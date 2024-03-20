@@ -1,0 +1,16 @@
+MultiSquaresClient/MultiSquaresClient.vcxproj.filters
+MultiSquaresClient/MultiSquaresClient.vcxproj
+MultiSquaresClient/MultiSquaresClient.vcxproj.user
+MultiSquaresClient/.vs
+MultiSquaresClient/x64
+MultiSquareServer/.idea
+MultiSquareServer/target
+MultiSquaresClient/out
+MultiSquaresClient/bin/
+MultiSquaresClient/build/
+MultiSquaresClient/.vs
+MultiSquaresClient/.idea/
+MultiSquaresClient/CMakeSettings.json
+MultiSquaresClient/Makefile
+.vs/
+images/
