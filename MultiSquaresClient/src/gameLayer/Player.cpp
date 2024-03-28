@@ -11,7 +11,7 @@ Player::Player() {
     lives = 100;
 
     maxSpeed = 100.0f; 
-    acceleration = 20.0f;
+    acceleration = 25.0f;
     fireRate = 100; 
     fireRateTimer = fireRate; 
 
@@ -31,6 +31,13 @@ void Player::update(float deltaTime)
     if (glm::length(velocity) > maxSpeed) {
         velocity = glm::normalize(velocity) * maxSpeed;
     }
+    if (velocity.x < 0.05f && velocity.x > -0.05f) {
+        velocity.x = 0;
+    }
+    if (velocity.y < 0.05f && velocity.y > -0.05f) {
+        velocity.y = 0.0f;
+    }
+
 
     pos += velocity * deltaTime;
     

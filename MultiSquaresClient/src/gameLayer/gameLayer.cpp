@@ -22,14 +22,25 @@
 std::vector<std::string> processPacket(ENetEvent* packetEvent);
 
 
+//TODO Client state into int ENUM
+/*
+enum GAME_STATE{
+
+	MAIN_MENU
+
+
+
+}
+*/
+
 
 enum PacketHeader
 {
-	NEW_CONNECTION = 0,
-	POSITION_UPDATE = 1,
-	NEW_CONNECTION_ACKNOWLEDGE = 2,
-	NEW_OUTSIDE_PLAYER_CONNECTED = 3,
-	NEW_ID = 4
+	NEW_CONNECTION = 10,
+	POSITION_UPDATE = 20,
+	NEW_CONNECTION_ACKNOWLEDGE = 30,
+	NEW_OUTSIDE_PLAYER_CONNECTED = 40,
+	SYNC_UPDATE = 50
 };
 
 Player player;
@@ -63,6 +74,7 @@ int sendPosTimer = 10;
 
 
 //GAMEPLAY FLAGS~~~~~~
+//TODO swap this to a single state ENUM/Variable
 bool IN_MAIN_MENU = true;
 bool IN_GAME = false;
 bool IS_CONNECTED = false;
@@ -229,7 +241,6 @@ bool gameLogic(float deltaTime) {
 
 							//check to see if header is NEW_CONNECTION_ACKNOWLEDGE and apply recieved ID to player
 							std::vector<std::string> packetData = processPacket(&event);
-							std::cout << "Ack Len: " << packetData.size();
 							if (stoi(packetData[0]) == NEW_CONNECTION_ACKNOWLEDGE) {
 								player.id = stoi(packetData[1]);
 								player.pos.x = stoi(packetData[2]);
@@ -277,18 +288,13 @@ bool gameLogic(float deltaTime) {
 			player.update(deltaTime);
 
 
-			//positional networing, every 25 frames send our current position and velocity to allow other clients to simulate
+			//positional networing, every set number of frames send our current position and velocity to allow other clients to simulate
 			if (sendPosTimer >= 1) {
 				sendPosTimer--;
 			}
 			else {
-				//send position update and reset timer
-				sendPacket(std::to_string(POSITION_UPDATE)
-					+ ";" + std::to_string(player.pos.x)
-					+ ";" + std::to_string(player.pos.y)
-					+ ";" + std::to_string(player.velocity.x)
-					+ ";" + std::to_string(player.velocity.y));
-				sendPosTimer = 25;
+				sendPosUpdate();
+				sendPosTimer = 30;
 			}
 
 
@@ -297,42 +303,57 @@ bool gameLogic(float deltaTime) {
 
 #pragma region network event handler
 
-			int eventCount = enet_host_service(client, &event, 0);
-			if (eventCount > 0) {
-				while (enet_host_service(client, &event, 0) > 0) {
-					switch (event.type) {
-					case ENET_EVENT_TYPE_CONNECT: {
-						std::cout << "Connected to server!" << std::endl;
-						break;
-					}
-					case ENET_EVENT_TYPE_DISCONNECT: {
-						std::cout << "Disconnected from server!" << std::endl;
-						IN_MAIN_MENU = true;
-						IS_CONNECTED = false;
-						break;
-					}
-					case ENET_EVENT_TYPE_RECEIVE: {
+			while (enet_host_service(client, &event, 0) > 0) {
 
-						printf("Received data from server: %s\n", event.packet->data);
+				std::string rawPacket(reinterpret_cast<char*>(event.packet->data), event.packet->dataLength);
+				std::vector<std::string> packetData = breakPacket(rawPacket);
+				int packetHeader = std::stoi(packetData[0]);
+
+				switch (event.type) {
+
+				case ENET_EVENT_TYPE_CONNECT: {
+					std::cout << "Connected to server!" << std::endl;
+					break;
+				}
+				case ENET_EVENT_TYPE_DISCONNECT: {
+					std::cout << "Disconnected from server!" << std::endl;
+					IN_MAIN_MENU = true;
+					IS_CONNECTED = false;
+					break;
+				}
+				case ENET_EVENT_TYPE_RECEIVE: {
+
+					switch (packetHeader) {
+						case POSITION_UPDATE: {
+							handlePosUpdate(&packetData);
+							break;
+						}
+						case NEW_OUTSIDE_PLAYER_CONNECTED: {
+							handleNewOutsidePlayer(&packetData);
 						break;
+						}
 					}
-					default:
-						break;
-					}
+					
+					break;
+				}
 				}
 			}
 #pragma endregion			
 
-
-
-			renderPlayer(renderer, player, playerTexture);
-			renderPlayerName(renderer, player, font);
-			//tell GPU to process everything
-			renderer.flush();
+#pragma region render
+			for (const Player& player : extPlayers) {
+				renderPlayer(renderer, player, playerTexture);
+				}
+				renderPlayer(renderer, player, playerTexture);
+				renderPlayerName(renderer, player, font);
+				//tell GPU to process everything
+				renderer.flush();
+#pragma endregion
+			}
+			return true;
 		}
-		return true;
 	}
-}
+
 
 //This function might not be be called if the program is forced closed
 void closeGame()
@@ -372,4 +393,59 @@ std::vector<std::string> processPacket(ENetEvent* packetEvent) {
 	}
 	return seglist;
 }
+
+void sendPosUpdate() {
+	//send position update and reset timer
+	sendPacket(std::to_string(POSITION_UPDATE)
+		+ ";" + std::to_string(player.id)
+		+ ";" + std::to_string(player.pos.x)
+		+ ";" + std::to_string(player.pos.y)
+		+ ";" + std::to_string(player.velocity.x)
+		+ ";" + std::to_string(player.velocity.y));
+}
+
+std::vector<std::string> breakPacket(std::string packetData) {
+	// Simple tokenization example to parse packet content
+	std::istringstream packetStream(packetData);
+	std::string segment;
+	std::vector<std::string> seglist;
+
+	while (std::getline(packetStream, segment, ';'))
+	{
+		seglist.push_back(segment);
+	}
+	return seglist;
+}
+
+void handlePosUpdate(std::vector<std::string>* packetData) {
+
+	for (Player &player : extPlayers) {
+			std::cout << "player id " << packetData->at(1) << " updated\n";
+		if (player.id == std::stoi(packetData->at(1))) {
+			player.pos.x = std::stof(packetData->at(2));
+			player.pos.y = std::stof(packetData->at(3));
+			player.velocity.x = std::stof(packetData->at(4));
+			player.velocity.y = std::stof(packetData->at(5));
+			std::cout << "Successfully updated player data for ext player\n";
+		}
+	}
+}
+
+void handleNewOutsidePlayer(std::vector<std::string> *packetData) {
+
+	Player newPlayer = {};
+
+	newPlayer.id = std::stoi(packetData->at(1));
+	newPlayer.pos.x = std::stof(packetData->at(2));
+	newPlayer.pos.y = std::stof(packetData->at(3));
+	newPlayer.velocity.x = std::stof(packetData->at(4));
+	newPlayer.velocity.y = std::stof(packetData->at(5));
+	newPlayer.health = std::stof(packetData->at(6));
+	newPlayer.maxSpeed = std::stof(packetData->at(7));
+	newPlayer.damage = std::stof(packetData->at(8));
+	newPlayer.acceleration = std::stof(packetData->at(9));
+	newPlayer.bulletSpeed = std::stof(packetData->at(10));
+}
+
+
 #pragma endregion
