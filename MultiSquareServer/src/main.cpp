@@ -47,8 +47,8 @@ struct Client {
 
 int newConnectionPacketHandler(ENetPeer* sender);
 void handlePacket(ENetPeer* sender, const std::string& packetData);
-void syncPositions();
-void positionUpdated(Client client);
+bool syncPositions();
+bool sendClientUpdate(Client client);
 std::string clientToPacket(Client client);
 
 int currentId = 0;
@@ -165,7 +165,7 @@ void handlePacket(ENetPeer* sender, const std::string& packetData) {
 		switch (packetHeader) {
 			case PLAYER_UPDATE: {
 				Client updateClient = packetToClient(packetData);
-				playerUpdate(updateClient);
+				sendClientUpdate(updateClient);
 				break;
 			}
 		default:
@@ -183,8 +183,8 @@ int newConnectionPacketHandler(ENetPeer* sender) {
 
 
 //send syncingClient's stats to each reciever client to keep everything in lockstep
-void syncPositions() {
-
+bool syncPositions() {
+	bool sentSuccessfully = true;
 	if (!clients.empty()) {
 
 		for (const Client& syncingClient : clients) {
@@ -193,15 +193,17 @@ void syncPositions() {
 
 				std::string payload = std::to_string(SYNC_UPDATE) + ";" + clientToPacket(syncingClient);
 				std::cout << "sync payload: " << payload << "\n";
-				sendMessage(payload.c_str(), payload.length() + 1, recieverClient.peer);
-
+				if (sendMessage(payload.c_str(), payload.length() + 1, recieverClient.peer) < 0) {
+					sentSuccessfully = false;
+				}
 			}
 		}
 	}
+	return sentSuccessfully;
 }
 
 //player sent a packet with update data, send everyone but sender fresh data
-void playerUpdate(Client senderClient) {
+bool sendClientUpdate(Client senderClient) {
 	bool sentSuccessfully = true;
 	for (const Client& recievingClient : clients) {
 		if (recievingClient.id != senderClient.id) {
