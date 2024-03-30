@@ -50,6 +50,8 @@ void handlePacket(ENetPeer* sender, const std::string& packetData);
 bool syncPositions();
 bool sendClientUpdate(Client client);
 std::string clientToPacket(Client client);
+Client packetToClient(std::string packetData);
+int getPacketHeader(const std::string& packetData);
 
 int currentId = 0;
 std::vector<Client> clients;
@@ -177,7 +179,7 @@ void handlePacket(ENetPeer* sender, const std::string& packetData) {
 
 
 int newConnectionPacketHandler(ENetPeer* sender) {
-	
+	return -1;
 }
 
 
@@ -215,6 +217,7 @@ bool sendClientUpdate(Client senderClient) {
 			}
 		}
 	}
+	return sentSuccessfully;
 }
 
 
