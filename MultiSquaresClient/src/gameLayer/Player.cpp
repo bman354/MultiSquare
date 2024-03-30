@@ -22,6 +22,29 @@ Player::Player() {
 
 }
 
+//create a player obj from a packet recieved from the server
+Player::Player(std::string packetData) {
+    std::istringstream ss(packetData);
+    std::string token;
+    std::vector<std::string> tokens;
+
+    // tokenize packetData using ';' as delimiter
+    while (std::getline(ss, token, ';')) {
+        tokens.push_back(token);
+    }
+
+    id = std::stoi(tokens[1]);
+    name = tokens[2];
+    pos = glm::vec2(std::stof(tokens[3]), std::stof(tokens[4]));
+    velocity = glm::vec2(std::stof(tokens[5]), std::stof(tokens[6]));
+    lives = std::stoi(tokens[7]);
+    health = std::stof(tokens[8]);
+    maxSpeed = std::stof(tokens[9]);
+    damage = std::stof(tokens[10]);
+    acceleration = std::stof(tokens[11]);
+    bulletSpeed = std::stof(tokens[12]);
+}
+
 void Player::update(float deltaTime)
 {
     float friction = 0.96f;
@@ -42,12 +65,19 @@ void Player::update(float deltaTime)
     pos += velocity * deltaTime;
     
 }
-
-std::string Player::newConnectionDataPacket() {
-    return name + ";"
+//header;id;name;posx;posy;velx;vely;lives;health;maxSpeed;damage;bulletSpeed
+std::string Player::toNetworkDataPacket() {
+    return "20;"
+        + std::to_string(id) + ";"
+        + name + ";"
+        + std::to_string(pos.x) + ";"
+        + std::to_string(pos.y) + ";"
+        + std::to_string(velocity.x) + ";"
+        + std::to_string(velocity.y) + ";"
         + std::to_string(lives) + ";"
         + std::to_string(health) + ";"
         + std::to_string(maxSpeed) + ";"
         + std::to_string(damage) + ";"
-        + std::to_string(bulletSpeed);
+        + std::to_string(playerSize.x) + ";"
+        + std::to_string(playerSize.y);
 }

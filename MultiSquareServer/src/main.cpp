@@ -9,22 +9,21 @@
 Packet Layouts
 
 new client connects and sends its init data
-NEW_CONNECTION: header;playerDesiredName
+NEW_CONNECTION: header;id;name;x;y;xVel;yVel;lives;health;maxSpeed;damage;acceleration;bulletSpeed
 
 send back the server's player Id and starting positions
 NEW_CONNECTION_ACKNOWLEDGE: header;id;pos.x;pos.y
 
 player sends where they are, header ID also used to send back to clients to inform of updated pos on that player
-POSITION_UPDATE: header;clientId;x;y;xvel;yvel
+PLAYER_UPDATE: header;id;name;x;y;xVel;yVel;lives;health;maxSpeed;damage;acceleration;bulletSpeed
 
 packet sent to clients to give them data on a new client that has connected
-NEW_OUTSIDE_PLAYER_CONNECTED:  header;id;x;y;xVel;yVel;lives;health;maxSpeed;damage;acceleration;bulletSpeed
-
+NEW_OUTSIDE_PLAYER_CONNECTED:  header;id;name;x;y;xVel;yVel;lives;health;maxSpeed;damage;acceleration;bulletSpeed
 
 packet being sent to update everything about a player every 500 ticks to ensure everyone is in sync
-SYNC_UPDATE: header;id;x;y;xVel;yVel;lives;health;maxSpeed;damage;acceleration;bulletSpeed
+SYNC_UPDATE: header;id;name;x;y;xVel;yVel;lives;health;maxSpeed;damage;acceleration;bulletSpeed
 
-
+ 
 */
 
 
@@ -175,8 +174,8 @@ std::vector<std::string> breakPacket(std::string packetData) {
 
 
 void handlePacket(ENetPeer* sender, const std::string& packetData) {
-	void handlePacket(ENetPeer * sender, const std::string & packetData) {
-		std::vector<std::string> packetParts = splitPacket(packetData);
+	
+		std::vector<std::string> packetParts = breakPacket(packetData);
 		if (packetParts.empty())
 			return;
 
@@ -189,7 +188,7 @@ void handlePacket(ENetPeer* sender, const std::string& packetData) {
 			// Handle other packet types as needed
 			break;
 		}
-	}
+	
 }
 
 

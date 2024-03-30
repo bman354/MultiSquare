@@ -37,12 +37,13 @@ enum GAME_STATE{
 enum PacketHeader
 {
 	NEW_CONNECTION = 10,
-	POSITION_UPDATE = 20,
+	PLAYER_UPDATE = 20,
 	NEW_CONNECTION_ACKNOWLEDGE = 30,
 	NEW_OUTSIDE_PLAYER_CONNECTED = 40,
 	SYNC_UPDATE = 50
 };
-
+//TODO figure out a structure to hold all this data, this is too much just sitting around in an odd scope
+//use one structure that is just players, "player" can just be an index or a key to the local player?
 Player player;
 std::vector<Bullet> allBullets;
 std::vector<Player> extPlayers;
@@ -74,7 +75,7 @@ int sendPosTimer = 10;
 
 
 //GAMEPLAY FLAGS~~~~~~
-//TODO swap this to a single state ENUM/Variable
+//TODO swap this to a single state ENUM/Variable so I can use a switch statement instead of if/else
 bool IN_MAIN_MENU = true;
 bool IN_GAME = false;
 bool IS_CONNECTED = false;
@@ -147,6 +148,7 @@ bool gameLogic(float deltaTime) {
 
 		//key input handling
 		std::string in = platform::getTypedInput();
+		//TODO this doesnt work yet
 		int ctrlPressed = platform::isButtonPressedOn(43);
 		for (char c : in) {
 			if (c == '\b') {
@@ -229,24 +231,21 @@ bool gameLogic(float deltaTime) {
 					IS_CONNECTED = true;
 
 					player.name = playerMenuName;
-					//we got a connection, send the init packet with player data and await starting info
-					std::string playerData = player.newConnectionDataPacket();
-					sendPacketReliable(std::to_string(NEW_CONNECTION) + ";" + playerData);
+					
+
+					//TODO SEND INITIAL CONNECTION
+
+
 
 					bool ESTABLISHED_CONNECTION = false;
 					while (!ESTABLISHED_CONNECTION) {
 						rendererUi.Begin(02);
 						rendererUi.Text("Connecting To Server...", Colors_Black);
+
 						if (enet_host_service(client, &event, 0) > 0) {
 
 							//check to see if header is NEW_CONNECTION_ACKNOWLEDGE and apply recieved ID to player
-							std::vector<std::string> packetData = processPacket(&event);
-							if (stoi(packetData[0]) == NEW_CONNECTION_ACKNOWLEDGE) {
-								player.id = stoi(packetData[1]);
-								player.pos.x = stoi(packetData[2]);
-								player.pos.y = stoi(packetData[3]);
-								ESTABLISHED_CONNECTION = true;
-							}
+							
 						}
 
 						rendererUi.End();
@@ -324,7 +323,7 @@ bool gameLogic(float deltaTime) {
 				case ENET_EVENT_TYPE_RECEIVE: {
 
 					switch (packetHeader) {
-						case POSITION_UPDATE: {
+						case PLAYER_UPDATE: {
 							handlePosUpdate(&packetData);
 							break;
 						}
@@ -341,8 +340,8 @@ bool gameLogic(float deltaTime) {
 #pragma endregion			
 
 #pragma region render
-			for (const Player& player : extPlayers) {
-				renderPlayer(renderer, player, playerTexture);
+				for (const Player& player : extPlayers) {
+					renderPlayer(renderer, player, playerTexture);
 				}
 				renderPlayer(renderer, player, playerTexture);
 				renderPlayerName(renderer, player, font);
@@ -380,72 +379,15 @@ void sendPacketReliable(std::string data) {
 	ENetPacket* packet = enet_packet_create(data.c_str(), data.size() + 1, ENET_PACKET_FLAG_RELIABLE);
 	enet_peer_send(server, 0, packet);
 }
-std::vector<std::string> processPacket(ENetEvent* packetEvent) {
-
-	std::string rawPacket(reinterpret_cast<char*>(event.packet->data), event.packet->dataLength);
-	std::istringstream packetStream(rawPacket);
-	std::string segment;
-	std::vector<std::string> seglist;
-
-	while (std::getline(packetStream, segment, ';'))
-	{
-		seglist.push_back(segment);
-	}
-	return seglist;
-}
 
 void sendPosUpdate() {
 	//send position update and reset timer
-	sendPacket(std::to_string(POSITION_UPDATE)
-		+ ";" + std::to_string(player.id)
-		+ ";" + std::to_string(player.pos.x)
-		+ ";" + std::to_string(player.pos.y)
-		+ ";" + std::to_string(player.velocity.x)
-		+ ";" + std::to_string(player.velocity.y));
-}
-
-std::vector<std::string> breakPacket(std::string packetData) {
-	// Simple tokenization example to parse packet content
-	std::istringstream packetStream(packetData);
-	std::string segment;
-	std::vector<std::string> seglist;
-
-	while (std::getline(packetStream, segment, ';'))
-	{
-		seglist.push_back(segment);
-	}
-	return seglist;
-}
-
-void handlePosUpdate(std::vector<std::string>* packetData) {
-
-	for (Player &player : extPlayers) {
-			std::cout << "player id " << packetData->at(1) << " updated\n";
-		if (player.id == std::stoi(packetData->at(1))) {
-			player.pos.x = std::stof(packetData->at(2));
-			player.pos.y = std::stof(packetData->at(3));
-			player.velocity.x = std::stof(packetData->at(4));
-			player.velocity.y = std::stof(packetData->at(5));
-			std::cout << "Successfully updated player data for ext player\n";
-		}
-	}
-}
-
-void handleNewOutsidePlayer(std::vector<std::string> *packetData) {
-
-	Player newPlayer = {};
-
-	newPlayer.id = std::stoi(packetData->at(1));
-	newPlayer.pos.x = std::stof(packetData->at(2));
-	newPlayer.pos.y = std::stof(packetData->at(3));
-	newPlayer.velocity.x = std::stof(packetData->at(4));
-	newPlayer.velocity.y = std::stof(packetData->at(5));
-	newPlayer.health = std::stof(packetData->at(6));
-	newPlayer.maxSpeed = std::stof(packetData->at(7));
-	newPlayer.damage = std::stof(packetData->at(8));
-	newPlayer.acceleration = std::stof(packetData->at(9));
-	newPlayer.bulletSpeed = std::stof(packetData->at(10));
+	sendPacket(player.toNetworkDataPacket());
 }
 
 
+void playerUpdate(std::string newData) {
+
+	
+}
 #pragma endregion

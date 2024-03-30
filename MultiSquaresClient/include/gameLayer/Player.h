@@ -2,15 +2,17 @@
 #include <gl2d/gl2d.h>
 #include <glm/glm.hpp>
 #include <string>
-
+#include <sstream>
 
 
 
 class Player {
 public:
 	Player();
+	Player(std::string packetData);
 	void update(float deltaTime);
-	std::string newConnectionDataPacket();
+
+	std::string toNetworkDataPacket();
 	int id;
 
 	glm::vec2 pos;
@@ -23,6 +25,7 @@ public:
 	float maxSpeed;
 	float damage;
 	float acceleration;
+	glm::vec2 playerSize;
 
 	int fireRate;
 	int fireRateTimer;
@@ -30,5 +33,4 @@ public:
 	float bulletSpeed;
 
 	glm::vec2 bulletSize;
-	glm::vec2 playerSize;
 };
