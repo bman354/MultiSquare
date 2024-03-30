@@ -15,25 +15,26 @@ send back the server's player Id and starting positions
 NEW_CONNECTION_ACKNOWLEDGE: header;id;pos.x;pos.y
 
 player sends where they are, header ID also used to send back to clients to inform of updated pos on that player
-PLAYER_UPDATE: header;id;name;x;y;xVel;yVel;lives;health;maxSpeed;damage;acceleration;bulletSpeed
+PLAYER_UPDATE: header;id;name;x;y;xVel;yVel;lives;health;maxSpeed;damage;xSize;ySize
 
 packet sent to clients to give them data on a new client that has connected
-NEW_OUTSIDE_PLAYER_CONNECTED:  header;id;name;x;y;xVel;yVel;lives;health;maxSpeed;damage;acceleration;bulletSpeed
+NEW_OUTSIDE_PLAYER_CONNECTED:  header;id;name;x;y;xVel;yVel;lives;health;maxSpeed;damage;xSize;ySize
 
 packet being sent to update everything about a player every 500 ticks to ensure everyone is in sync
-SYNC_UPDATE: header;id;name;x;y;xVel;yVel;lives;health;maxSpeed;damage;acceleration;bulletSpeed
-
- 
+SYNC_UPDATE: header;id;name;x;y;xVel;yVel;lives;health;maxSpeed;damage;xSize;ySize
 */
 
 
 struct Client {
 	ENetPeer* peer = {};
 	int id;
+	std::string name;
 	float x;
 	float y;
 	float xVel;
 	float yVel;
+	float xSize;
+	float ySize;
 
 	int lives;
 	float health;
@@ -44,19 +45,16 @@ struct Client {
 };
 
 
-
-std::vector<std::string> breakPacket(std::string packetData);
-std::string clientPacketData(Client client);
 int newConnectionPacketHandler(ENetPeer* sender);
 void handlePacket(ENetPeer* sender, const std::string& packetData);
 void syncPositions();
-void positionUpdated(ENetPeer* peer, std::vector<std::string> *packetData);
-
+void positionUpdated(Client client);
+std::string clientToPacket(Client client);
 
 int currentId = 0;
 std::vector<Client> clients;
 
-int syncPositionTimer = 500;
+int syncPositionTimer = 5000;
 
 
 
@@ -128,8 +126,6 @@ int main()
 				break;
 			}
 			}
-
-
 		}
 
 		//syncing and common routines
@@ -144,10 +140,7 @@ int main()
 
 			}
 		}
-
-
-
-
+		//end of main server loop, clean up after here
 	}
 
 	enet_host_destroy(server);
@@ -155,35 +148,26 @@ int main()
 }
 
 int sendMessage(const char* data, size_t size, ENetPeer* peer) {
+
+	if (std::strlen(data) > 500) {
+		std::cout << "WARNING, packet was sent with size > 500, data loss may occur\n";
+	}
+
 	ENetPacket* packet = enet_packet_create(data, size, 0);
 	return enet_peer_send(peer, 0, packet);
-}
-
-std::vector<std::string> breakPacket(std::string packetData) {
-	// Simple tokenization example to parse packet content
-	std::istringstream packetStream(packetData);
-	std::string segment;
-	std::vector<std::string> seglist;
-
-	while (std::getline(packetStream, segment, ';'))
-	{
-		seglist.push_back(segment);
-	}
-	return seglist;
 }
 
 
 void handlePacket(ENetPeer* sender, const std::string& packetData) {
 	
-		std::vector<std::string> packetParts = breakPacket(packetData);
-		if (packetParts.empty())
-			return;
-
-		int packetHeader = std::stoi(packetParts[0]);
+		int packetHeader = getPacketHeader(packetData);
+		
 		switch (packetHeader) {
-		case POSITION_UPDATE:
-			// Handle position update packet
-			break;
+			case PLAYER_UPDATE: {
+				Client updateClient = packetToClient(packetData);
+				playerUpdate(updateClient);
+				break;
+			}
 		default:
 			// Handle other packet types as needed
 			break;
@@ -193,77 +177,94 @@ void handlePacket(ENetPeer* sender, const std::string& packetData) {
 
 
 int newConnectionPacketHandler(ENetPeer* sender) {
-	float initXPos = 100.0f;
-	float initYPos = 100.0f;
-
-	std::string newConnectionMessage = std::to_string(NEW_CONNECTION_ACKNOWLEDGE) + ";" + std::to_string(currentId)+ ";" + std::to_string(initXPos) + ";" + std::to_string(initYPos);
-	std::cout << "Sending acknowledgement packet: " << newConnectionMessage << "Player ID: " << currentId <<"\n";
-
-
-	//send NEW_OUTSIDE_PLAYER_CONNECTED packet with relevent data
-	//NEW_OUTSIDE_PLAYER_CONNECTED:  header; id; x; y; xVel; yVel; lives; health; maxSpeed; damage; acceleration; bulletSpeed
-	for (const Client& existingClient : clients) {
-		if (existingClient.peer != sender) { 
-			
-		}
-	}
-
 	
-
-	return sendMessage(newConnectionMessage.c_str(), newConnectionMessage.size() + 1, sender);
 }
-//builds a string with the clients stats for various types of packets
-std::string clientPacketData(Client client) {
 
-	return	  std::to_string(client.id) +
-		";" + std::to_string(client.x) +
-		";" + std::to_string(client.y) +
-		";" + std::to_string(client.xVel) +
-		";" + std::to_string(client.yVel) +
-		";" + std::to_string(client.lives) +
-		";" + std::to_string(client.health) +
-		";" + std::to_string(client.maxSpeed) +
-		";" + std::to_string(client.damage) +
-		";" + std::to_string(client.acceleration) +
-		";" + std::to_string(client.bulletSpeed);
-}
+
 
 //send syncingClient's stats to each reciever client to keep everything in lockstep
 void syncPositions() {
 
-	if(!clients.empty()){
+	if (!clients.empty()) {
 
 		for (const Client& syncingClient : clients) {
 
 			for (const Client& recieverClient : clients) {
-				
-				std::string payload = std::to_string(SYNC_UPDATE) + ";" + clientPacketData(syncingClient);
+
+				std::string payload = std::to_string(SYNC_UPDATE) + ";" + clientToPacket(syncingClient);
 				std::cout << "sync payload: " << payload << "\n";
 				sendMessage(payload.c_str(), payload.length() + 1, recieverClient.peer);
 
-				
+			}
+		}
+	}
+}
+
+//player sent a packet with update data, send everyone but sender fresh data
+void playerUpdate(Client senderClient) {
+	bool sentSuccessfully = true;
+	for (const Client& recievingClient : clients) {
+		if (recievingClient.id != senderClient.id) {
+			std::string payload = std::to_string(PLAYER_UPDATE) + ";";
+			payload += clientToPacket(senderClient);
+
+			if ((sendMessage(payload.c_str(), strlen(payload.c_str()) + 1, recievingClient.peer)) < 0) {
+				sentSuccessfully = false;
 			}
 		}
 	}
 }
 
 
-//player sent a packet with update data, send everyone where they are except the sending client
-void positionUpdated(ENetPeer* peer ,std::vector<std::string> *packetData) {
-	for (const Client &recievingClient: clients) {
-		
-		//HACK find better comparison, this can be a performance hog
-		if (!(recievingClient.peer == peer)) {
-			//POSITION_UPDATE: header; clientId; x; y; xvel; yvel
-			std::string positionPayload = std::to_string(POSITION_UPDATE) + 
-				";" + packetData->at(1) +
-				";" + packetData->at(2) + 
-				";" + packetData->at(3) + 
-				";" + packetData->at(4) + 
-				";" + packetData->at(5);
-			
-			sendMessage(positionPayload.c_str(), positionPayload.size() + 1, recievingClient.peer);
-		}
-	}
+//builds a string with the clients stats for various types of packets
+std::string clientToPacket(Client client) {
+
+	return std::to_string(client.id) + ";"
+		+ client.name + ";"
+		+ std::to_string(client.x) + ";"
+		+ std::to_string(client.y) + ";"
+		+ std::to_string(client.xVel) + ";"
+		+ std::to_string(client.yVel) + ";"
+		+ std::to_string(client.lives) + ";"
+		+ std::to_string(client.health) + ";"
+		+ std::to_string(client.maxSpeed) + ";"
+		+ std::to_string(client.damage) + ";"
+		+ std::to_string(client.xSize) + ";"
+		+ std::to_string(client.ySize);
 }
 
+Client packetToClient(std::string packetData) {
+	Client returnClient;
+
+	std::istringstream ss(packetData);
+	std::string token;
+	std::vector<std::string> tokens;
+
+	// tokenize packetData using ';' as delimiter
+	while (std::getline(ss, token, ';')) {
+		tokens.push_back(token);
+	}
+
+	returnClient.id = std::stoi(tokens[1]);
+	returnClient.name = tokens[2];
+	returnClient.x = std::stof(tokens[3]);;
+	returnClient.y = std::stof(tokens[4]);
+	returnClient.xVel = std::stof(tokens[5]);
+	returnClient.yVel = std::stof(tokens[6]);
+	returnClient.lives = std::stoi(tokens[7]);
+	returnClient.health = std::stof(tokens[8]);
+	returnClient.maxSpeed = std::stof(tokens[9]);
+	returnClient.damage = std::stof(tokens[10]);
+	returnClient.acceleration = std::stof(tokens[11]);
+	returnClient.bulletSpeed = std::stof(tokens[12]);
+
+	return returnClient;
+}
+
+int getPacketHeader(const std::string& packetData) {
+	size_t delimiterPos = packetData.find(';');
+
+	std::string headerString = packetData.substr(0, delimiterPos);
+
+	return std::stoi(headerString);
+}

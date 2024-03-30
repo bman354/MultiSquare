@@ -334,14 +334,14 @@ bool gameLogic(float deltaTime) {
 			}
 #pragma endregion			
 
-#pragma region render
-				for (const Player& player : extPlayers) {
-					renderPlayer(renderer, player, playerTexture);
-				}
-				renderPlayer(renderer, player, playerTexture);
-				renderPlayerName(renderer, player, font);
-				//tell GPU to process everything
-				renderer.flush();
+#pragma region rendering
+		for (const Player& player : extPlayers) {
+			renderPlayer(renderer, player, playerTexture);
+		}
+		renderPlayer(renderer, player, playerTexture);
+		renderPlayerName(renderer, player, font);
+		//tell GPU to process everything
+		renderer.flush();
 #pragma endregion
 			}
 			return true;
@@ -403,7 +403,11 @@ void newPlayerConnected(std::string *packetData) {
 }
 
 
-int getPacketHeader(std::string packetData) {	
-	return (int)packetData[0];
+int getPacketHeader(const std::string& packetData) {
+	size_t delimiterPos = packetData.find(';');
+
+	std::string headerString = packetData.substr(0, delimiterPos);
+
+	return std::stoi(headerString);
 }
 #pragma endregion
