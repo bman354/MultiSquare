@@ -66,8 +66,9 @@ void Player::update(float deltaTime)
     
 }
 //header;id;name;posx;posy;velx;vely;lives;health;maxSpeed;damage;bulletSpeed
-std::string Player::toNetworkDataPacket() {
-    return "20;"
+//is there a better way to append the header using the ENUM in the gamelayer?
+std::string Player::toNetworkDataPacket(int HEADERID) {
+    return std::to_string(HEADERID) + ";"
         + std::to_string(id) + ";"
         + name + ";"
         + std::to_string(pos.x) + ";"
@@ -81,3 +82,21 @@ std::string Player::toNetworkDataPacket() {
         + std::to_string(playerSize.x) + ";"
         + std::to_string(playerSize.y);
 }
+
+void Player::updateStats(Player newStats) {
+    id = newStats.id;
+    pos = newStats.pos;
+    velocity = newStats.velocity;
+    name = newStats.name;
+    lives = newStats.lives;
+    health = newStats.health;
+    maxSpeed = newStats.maxSpeed;
+    damage = newStats.damage;
+    acceleration = newStats.acceleration;
+    playerSize = newStats.playerSize;
+    fireRate = newStats.fireRate;
+    fireRateTimer = newStats.fireRateTimer;
+    bulletSpeed = newStats.bulletSpeed;
+    bulletSize = newStats.bulletSize;
+}
+

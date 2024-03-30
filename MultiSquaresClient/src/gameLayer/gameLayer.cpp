@@ -19,10 +19,7 @@
 #include "Bullet.h"
 #include "Player.h"
 
-std::vector<std::string> processPacket(ENetEvent* packetEvent);
-
-
-//TODO Client state into int ENUM
+//TODO Client state into int ENUM? mostly on serverSide
 /*
 enum GAME_STATE{
 
@@ -225,7 +222,7 @@ bool gameLogic(float deltaTime) {
 			}
 			else {
 				event = {};
-				//get server connection
+				//wait 5 seconds to get server connection
 				if (enet_host_service(client, &event, 5000) > 0 && event.type == ENET_EVENT_TYPE_CONNECT) {
 					std::cout << "Connection success!\n";
 					IS_CONNECTED = true;
@@ -263,7 +260,6 @@ bool gameLogic(float deltaTime) {
 
 #pragma region movement input
 
-
 			glm::vec2 inputAcceleration = { 0.0f, 0.0f };
 
 			if (platform::isButtonHeld(platform::Button::W)) {
@@ -287,7 +283,7 @@ bool gameLogic(float deltaTime) {
 			player.update(deltaTime);
 
 
-			//positional networing, every set number of frames send our current position and velocity to allow other clients to simulate
+			//update the server semi regularly with the player's data
 			if (sendPosTimer >= 1) {
 				sendPosTimer--;
 			}
@@ -301,12 +297,11 @@ bool gameLogic(float deltaTime) {
 
 
 #pragma region network event handler
-
+			//HACK probably needs to either go to another thread, ENET may do this already
 			while (enet_host_service(client, &event, 0) > 0) {
 
 				std::string rawPacket(reinterpret_cast<char*>(event.packet->data), event.packet->dataLength);
-				std::vector<std::string> packetData = breakPacket(rawPacket);
-				int packetHeader = std::stoi(packetData[0]);
+				int packetHeader = getPacketHeader(rawPacket);
 
 				switch (event.type) {
 
@@ -324,11 +319,11 @@ bool gameLogic(float deltaTime) {
 
 					switch (packetHeader) {
 						case PLAYER_UPDATE: {
-							handlePosUpdate(&packetData);
+							playerUpdate(&rawPacket);
 							break;
 						}
 						case NEW_OUTSIDE_PLAYER_CONNECTED: {
-							handleNewOutsidePlayer(&packetData);
+							newPlayerConnected(&rawPacket);
 						break;
 						}
 					}
@@ -381,13 +376,34 @@ void sendPacketReliable(std::string data) {
 }
 
 void sendPosUpdate() {
-	//send position update and reset timer
-	sendPacket(player.toNetworkDataPacket());
+	sendPacket(player.toNetworkDataPacket(PLAYER_UPDATE));
+}
+
+//ext player sent some data we need to update
+void playerUpdate(std::string *newData) {
+	Player newPlayer = Player(*newData);
+	for (Player &player : extPlayers) {
+		if (player.id == newPlayer.id) {
+			player.updateStats(newPlayer);
+		}
+	}
 }
 
 
-void playerUpdate(std::string newData) {
+void newPlayerConnected(std::string *packetData) {
+	Player newPlayer = Player(*packetData);
+	for (const Player &player : extPlayers) {
+		if (player.id == newPlayer.id) {
+			std::cout << "new player packet sent when we already have a player with that ID\n";
+			break;
+		} else {
+			extPlayers.push_back(newPlayer);
+		}
+	}
+}
 
-	
+
+int getPacketHeader(std::string packetData) {	
+	return (int)packetData[0];
 }
 #pragma endregion

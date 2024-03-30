@@ -10,9 +10,9 @@ void closeGame();
 void sendPacket(std::string data);
 void sendPacketReliable(std::string data);
 void sendPosUpdate();
-std::vector<std::string> breakPacket(std::string packetData);
-void handlePosUpdate(std::vector<std::string> *packetData);
-void handleNewOutsidePlayer(std::vector<std::string> *packetData);
+void playerUpdate(std::string *newData);
+int getPacketHeader(std::string packetData);
+void newPlayerConnected(std::string *packetData);
 
 namespace platform
 {

@@ -11,8 +11,10 @@ public:
 	Player();
 	Player(std::string packetData);
 	void update(float deltaTime);
+	void updateStats(Player newStats);
 
-	std::string toNetworkDataPacket();
+
+	std::string toNetworkDataPacket(int HEADERID);
 	int id;
 
 	glm::vec2 pos;
