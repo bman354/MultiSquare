@@ -183,7 +183,7 @@ int newConnectionPacketHandler(Client newClient) {
 	currentId++;
 	clients.push_back(newClient);
 
-	if (clients.size() > 1){
+	
 		std::string payload = clientToPacket(newClient);
 		std::string ackPayload = std::to_string(NEW_CONNECTION_ACKNOWLEDGE) + ";" + std::to_string(newClient.id);
 
@@ -195,13 +195,13 @@ int newConnectionPacketHandler(Client newClient) {
 				}
 			} else if(sendMessage(ackPayload.c_str(), ackPayload.length() + 1, newClient.peer) < 0){
 				successful = false;
-				std::cout << "error sending client acknowledgement\n";
+				std::cout << "failed to send connection acknowledgement to id " << newClient.id << "\n";
 			}
 
 		}
 
 		return successful;
-	}
+	
 }
 
 //send syncingClient's stats to each reciever client to keep everything in lockstep

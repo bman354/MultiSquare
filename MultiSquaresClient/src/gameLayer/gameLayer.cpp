@@ -234,7 +234,7 @@ bool gameLogic(float deltaTime) {
 
 				//tell server we are new, and need to tell everyone we've joined
 				sendPacket(player.toNetworkDataPacket(NEW_CONNECTION));
-
+				std::cout << "sent new connection packet\n";
 				event = {};
 				if (enet_host_service(client, &event, 5000) > 0) {
 					std::string rawPacket(reinterpret_cast<char*>(event.packet->data), event.packet->dataLength);
@@ -242,6 +242,7 @@ bool gameLogic(float deltaTime) {
 					
 					if (packetHeader == NEW_CONNECTION_ACKNOWLEDGE) {
 						newConnectionAcknowledge(rawPacket);
+						std::cout << "connection acknowledged and ip applied\n";
 					}
 
 				} else {
@@ -331,7 +332,7 @@ bool gameLogic(float deltaTime) {
 #pragma endregion			
 
 #pragma region rendering
-		for (const Player& player : extPlayers) {
+		for (Player player : extPlayers) {
 			renderPlayer(renderer, player, playerTexture);
 		}
 		renderPlayer(renderer, player, playerTexture);
@@ -376,26 +377,41 @@ void sendPosUpdate() {
 }
 
 //ext player sent some data we need to update
-void playerUpdate(std::string *newData) {
-	Player newPlayer = Player(*newData);
+void playerUpdate(std::string newData) {
+	bool playerUpdated = false;
+	Player newPlayer = Player(newData);
+	
 	for (Player &player : extPlayers) {
 		if (player.id == newPlayer.id) {
+			playerUpdated = true;
 			player.updateStats(newPlayer);
 		}
+	}
+	if (playerUpdated == false) {
+		newPlayerConnected(newData);
 	}
 }
 
 
-void newPlayerConnected(std::string *packetData) {
-	Player newPlayer = Player(*packetData);
-	for (const Player &player : extPlayers) {
-		if (player.id == newPlayer.id) {
-			std::cout << "new player packet sent when we already have a player with that ID\n";
-			break;
-		} else {
-			extPlayers.push_back(newPlayer);
+void newPlayerConnected(std::string packetData) {
+	std::cout << "new player connected\n";
+	Player newPlayer = Player(packetData);
+	std::cout << "new player id: " << newPlayer.id << "\n";
+	if (extPlayers.size() > 0) {
+		for (const Player& player : extPlayers) {
+			if (player.id == newPlayer.id) {
+				std::cout << "new player packet sent when we already have a player with that ID\n";
+				break;
+			}
+			else {
+				extPlayers.push_back(newPlayer);
+			}
 		}
 	}
+	else {
+		extPlayers.push_back(newPlayer);
+	}
+	
 }
 
 
@@ -413,7 +429,7 @@ void newConnectionAcknowledge(std::string rawPacketData) {
 	if (delimiterPos != std::string::npos) {
 		std::string idString = rawPacketData.substr(delimiterPos + 1);
 		player.id = std::stoi(idString);
-		std::cout << "player id is now: " << player.id;
+		std::cout << "player id is now: " << player.id << "\n";
 	} else {
 		std::cout << "invalid acknowledgement packet\n";
 	}
