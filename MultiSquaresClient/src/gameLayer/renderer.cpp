@@ -1,6 +1,5 @@
-#include <tiledRenderer.h>
 #include <gl2d/gl2d.h>
-
+#include "renderer.h"
 
 void renderPlayer(gl2d::Renderer2D &renderer, Player player, gl2d::Texture texture){
 	renderer.renderRectangle({ player.pos, player.playerSize.x,player.playerSize.y },texture);

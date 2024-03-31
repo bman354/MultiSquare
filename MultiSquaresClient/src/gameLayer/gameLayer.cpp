@@ -11,7 +11,7 @@
 //#include "imfilebrowser.h"
 #include <gl2d/gl2d.h>
 #include <platformTools.h>
-#include <tiledRenderer.h>
+#include <renderer.h>
 #include <cstdio>
 #include <glui/glui.h>
 #include <raudio.h>
@@ -316,11 +316,11 @@ bool gameLogic(float deltaTime) {
 
 					switch (packetHeader) {
 						case PLAYER_UPDATE: {
-							playerUpdate(&rawPacket);
+							playerUpdate(rawPacket);
 							break;
 						}
 						case NEW_OUTSIDE_PLAYER_CONNECTED: {
-							newPlayerConnected(&rawPacket);
+							newPlayerConnected(rawPacket);
 						break;
 						}
 					}
@@ -333,6 +333,7 @@ bool gameLogic(float deltaTime) {
 
 #pragma region rendering
 		for (Player player : extPlayers) {
+			std::cout << "player ysize: " << player.playerSize.y << "\n";
 			renderPlayer(renderer, player, playerTexture);
 		}
 		renderPlayer(renderer, player, playerTexture);
