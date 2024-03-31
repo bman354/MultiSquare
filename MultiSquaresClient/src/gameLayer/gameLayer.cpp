@@ -286,7 +286,7 @@ bool gameLogic(float deltaTime) {
 			}
 			else {
 				sendPosUpdate();
-				sendPosTimer = 30;
+				sendPosTimer = 1;
 			}
 
 
@@ -333,7 +333,6 @@ bool gameLogic(float deltaTime) {
 
 #pragma region rendering
 		for (Player player : extPlayers) {
-			std::cout << "player ysize: " << player.playerSize.y << "\n";
 			renderPlayer(renderer, player, playerTexture);
 		}
 		renderPlayer(renderer, player, playerTexture);

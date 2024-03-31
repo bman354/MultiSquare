@@ -41,8 +41,7 @@ Player::Player(std::string packetData) {
     health = std::stof(tokens[8]);
     maxSpeed = std::stof(tokens[9]);
     damage = std::stof(tokens[10]);
-    acceleration = std::stof(tokens[11]);
-    bulletSpeed = std::stof(tokens[12]);
+    playerSize = glm::vec2(std::stof(tokens[11]), std::stof(tokens[12]));
 }
 
 void Player::update(float deltaTime)

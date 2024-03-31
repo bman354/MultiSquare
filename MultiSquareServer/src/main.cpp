@@ -255,6 +255,7 @@ std::string clientToPacket(Client client) {
 		+ std::to_string(client.damage) + ";"
 		+ std::to_string(client.xSize) + ";"
 		+ std::to_string(client.ySize);
+
 }
 
 Client packetToClient(std::string packetData) {
@@ -268,7 +269,7 @@ Client packetToClient(std::string packetData) {
 	while (std::getline(ss, token, ';')) {
 		tokens.push_back(token);
 	}
-	std::cout << "tokens size: " << tokens.size() << "\n";
+	
 	returnClient.id = std::stoi(tokens[1]);
 	returnClient.name = tokens[2];
 	returnClient.x = std::stof(tokens[3]);;
