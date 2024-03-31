@@ -39,6 +39,7 @@ enum PacketHeader
 	NEW_OUTSIDE_PLAYER_CONNECTED = 40,
 	SYNC_UPDATE = 50
 };
+
 //TODO figure out a structure to hold all this data, this is too much just sitting around in an odd scope
 //use one structure that is just players, "player" can just be an index or a key to the local player?
 Player player;
@@ -222,35 +223,12 @@ bool gameLogic(float deltaTime) {
 			}
 			else {
 				event = {};
-				//wait 5 seconds to get server connection
+				//wait for acknowledgement
 				if (enet_host_service(client, &event, 5000) > 0 && event.type == ENET_EVENT_TYPE_CONNECT) {
 					std::cout << "Connection success!\n";
 					IS_CONNECTED = true;
 
 					player.name = playerMenuName;
-					
-
-					//TODO SEND INITIAL CONNECTION
-
-
-
-					bool ESTABLISHED_CONNECTION = false;
-					while (!ESTABLISHED_CONNECTION) {
-						rendererUi.Begin(02);
-						rendererUi.Text("Connecting To Server...", Colors_Black);
-
-						if (enet_host_service(client, &event, 0) > 0) {
-
-							//check to see if header is NEW_CONNECTION_ACKNOWLEDGE and apply recieved ID to player
-							
-						}
-
-						rendererUi.End();
-						renderer.clearScreen(Colors_White);
-						rendererUi.renderFrame(renderer, font, platform::getRelMousePosition(), platform::isLMousePressed(), platform::isLMouseHeld(), platform::isLMouseReleased(),
-							platform::isButtonReleased(platform::Button::Escape), platform::getTypedInput(), deltaTime);
-						renderer.flush();
-					}
 				}
 			}
 		}
@@ -403,7 +381,7 @@ void newPlayerConnected(std::string *packetData) {
 }
 
 
-int getPacketHeader(const std::string& packetData) {
+int getPacketHeader(std::string packetData) {
 	size_t delimiterPos = packetData.find(';');
 
 	std::string headerString = packetData.substr(0, delimiterPos);

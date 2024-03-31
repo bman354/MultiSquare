@@ -170,6 +170,12 @@ void handlePacket(ENetPeer* sender, const std::string& packetData) {
 				sendClientUpdate(updateClient);
 				break;
 			}
+			case NEW_CONNECTION: {
+				
+				
+				
+				break;
+			}
 		default:
 			// Handle other packet types as needed
 			break;
