@@ -222,13 +222,31 @@ bool gameLogic(float deltaTime) {
 				IS_CONNECTED = false;
 			}
 			else {
+				player.name = playerMenuName;
 				event = {};
-				//wait for acknowledgement
+				//wait for acknowledgement from enet
 				if (enet_host_service(client, &event, 5000) > 0 && event.type == ENET_EVENT_TYPE_CONNECT) {
 					std::cout << "Connection success!\n";
 					IS_CONNECTED = true;
 
-					player.name = playerMenuName;
+					
+				}
+
+				//tell server we are new, and need to tell everyone we've joined
+				sendPacket(player.toNetworkDataPacket(NEW_CONNECTION));
+
+				event = {};
+				if (enet_host_service(client, &event, 5000) > 0) {
+					std::string rawPacket(reinterpret_cast<char*>(event.packet->data), event.packet->dataLength);
+					int packetHeader = getPacketHeader(rawPacket);
+					
+					if (packetHeader == NEW_CONNECTION_ACKNOWLEDGE) {
+						newConnectionAcknowledge(rawPacket);
+					}
+
+				} else {
+					std::cout << "connection failed to be acknowledged\n";
+					return false;
 				}
 			}
 		}
@@ -388,4 +406,18 @@ int getPacketHeader(std::string packetData) {
 
 	return std::stoi(headerString);
 }
+
+void newConnectionAcknowledge(std::string rawPacketData) {
+	std::cout << rawPacketData << "\n";
+	size_t delimiterPos = rawPacketData.find(';');
+	if (delimiterPos != std::string::npos) {
+		std::string idString = rawPacketData.substr(delimiterPos + 1);
+		player.id = std::stoi(idString);
+		std::cout << "player id is now: " << player.id;
+	} else {
+		std::cout << "invalid acknowledgement packet\n";
+	}
+}
+
+
 #pragma endregion

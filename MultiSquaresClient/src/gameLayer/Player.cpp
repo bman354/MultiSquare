@@ -1,10 +1,10 @@
 #include "Player.h"
 
-// Constructor definition
+// Constructor definition, -1 id means undefined on server side, server will send new ID
 Player::Player() {
     pos = { 100.0f, 100.0f };
     velocity = { 0.0f, 0.0f };
-    id = 0; 
+    id = -1; 
     name = "DEFAULT"; 
     health = 100.0f; 
     damage = 10.0f; 

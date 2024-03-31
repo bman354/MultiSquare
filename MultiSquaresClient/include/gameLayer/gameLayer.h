@@ -13,6 +13,7 @@ void sendPosUpdate();
 void playerUpdate(std::string *newData);
 int getPacketHeader(std::string packetData);
 void newPlayerConnected(std::string *packetData);
+void newConnectionAcknowledge(std::string rawPacketData);
 
 namespace platform
 {

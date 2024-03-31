@@ -45,9 +45,9 @@ struct Client {
 };
 
 
-int newConnectionPacketHandler(ENetPeer* sender);
+int newConnectionPacketHandler(Client client);
 void handlePacket(ENetPeer* sender, const std::string& packetData);
-bool syncPositions();
+bool syncPlayerData();
 bool sendClientUpdate(Client client);
 std::string clientToPacket(Client client);
 Client packetToClient(std::string packetData);
@@ -57,9 +57,6 @@ int currentId = 0;
 std::vector<Client> clients;
 
 int syncPositionTimer = 5000;
-
-
-
 
 
 int main()
@@ -105,11 +102,6 @@ int main()
 				case ENET_EVENT_TYPE_CONNECT:
 				{
 					std::cout << "New client connected from address and port " << event.peer->address.host << " Port: " << event.peer->address.port << "\n";
-					Client newClient;
-					newClient.peer = event.peer;
-					newClient.id = currentId;
-					currentId++;
-					clients.push_back(newClient);
 					break;
 				}
 				case ENET_EVENT_TYPE_RECEIVE:
@@ -137,8 +129,8 @@ int main()
 			}
 			else if (syncPositionTimer <= 0) {
 
-				syncPositions();
-				syncPositionTimer = 500;
+				syncPlayerData();
+				syncPositionTimer = 1500;
 
 			}
 		}
@@ -171,9 +163,9 @@ void handlePacket(ENetPeer* sender, const std::string& packetData) {
 				break;
 			}
 			case NEW_CONNECTION: {
-				
-				
-				
+				Client newClient = packetToClient(packetData);
+				newClient.peer = sender;
+				newConnectionPacketHandler(newClient);
 				break;
 			}
 		default:
@@ -184,14 +176,36 @@ void handlePacket(ENetPeer* sender, const std::string& packetData) {
 }
 
 
-int newConnectionPacketHandler(ENetPeer* sender) {
-	return -1;
+int newConnectionPacketHandler(Client newClient) {
+	bool successful = true;
+	newClient.id = currentId;
+	std::cout << "new client given id: " << currentId << "\n";
+	currentId++;
+	clients.push_back(newClient);
+
+	if (clients.size() > 1){
+		std::string payload = clientToPacket(newClient);
+		std::string ackPayload = std::to_string(NEW_CONNECTION_ACKNOWLEDGE) + ";" + std::to_string(newClient.id);
+
+		for (const Client& recieverClient : clients) {
+			if (recieverClient.id != newClient.id) {
+				if (sendMessage(payload.c_str(), payload.length() + 1, recieverClient.peer) < 0) {
+					std::cout << "error sending new client acknowledgement to other client\n";
+					successful = false;
+				}
+			} else if(sendMessage(ackPayload.c_str(), ackPayload.length() + 1, newClient.peer) < 0){
+				successful = false;
+				std::cout << "error sending client acknowledgement\n";
+			}
+
+		}
+
+		return successful;
+	}
 }
 
-
-
 //send syncingClient's stats to each reciever client to keep everything in lockstep
-bool syncPositions() {
+bool syncPlayerData() {
 	bool sentSuccessfully = true;
 	if (!clients.empty()) {
 
@@ -225,7 +239,6 @@ bool sendClientUpdate(Client senderClient) {
 	}
 	return sentSuccessfully;
 }
-
 
 //builds a string with the clients stats for various types of packets
 std::string clientToPacket(Client client) {
