@@ -1,99 +1,18 @@
 # ninja log v5
-6	46	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-104	241	7304099831648187	thirdparty/enet-1.3.17/CMakeFiles/enet.dir/unix.c.obj	383fb12222969c46
-75	1113	7304099840008118	thirdparty/enet-1.3.17/CMakeFiles/enet.dir/packet.c.obj	5ac6628753e0cb7a
 69	1118	7304099839978214	thirdparty/enet-1.3.17/CMakeFiles/enet.dir/list.c.obj	462c13511cff9c77
+75	1113	7304099840008118	thirdparty/enet-1.3.17/CMakeFiles/enet.dir/packet.c.obj	5ac6628753e0cb7a
+104	241	7304099831648187	thirdparty/enet-1.3.17/CMakeFiles/enet.dir/unix.c.obj	383fb12222969c46
+4	34	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
 49	1101	7304099840018122	thirdparty/enet-1.3.17/CMakeFiles/enet.dir/callbacks.c.obj	706c4020aca7e24d
-62	1131	7304099840328129	thirdparty/enet-1.3.17/CMakeFiles/enet.dir/host.c.obj	b8716761206c298
 98	1162	7304099840708196	thirdparty/enet-1.3.17/CMakeFiles/enet.dir/protocol.c.obj	fbb6bc43f7f3dca1
+62	1131	7304099840328129	thirdparty/enet-1.3.17/CMakeFiles/enet.dir/host.c.obj	b8716761206c298
 55	1142	7304099840368163	thirdparty/enet-1.3.17/CMakeFiles/enet.dir/compress.c.obj	9e14bbc3f49bb65c
 82	1164	7304099840788190	thirdparty/enet-1.3.17/CMakeFiles/enet.dir/peer.c.obj	82ba367c52d87e53
 243	1242	7304099841638106	thirdparty/enet-1.3.17/CMakeFiles/enet.dir/win32.c.obj	71a2badf99c0cb9d
 1242	1322	7304099842418102	thirdparty/enet-1.3.17/enet.lib	39cd3285b9621f90
 43	1493	7326653972340513	CMakeFiles/multiSquareServer.dir/src/client.cpp.obj	662c91222c284e0e
-47	2273	7326717106909271	CMakeFiles/multiSquareServer.dir/src/main.cpp.obj	e20011a46ca7b571
-2274	2564	7326717109279066	multiSquareServer.exe	a76317c4f0ee4ce9
-17	54	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-3	33	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-4	34	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-35	1263	7329299965115197	CMakeFiles/multiSquareServer.dir/src/main.cpp.obj	e20011a46ca7b571
-1264	1665	7329299968271232	multiSquareServer.exe	a76317c4f0ee4ce9
-7	39	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-6	37	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-39	2098	7329318260830889	CMakeFiles/multiSquareServer.dir/src/main.cpp.obj	e20011a46ca7b571
-2099	2461	7329318264010769	multiSquareServer.exe	a76317c4f0ee4ce9
-8	48	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-50	1698	7329323359508337	CMakeFiles/multiSquareServer.dir/src/main.cpp.obj	e20011a46ca7b571
-1699	1917	7329323361208266	multiSquareServer.exe	a76317c4f0ee4ce9
-6	40	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-42	1477	7329323781950059	CMakeFiles/multiSquareServer.dir/src/main.cpp.obj	e20011a46ca7b571
-1478	1692	7329323783680107	multiSquareServer.exe	a76317c4f0ee4ce9
-7	44	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-46	1642	7329324537172379	CMakeFiles/multiSquareServer.dir/src/main.cpp.obj	e20011a46ca7b571
-1643	1876	7329324539052062	multiSquareServer.exe	a76317c4f0ee4ce9
-5	37	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-39	1635	7329330646017972	CMakeFiles/multiSquareServer.dir/src/main.cpp.obj	e20011a46ca7b571
-1635	1895	7329330648188058	multiSquareServer.exe	a76317c4f0ee4ce9
-5	37	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-4	34	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-6	35	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-6	42	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-43	1464	7329335030405627	CMakeFiles/multiSquareServer.dir/src/main.cpp.obj	e20011a46ca7b571
-4	36	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-37	235	7329335091466303	multiSquareServer.exe	a76317c4f0ee4ce9
-5	35	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-6	33	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-8	48	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-5	59	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-6	34	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-6	39	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-5	44	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-13	56	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-4	41	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-43	1508	7333516954570210	CMakeFiles/multiSquareServer.dir/src/main.cpp.obj	e20011a46ca7b571
-1509	1816	7333516957040237	multiSquareServer.exe	a76317c4f0ee4ce9
-4	33	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-34	1237	7333522167707339	CMakeFiles/multiSquareServer.dir/src/main.cpp.obj	e20011a46ca7b571
-1238	1437	7333522169273288	multiSquareServer.exe	a76317c4f0ee4ce9
-5	54	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-5	42	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-44	1520	7333811831947977	CMakeFiles/multiSquareServer.dir/src/main.cpp.obj	e20011a46ca7b571
-1521	1997	7333811836047948	multiSquareServer.exe	a76317c4f0ee4ce9
-18	52	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-5	36	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-6	40	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-42	1519	7335374823456203	CMakeFiles/multiSquareServer.dir/src/main.cpp.obj	e20011a46ca7b571
-1520	1930	7335374826826267	multiSquareServer.exe	a76317c4f0ee4ce9
-6	40	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-4	33	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-3	33	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-6	57	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-58	1968	7335535644520064	CMakeFiles/multiSquareServer.dir/src/main.cpp.obj	e20011a46ca7b571
-5	38	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-39	492	7335535953969899	multiSquareServer.exe	a76317c4f0ee4ce9
-4	34	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-6	45	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-5	39	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-5	39	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-42	1571	7335563466322096	CMakeFiles/multiSquareServer.dir/src/main.cpp.obj	e20011a46ca7b571
-1571	1871	7335563468838195	multiSquareServer.exe	a76317c4f0ee4ce9
-5	37	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-4	33	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-4	32	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-34	1522	7335671864370378	CMakeFiles/multiSquareServer.dir/src/main.cpp.obj	e20011a46ca7b571
-1522	1753	7335671866180360	multiSquareServer.exe	a76317c4f0ee4ce9
-5	38	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-39	1631	7335672252836969	CMakeFiles/multiSquareServer.dir/src/main.cpp.obj	e20011a46ca7b571
-1632	1834	7335672254437041	multiSquareServer.exe	a76317c4f0ee4ce9
-4	38	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-40	1385	7335673423861640	CMakeFiles/multiSquareServer.dir/src/main.cpp.obj	e20011a46ca7b571
-1386	1586	7335673425445953	multiSquareServer.exe	a76317c4f0ee4ce9
-4	32	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-3	32	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-4	33	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-4	35	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-4	33	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-4	34	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-3	32	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
-33	1759	7335689668449573	CMakeFiles/multiSquareServer.dir/src/main.cpp.obj	e20011a46ca7b571
-1760	1972	7335689670259616	multiSquareServer.exe	a76317c4f0ee4ce9
+35	1809	7335703246257706	CMakeFiles/multiSquareServer.dir/src/main.cpp.obj	e20011a46ca7b571
+1811	2084	7335703248437628	multiSquareServer.exe	a76317c4f0ee4ce9
+8	39	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/MultiSquareServer/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	174d560bec74bcc7
+40	1516	7335706356629750	CMakeFiles/multiSquareServer.dir/src/main.cpp.obj	e20011a46ca7b571
+1517	1705	7335706358159732	multiSquareServer.exe	a76317c4f0ee4ce9

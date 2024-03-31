@@ -268,7 +268,7 @@ Client packetToClient(std::string packetData) {
 	while (std::getline(ss, token, ';')) {
 		tokens.push_back(token);
 	}
-
+	std::cout << "tokens size: " << tokens.size() << "\n";
 	returnClient.id = std::stoi(tokens[1]);
 	returnClient.name = tokens[2];
 	returnClient.x = std::stof(tokens[3]);;
@@ -279,8 +279,8 @@ Client packetToClient(std::string packetData) {
 	returnClient.health = std::stof(tokens[8]);
 	returnClient.maxSpeed = std::stof(tokens[9]);
 	returnClient.damage = std::stof(tokens[10]);
-	returnClient.acceleration = std::stof(tokens[11]);
-	returnClient.bulletSpeed = std::stof(tokens[12]);
+	returnClient.xSize = std::stof(tokens[11]);
+	returnClient.ySize = std::stof(tokens[12]);
 
 	return returnClient;
 }

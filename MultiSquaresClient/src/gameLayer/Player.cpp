@@ -94,9 +94,5 @@ void Player::updateStats(Player newStats) {
     damage = newStats.damage;
     acceleration = newStats.acceleration;
     playerSize = newStats.playerSize;
-    fireRate = newStats.fireRate;
-    fireRateTimer = newStats.fireRateTimer;
-    bulletSpeed = newStats.bulletSpeed;
-    bulletSize = newStats.bulletSize;
 }
 
