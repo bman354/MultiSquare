@@ -22,6 +22,11 @@ NEW_OUTSIDE_PLAYER_CONNECTED:  header;id;name;x;y;xVel;yVel;lives;health;maxSpee
 
 packet being sent to update everything about a player every 500 ticks to ensure everyone is in sync
 SYNC_UPDATE: header;id;name;x;y;xVel;yVel;lives;health;maxSpeed;damage;xSize;ySize
+
+
+packet sent and recieved with information about a bullet
+BULLET: HEADER;x;y;xVel;yVel;width;height;speed;damage
+
 */
 
 
@@ -43,6 +48,21 @@ struct Client {
 	float acceleration;
 	float bulletSpeed;
 };
+
+struct Bullet {
+	float x;
+	float y;
+
+	float xVel;
+	float yVel;
+	//rotation
+	float width;
+	float height;
+
+	float speed;
+	float damage;
+};
+
 
 
 int newConnectionPacketHandler(Client client);
