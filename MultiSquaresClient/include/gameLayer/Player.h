@@ -3,7 +3,6 @@
 #include <glm/glm.hpp>
 #include <string>
 #include <sstream>
-#include <Bullet.h>
 
 
 
@@ -13,7 +12,7 @@ public:
 	Player(std::string packetData);
 	void update(float deltaTime);
 	void updateStats(Player newStats);
-	Bullet fireBullet();
+	
 
 	std::string toNetworkDataPacket(int HEADERID);
 	int id;

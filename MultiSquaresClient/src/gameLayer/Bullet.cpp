@@ -55,3 +55,13 @@ Bullet Bullet::packetToBullet(std::string packetData) {
 
 	return returnBullet;
 }
+
+Bullet Bullet::fireBullet(Player player) {
+    Bullet bullet(player);
+
+    glm::vec2 bulletVelocity = glm::normalize(this->velocity);
+    bulletVelocity *= player.bulletSpeed;
+
+    bullet.pos += glm::vec2(player.playerSize.x / 2 + bullet.width / 2);
+    return bullet;
+}

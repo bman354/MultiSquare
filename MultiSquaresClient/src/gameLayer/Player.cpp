@@ -95,12 +95,3 @@ void Player::updateStats(Player newStats) {
     playerSize = newStats.playerSize;
 }
 
-Bullet Player::fireBullet() {
-    Bullet bullet(*this);
-
-    glm::vec2 bulletVelocity = glm::normalize(this->velocity);
-    bulletVelocity *= this->bulletSpeed;
-
-    bullet.pos += glm::vec2(playerSize.x / 2 + bullet.width / 2);
-    return bullet;
-}

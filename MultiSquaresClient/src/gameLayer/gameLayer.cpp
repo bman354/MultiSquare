@@ -43,7 +43,7 @@ enum PacketHeader
 //TODO figure out a structure to hold all this data, this is too much just sitting around in an odd scope
 //use one structure that is just players, "player" can just be an index or a key to the local player?
 Player player;
-std::vector<Bullet> allBullets;
+std::vector<Bullet> bullets;
 std::vector<Player> extPlayers;
 
 gl2d::Renderer2D renderer;
@@ -274,14 +274,17 @@ bool gameLogic(float deltaTime) {
 				platform::isButtonHeld(platform::Button::D)) {
 				inputAcceleration.x += player.acceleration;
 			}
+			
+			/*
 			if (
 				platform::isLMousePressed || platform::isLMouseHeld) {
-				allBullets.push_back(player.fireBullet());
+				Bullet firedBullet;
+				bullets.push_back(firedBullet.fireBullet(player));
 			} 
-
+			*/
+			
 			player.velocity += inputAcceleration;
 			player.update(deltaTime);
-
 
 			//update the server semi regularly with the player's data
 			//HACK change this to only send packets when player info changes enough
@@ -336,14 +339,19 @@ bool gameLogic(float deltaTime) {
 #pragma endregion			
 
 #pragma region rendering
-		renderPlayer(renderer, player, playerTexture);
+		
+		for (Bullet bullet : bullets) {
+			renderBullet(renderer, bullet, bulletTexture);
+		}
+
 		for (Player player : extPlayers) {
 			renderPlayer(renderer, player, playerTexture);
 			renderPlayerName(renderer, player, font);
 		}
 		
-
+		renderPlayer(renderer, player, playerTexture);
 		renderPlayerName(renderer, player, font);
+
 		//tell GPU to process everything
 		renderer.flush();
 #pragma endregion
