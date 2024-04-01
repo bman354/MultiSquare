@@ -274,13 +274,17 @@ bool gameLogic(float deltaTime) {
 				platform::isButtonHeld(platform::Button::D)) {
 				inputAcceleration.x += player.acceleration;
 			}
-
+			if (
+				platform::isLMousePressed || platform::isLMouseHeld) {
+				allBullets.push_back(player.fireBullet());
+			} 
 
 			player.velocity += inputAcceleration;
 			player.update(deltaTime);
 
 
 			//update the server semi regularly with the player's data
+			//HACK change this to only send packets when player info changes enough
 			if (sendPosTimer >= 1) {
 				sendPosTimer--;
 			}
@@ -332,10 +336,13 @@ bool gameLogic(float deltaTime) {
 #pragma endregion			
 
 #pragma region rendering
+		renderPlayer(renderer, player, playerTexture);
 		for (Player player : extPlayers) {
 			renderPlayer(renderer, player, playerTexture);
+			renderPlayerName(renderer, player, font);
 		}
-		renderPlayer(renderer, player, playerTexture);
+		
+
 		renderPlayerName(renderer, player, font);
 		//tell GPU to process everything
 		renderer.flush();
