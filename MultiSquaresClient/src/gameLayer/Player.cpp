@@ -17,7 +17,7 @@ Player::Player() {
 
     bulletSpeed = 10.0f; 
 
-    playerSize = { 16.0f, 16.0f };
+    playerSize = { 32.0f, 32.0f };
     bulletSize = { 16.0f, 16.0f };
 
 }

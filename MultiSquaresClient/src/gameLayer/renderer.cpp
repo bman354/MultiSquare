@@ -5,8 +5,9 @@ void renderPlayer(gl2d::Renderer2D &renderer, Player player, gl2d::Texture textu
 	renderer.renderRectangle({ player.pos, player.playerSize.x,player.playerSize.y },texture);
 }
 
+//TODO scale text size to screen size
 void renderPlayerName(gl2d::Renderer2D& renderer, Player player, gl2d::Font font) {
-	renderer.renderText({ player.pos.x, player.pos.y }, player.name.c_str(), font, Colors_Orange);
+	renderer.renderText({ player.pos.x + (player.playerSize.x / 2), player.pos.y + player.playerSize.y }, player.name.c_str(), font, Colors_Orange, 0.5f);
 }
 
 void renderBullet(gl2d::Renderer2D& renderer, Bullet bullet, gl2d::Texture texture) {
