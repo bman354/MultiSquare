@@ -1,4 +1,4 @@
-#include "Bullet.h"
+#include "../include/Bullet.h"
 
 // Constructor definition
 Bullet::Bullet(Player playerStats):

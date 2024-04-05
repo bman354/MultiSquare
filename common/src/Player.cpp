@@ -1,4 +1,4 @@
-#include "Player.h"
+#include "../include/Player.h"
 
 // Constructor definition, -1 id means undefined on server side, server will send new ID
 Player::Player() {

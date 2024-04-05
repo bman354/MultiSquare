@@ -10,6 +10,9 @@ cmake_minimum_required(VERSION 3.16)
 option(PRODUCTION_BUILD "Make this a production build" FALSE)
 #DELETE THE OUT FOLDER AFTER CHANGING THIS BECAUSE VISUAL STUDIO DOESN'T SEEM TO RECOGNIZE THIS CHANGE AND REBUILD!
 
+set(CMAKE_VERBOSE_MAKEFILE ON)
+
+
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
 	set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreadedDebug")
 else()
@@ -56,7 +59,12 @@ file(GLOB_RECURSE SERVER_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/
 
 # Client executable
 add_executable(MultiSquaresClient)
+
+set_target_properties(MultiSquaresClient PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/out")
+
 target_sources(MultiSquaresClient PRIVATE ${CLIENT_SOURCES} ${SHARED_SOURCES})
+target_include_directories(MultiSquaresClient PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/client/include/" "${CMAKE_CURRENT_SOURCE_DIR}/client/platform/include/" "${CMAKE_CURRENT_SOURCE_DIR}/common/include/")
+
 if(PRODUCTION_BUILD)
 	# setup the ASSETS_PATH macro to be in the root folder of your exe
 	target_compile_definitions(MultiSquaresClient PUBLIC RESOURCES_PATH="/client/resources/") 
@@ -70,14 +78,16 @@ else()
 	target_compile_definitions(MultiSquaresClient PUBLIC PRODUCTION_BUILD=0)
 endif()
 
-target_include_directories(MultiSquaresClient PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/client/include/" "${CMAKE_CURRENT_SOURCE_DIR}/client/platform/include/")
-target_link_libraries(MultiSquaresClient PRIVATE glm glfw glad stb_image stb_truetype gl2d raudio imgui safeSave enet profilerLib glui)
+
 
 
 
 # Server executable
 add_executable(MultiSquaresServer)
+set_target_properties(MultiSquaresServer PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/out")
 target_sources(MultiSquaresServer PRIVATE ${SERVER_SOURCES} ${SHARED_SOURCES})
+target_include_directories(MultiSquaresServer PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/server/include/" "${CMAKE_CURRENT_SOURCE_DIR}/common/include/")
+
 if(PRODUCTION_BUILD)
 	# remove the option to debug asserts.
 	target_compile_definitions(MultiSquaresServer PUBLIC PRODUCTION_BUILD=1) 
@@ -85,10 +95,6 @@ if(PRODUCTION_BUILD)
 else()
 	target_compile_definitions(MultiSquaresServer PUBLIC PRODUCTION_BUILD=0) 
 endif()
-
-target_include_directories(MultiSquaresServer PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/server/include/")
-target_link_libraries(MultiSquaresServer PRIVATE enet)
-
 
 
 set_property(TARGET MultiSquaresClient PROPERTY CXX_STANDARD 17)
@@ -100,10 +106,13 @@ if(MSVC) # If using the VS compiler...
 	target_compile_definitions(MultiSquaresClient PUBLIC _CRT_SECURE_NO_WARNINGS)
 	target_compile_definitions(MultiSquaresServer PUBLIC _CRT_SECURE_NO_WARNINGS)
 
-	set_target_properties(MultiSquaresClient PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup") #no console
-	set_target_properties(MultiSquaresServer PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup")
+	#set_target_properties(MultiSquaresClient PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup") #no console
+	#set_target_properties(MultiSquaresServer PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup")
 
 	#set_property(TARGET "${CMAKE_PROJECT_NAME}" PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreadedDebug<$<CONFIG:Debug>:Debug>")
 	#set_property(TARGET "${CMAKE_PROJECT_NAME}" PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Release>:Release>")
 
 endif()
+
+target_link_libraries(MultiSquaresServer PRIVATE glm glfw glad stb_image stb_truetype gl2d raudio imgui safeSave enet profilerLib glui)
+target_link_libraries(MultiSquaresClient PRIVATE glm glfw glad stb_image stb_truetype gl2d raudio imgui safeSave enet profilerLib glui)
