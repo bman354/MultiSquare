@@ -45,54 +45,65 @@ add_subdirectory(thirdparty/glui)				#ui library, usefull for making game menus
 
 
 
+# Define shared sources
+file(GLOB_RECURSE SHARED_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/common/src/*.cpp")
 
+# Define client sources
+file(GLOB_RECURSE CLIENT_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/client/src/*.cpp")
 
-# Define MY_SOURCES to be a list of all the source files for my game 
-file(GLOB_RECURSE MY_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
+# Define server sources
+file(GLOB_RECURSE SERVER_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/server/src/*.cpp")
 
-
-add_executable("${CMAKE_PROJECT_NAME}")
-
-set_property(TARGET "${CMAKE_PROJECT_NAME}" PROPERTY CXX_STANDARD 17)
-
-
-
+# Client executable
+add_executable(MultiSquaresClient)
+target_sources(MultiSquaresClient PRIVATE ${CLIENT_SOURCES} ${SHARED_SOURCES})
 if(PRODUCTION_BUILD)
 	# setup the ASSETS_PATH macro to be in the root folder of your exe
-	target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC RESOURCES_PATH="./resources/") 
+	target_compile_definitions(MultiSquaresClient PUBLIC RESOURCES_PATH="/client/resources/") 
 
 	# remove the option to debug asserts.
-	target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC PRODUCTION_BUILD=1) 
+	target_compile_definitions(MultiSquaresClient PUBLIC PRODUCTION_BUILD=1) 
 
 else()
 	# This is useful to get an ASSETS_PATH in your IDE during development
-	target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC RESOURCES_PATH="${CMAKE_CURRENT_SOURCE_DIR}/resources/")
-	target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC PRODUCTION_BUILD=0) 
-
+	target_compile_definitions(MultiSquaresClient PUBLIC RESOURCES_PATH="${CMAKE_CURRENT_SOURCE_DIR}/client/resources/")
+	target_compile_definitions(MultiSquaresClient PUBLIC PRODUCTION_BUILD=0)
 endif()
 
-target_sources("${CMAKE_PROJECT_NAME}" PRIVATE ${MY_SOURCES} "app.rc")
+target_include_directories(MultiSquaresClient PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/client/include/" "${CMAKE_CURRENT_SOURCE_DIR}/client/platform/include/")
+target_link_libraries(MultiSquaresClient PRIVATE glm glfw glad stb_image stb_truetype gl2d raudio imgui safeSave enet profilerLib glui)
+
+
+
+# Server executable
+add_executable(MultiSquaresServer)
+target_sources(MultiSquaresServer PRIVATE ${SERVER_SOURCES} ${SHARED_SOURCES})
+if(PRODUCTION_BUILD)
+	# remove the option to debug asserts.
+	target_compile_definitions(MultiSquaresServer PUBLIC PRODUCTION_BUILD=1) 
+
+else()
+	target_compile_definitions(MultiSquaresServer PUBLIC PRODUCTION_BUILD=0) 
+endif()
+
+target_include_directories(MultiSquaresServer PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/server/include/")
+target_link_libraries(MultiSquaresServer PRIVATE enet)
+
+
+
+set_property(TARGET MultiSquaresClient PROPERTY CXX_STANDARD 17)
+set_property(TARGET MultiSquaresServer PROPERTY CXX_STANDARD 17)
 
 
 if(MSVC) # If using the VS compiler...
 
-	target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC _CRT_SECURE_NO_WARNINGS)
+	target_compile_definitions(MultiSquaresClient PUBLIC _CRT_SECURE_NO_WARNINGS)
+	target_compile_definitions(MultiSquaresServer PUBLIC _CRT_SECURE_NO_WARNINGS)
 
-	set_target_properties("${CMAKE_PROJECT_NAME}" PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup") #no console
-	
+	set_target_properties(MultiSquaresClient PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup") #no console
+	set_target_properties(MultiSquaresServer PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup")
+
 	#set_property(TARGET "${CMAKE_PROJECT_NAME}" PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreadedDebug<$<CONFIG:Debug>:Debug>")
 	#set_property(TARGET "${CMAKE_PROJECT_NAME}" PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Release>:Release>")
 
 endif()
-
-target_include_directories("${CMAKE_PROJECT_NAME}" PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include/")
-target_include_directories("${CMAKE_PROJECT_NAME}" PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include/gameLayer/")
-target_include_directories("${CMAKE_PROJECT_NAME}" PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include/platform/")
-
-
-#target_link_libraries("${CMAKE_PROJECT_NAME}" PRIVATE glm glfw 
-#	glad stb_image stb_truetype gl2d raudio imgui safeSave profilerLib enet glui)
-
-#enet not working yet on linux for some reason
-target_link_libraries("${CMAKE_PROJECT_NAME}" PRIVATE glm glfw 
-	glad stb_image stb_truetype gl2d raudio imgui safeSave enet profilerLib glui)
