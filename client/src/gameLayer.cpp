@@ -1,5 +1,23 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include "gameLayer.h"
+#include <glad/glad.h>
+#include <glm/glm.hpp>
+#include <glm/gtx/transform.hpp>
+#include "platform/platformInput.h"
+//#include "imgui.h"
+#include <iostream>
+#include <sstream>
+#include <enet/enet.h>
+//#include "imfilebrowser.h"
+#include <gl2d/gl2d.h>
+#include <platform/platformTools.h>
+#include <renderer.h>
+#include <cstdio>
+#include <glui/glui.h>
+#include <raudio.h>
+
+#include "Bullet.h"
+#include "Player.h"
 //TODO Client state into int ENUM? mostly on serverSide
 /*
 enum GAME_STATE{

@@ -6,6 +6,9 @@ cmake_policy(SET CMP0009 NEW)
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/client/src/*.cpp")
 set(OLD_GLOB
   "C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/client/src/gameLayer.cpp"
+  "C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/client/src/platform/glfwMain.cpp"
+  "C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/client/src/platform/otherPlatformFunctions.cpp"
+  "C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/client/src/platform/platformInput.cpp"
   "C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/client/src/renderer.cpp"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")

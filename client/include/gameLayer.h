@@ -2,24 +2,7 @@
 #include <glm/vec2.hpp>
 #include <string>
 #include <vector>
-#include <glad/glad.h>
-#include <glm/glm.hpp>
-#include <glm/gtx/transform.hpp>
-#include "platformInput.h"
-//#include "imgui.h"
-#include <iostream>
-#include <sstream>
-#include <enet/enet.h>
-//#include "imfilebrowser.h"
-#include <gl2d/gl2d.h>
-#include <platformTools.h>
-#include <renderer.h>
-#include <cstdio>
-#include <glui/glui.h>
-#include <raudio.h>
 
-#include "Bullet.h"
-#include "Player.h"
 
 bool initGame();
 bool gameLogic(float deltaTime);
