@@ -9,7 +9,7 @@
 
 
 struct Tile {
-	char type;
+	unsigned short type;
 	bool collidable;
 };
 
@@ -21,9 +21,9 @@ struct MapData {
 	int w;
 	int h;
 
-	void create(int w, int h, const char* d);
+	void create(int w, int h, const unsigned short* d);
 	Tile& get(int x, int y);
-	void render(gl2d::Renderer2D renderer, gl2d::TextureAtlas textureAtlas);
+	void render(gl2d::Renderer2D& renderer, gl2d::TextureAtlas& textureAtlas);
 
 	void cleanup();
 

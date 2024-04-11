@@ -13,10 +13,10 @@ void renderBullet(gl2d::Renderer2D& renderer, Bullet bullet, gl2d::Texture textu
 	renderer.renderRectangle({ bullet.pos, bullet.width, bullet.height }, texture);
 }
 
-void renderTile(gl2d::Renderer2D& renderer, Tile& tile, gl2d::TextureAtlas, int x, int y) {
+void renderMapTile(gl2d::Renderer2D& renderer, Tile& tile, gl2d::TextureAtlas& atlas, int x, int y) {
 
 	//atlas x value = tile type % 14
 	//atlas y value = tile type / 14 rounded down
-
+	renderer.renderRectangle({ x * 16, y * 16, 16, 16 }, atlas.get((tile.type % 14), (tile.type / 14), false));
 	
 }

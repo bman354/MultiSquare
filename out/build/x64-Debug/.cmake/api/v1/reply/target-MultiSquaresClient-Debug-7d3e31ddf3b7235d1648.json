@@ -33,13 +33,13 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 61,
+				"line" : 59,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 118,
+				"line" : 116,
 				"parent" : 0
 			},
 			{
@@ -54,37 +54,37 @@
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 78,
+				"line" : 76,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 77,
+				"line" : 75,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 106,
+				"line" : 104,
 				"parent" : 0
 			},
 			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 66,
+				"line" : 64,
 				"parent" : 0
 			},
 			{
 				"command" : 4,
 				"file" : 0,
-				"line" : 100,
+				"line" : 98,
 				"parent" : 0
 			},
 			{
 				"command" : 5,
 				"file" : 0,
-				"line" : 65,
+				"line" : 63,
 				"parent" : 0
 			}
 		]
@@ -223,11 +223,15 @@
 		},
 		{
 			"backtrace" : 2,
+			"id" : "raudio::@1df9a5823cc1f60ecd48"
+		},
+		{
+			"backtrace" : 2,
 			"id" : "enet::@68d3957fa5c81bdcfc98"
 		},
 		{
 			"backtrace" : 2,
-			"id" : "raudio::@1df9a5823cc1f60ecd48"
+			"id" : "gl2d::@b1e5fb9460302e2a28d7"
 		},
 		{
 			"backtrace" : 2,
@@ -235,15 +239,11 @@
 		},
 		{
 			"backtrace" : 2,
-			"id" : "glui::@17281c2e28480a18eeb3"
-		},
-		{
-			"backtrace" : 2,
 			"id" : "safeSave::@7315f01a1cae82018d2e"
 		},
 		{
 			"backtrace" : 2,
-			"id" : "gl2d::@b1e5fb9460302e2a28d7"
+			"id" : "glui::@17281c2e28480a18eeb3"
 		}
 	],
 	"id" : "MultiSquaresClient::@6890427a1f51a3e7e1df",

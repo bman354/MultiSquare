@@ -89,6 +89,8 @@ bool initGame() {
 	mapTexture.loadFromFile(RESOURCES_PATH "mapTiles.png");
 	gl2d::TextureAtlas mapAtlas(14, 14);
 	
+	MapData map = {};
+	map.load("../common/resources/maps/TestMap.csv");
 
 	return true;
 }

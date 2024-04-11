@@ -12,10 +12,10 @@ Tile& MapData::get(int x, int y) {
 
 }
 
-void MapData::render(gl2d::Renderer2D renderer, gl2d::TextureAtlas textureAtlas) {
+void MapData::render(gl2d::Renderer2D& renderer, gl2d::TextureAtlas& textureAtlas) {
 	for (int y = 0; y < h; y++) {
 		for (int x = 0; x < w; x++) {
-            renderer.({x*16});
+            renderMapTile(renderer, get(x, y), textureAtlas, x, y);
 		}
 	}
 }
@@ -33,7 +33,7 @@ bool MapData::load(const char* file) {
 
     std::string line;
     int y = 0;
-    std::vector<char> data;
+    std::vector<unsigned short> data;
 
     while (std::getline(inputFile, line)) {
         std::istringstream iss(line);
@@ -41,7 +41,7 @@ bool MapData::load(const char* file) {
         int x = 0;        
         
         while (std::getline(iss, token, ',')) {
-            data.push_back(std::stoi(token));
+            data.push_back((unsigned short)std::stoi(token));
             x++;
             if (x > xMax) { xMax = x;}
         }
@@ -54,7 +54,7 @@ bool MapData::load(const char* file) {
     return true;
 }
 
-void MapData::create(int w, int h, const char* d) {
+void MapData::create(int w, int h, const unsigned short* d) {
 	this->w = w;
 	this->h = h;
 	data = new Tile[w * h];

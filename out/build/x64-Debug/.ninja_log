@@ -1,0 +1,24 @@
+# ninja log v5
+6	36	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
+53	311	7345648642175149	CMakeFiles/MultiSquaresServer.dir/common/src/Packet.cpp.obj	760184a067bca1fd
+78	774	7345648646570675	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/input.c.obj	39a7bda2bba06a12
+65	785	7345648646880606	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/context.c.obj	5fb168e916741e0c
+94	816	7345648647170613	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/vulkan.c.obj	3a43f9dd646b41c
+72	840	7345648647340685	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/init.c.obj	cc5c570fcf0049fb
+86	977	7345648648750694	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/monitor.c.obj	72c9ba8bd3c0854d
+312	1077	7345648649830657	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/window.c.obj	8753ce40fc26cd94
+775	1634	7345648655240641	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/win32_init.c.obj	78d6b237d87a99d7
+786	1771	7345648656590739	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/win32_joystick.c.obj	b10422affac5c75f
+816	1805	7345648656450743	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/win32_monitor.c.obj	2681975b4b7437c5
+841	1893	7345648657090664	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/win32_time.c.obj	69fae091ae21de6f
+977	2141	7345648659490626	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/win32_thread.c.obj	6510a3b7b18b1201
+1077	2271	7345648661030663	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/win32_window.c.obj	5de1484a1507bb04
+59	2737	7345648665931516	CMakeFiles/MultiSquaresServer.dir/common/src/Player.cpp.obj	4e3c556282ed1c37
+1771	3005	7345648668972722	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/egl_context.c.obj	8da9157a2d66f3bb
+2272	3015	7345648669092734	thirdparty/stb_truetype/CMakeFiles/stb_truetype.dir/src/stb_truetype.cpp.obj	70944a9a419d4c29
+1635	3029	7345648669312657	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/wgl_context.c.obj	51e6580366d4007b
+1806	3193	7345648670472751	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/osmesa_context.c.obj	389ae979f8f8c318
+44	3240	7345648671382681	CMakeFiles/MultiSquaresServer.dir/common/src/Bullet.cpp.obj	e87b8a23d5254695
+39	3263	7345648671582679	CMakeFiles/MultiSquaresServer.dir/server/src/server.cpp.obj	3bcddba13ef15cdb
+2141	3509	7345648674142618	thirdparty/stb_image/CMakeFiles/stb_image.dir/src/stb_image.cpp.obj	a4e924b5198bed11
+1893	3631	7345648675342687	thirdparty/glad/CMakeFiles/glad.dir/src/glad.c.obj	d4008f0afe99b9a9
