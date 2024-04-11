@@ -18,6 +18,7 @@
 
 #include "Bullet.h"
 #include "Player.h"
+#include "Packet.h"
 //TODO Client state into int ENUM? mostly on serverSide
 /*
 enum GAME_STATE{
@@ -30,14 +31,7 @@ enum GAME_STATE{
 */
 
 
-enum PacketHeader
-{
-	NEW_CONNECTION = 10,
-	PLAYER_UPDATE = 20,
-	NEW_CONNECTION_ACKNOWLEDGE = 30,
-	NEW_OUTSIDE_PLAYER_CONNECTED = 40,
-	SYNC_UPDATE = 50
-};
+
 
 //TODO figure out a structure to hold all this data, this is too much just sitting around in an odd scope
 //use one structure that is just players, "player" can just be an index or a key to the local player?
@@ -51,6 +45,10 @@ glui::RendererUi rendererUi;
 gl2d::Texture playerTexture;
 gl2d::Texture bulletTexture;
 gl2d::Texture menuTexture;
+
+gl2d::Texture mapTexture;
+gl2d::TextureAtlas mapAtlas;
+
 
 gl2d::Font font;
 
@@ -87,6 +85,10 @@ bool initGame() {
 	bulletTexture.loadFromFile(RESOURCES_PATH "bulletSkins/default.png");
 	menuTexture.loadFromFile(RESOURCES_PATH "playerSkins/default.png");
 	font.createFromFile(RESOURCES_PATH "Arial.ttf");
+
+	mapTexture.loadFromFile(RESOURCES_PATH "mapTiles.png");
+	gl2d::TextureAtlas mapAtlas(14, 14);
+	
 
 	return true;
 }

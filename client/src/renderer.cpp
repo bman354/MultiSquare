@@ -1,4 +1,3 @@
-#include <gl2d/gl2d.h>
 #include "renderer.h"
 
 void renderPlayer(gl2d::Renderer2D &renderer, Player player, gl2d::Texture texture){
@@ -14,3 +13,10 @@ void renderBullet(gl2d::Renderer2D& renderer, Bullet bullet, gl2d::Texture textu
 	renderer.renderRectangle({ bullet.pos, bullet.width, bullet.height }, texture);
 }
 
+void renderTile(gl2d::Renderer2D& renderer, Tile& tile, gl2d::TextureAtlas, int x, int y) {
+
+	//atlas x value = tile type % 14
+	//atlas y value = tile type / 14 rounded down
+
+	
+}

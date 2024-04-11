@@ -20,6 +20,8 @@ endif()
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/common/src/*.cpp")
 set(OLD_GLOB
   "C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/common/src/Bullet.cpp"
+  "C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/common/src/MapData.cpp"
+  "C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/common/src/Packet.cpp"
   "C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/common/src/Player.cpp"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
