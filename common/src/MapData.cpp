@@ -12,14 +12,6 @@ Tile& MapData::get(int x, int y) {
 
 }
 
-void MapData::render(gl2d::Renderer2D& renderer, gl2d::TextureAtlas& textureAtlas) {
-	for (int y = 0; y < h; y++) {
-		for (int x = 0; x < w; x++) {
-            renderMapTile(renderer, get(x, y), textureAtlas, x, y);
-		}
-	}
-}
-
 //load a map from csv file
 bool MapData::load(const char* file) {
     std::ifstream inputFile(file);
@@ -51,6 +43,7 @@ bool MapData::load(const char* file) {
 
     create(yMax, xMax, &data[0]);
     inputFile.close();
+    std::cout << "Map Data loaded!\n";
     return true;
 }
 
@@ -64,6 +57,7 @@ void MapData::create(int w, int h, const unsigned short* d) {
             data[i].type = d[i];
         }
     }
+    this->toConsole();
 }
 void MapData::cleanup() {
     if (data)
@@ -74,4 +68,13 @@ void MapData::cleanup() {
 
     w = 0;
     h = 0;
+}
+
+void MapData::toConsole() {
+    if (data) {
+        std::cout << &data << "\n";
+    }
+    else {
+        std::cout << "no map data\n";
+    }
 }

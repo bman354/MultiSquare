@@ -61,9 +61,9 @@ char ipAddress[30];
 char port[20];
 char playerMenuName[30];
 
-std::string newPlayerName = "";
-std::string ipToConnectTo = "";
-std::string portToConnectTo = "";
+std::string newPlayerName = "B";
+std::string ipToConnectTo = "localhost";
+std::string portToConnectTo = "42040";
 
 //timers
 int sendPosTimer = 10;
@@ -76,6 +76,9 @@ bool IN_GAME = false;
 bool IS_CONNECTED = false;
 int selected = 0;
 
+MapData map = {};
+
+
 bool initGame() {
 	//creates the renderer and starts game
 	gl2d::init();
@@ -87,9 +90,9 @@ bool initGame() {
 	font.createFromFile(RESOURCES_PATH "Arial.ttf");
 
 	mapTexture.loadFromFile(RESOURCES_PATH "mapTiles.png");
-	gl2d::TextureAtlas mapAtlas(14, 14);
+	mapAtlas = gl2d::TextureAtlas(14, 14);
 	
-	MapData map = {};
+	
 	map.load("../common/resources/maps/TestMap.csv");
 
 	return true;
@@ -343,7 +346,9 @@ bool gameLogic(float deltaTime) {
 
 #pragma region rendering
 		
-		for (Bullet bullet : bullets) {
+		renderMap(renderer, mapAtlas, mapTexture, map);
+
+		for (const Bullet& bullet : bullets) {
 			renderBullet(renderer, bullet, bulletTexture);
 		}
 
