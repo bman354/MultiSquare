@@ -10,15 +10,15 @@ Player::Player() {
     damage = 10.0f; 
     lives = 100;
 
-    maxSpeed = 100.0f; 
+    maxSpeed = 200.0f; 
     acceleration = 25.0f;
     fireRate = 100; 
     fireRateTimer = fireRate; 
 
     bulletSpeed = 10.0f; 
 
-    playerSize = { 32.0f, 32.0f };
-    bulletSize = { 16.0f, 16.0f };
+    playerSize = { 16.0f, 16.0f };
+    bulletSize = { 8.0f, 8.0f };
 
 }
 
@@ -46,7 +46,7 @@ Player::Player(std::string packetData) {
 
 void Player::update(float deltaTime)
 {
-    float friction = 0.96f;
+    float friction = 0.999f;
 
     velocity *= friction;
 

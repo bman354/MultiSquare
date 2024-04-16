@@ -346,6 +346,10 @@ bool gameLogic(float deltaTime) {
 
 #pragma region rendering
 		
+		renderer.currentCamera.follow({ player.pos.x, player.pos.y }, 1.0f, 10.0f, 10.0f, w, h);
+		renderer.currentCamera.zoom = 1.0f;
+
+
 		renderMap(renderer, mapAtlas, mapTexture, map);
 
 		for (const Bullet& bullet : bullets) {
