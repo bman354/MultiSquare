@@ -281,10 +281,9 @@ bool gameLogic(float deltaTime) {
 				inputAcceleration.x += player.acceleration;
 			}
 			
-			
+			//fire boolet
 			if (platform::isLMousePressed()) {
-				std::cout << "pew!\n";
-				Bullet firedBullet(player);
+				Bullet firedBullet(player, currentMouseDirection);
 				bullets.push_back(firedBullet);
 			} 
 			
@@ -357,13 +356,12 @@ bool gameLogic(float deltaTime) {
 #pragma region rendering
 		
 		renderer.currentCamera.follow({ player.pos.x, player.pos.y }, 1.0f, 10.0f, 10.0f, w, h);
-		renderer.currentCamera.zoom = 1.0f;
-
+		renderer.currentCamera.zoom = 1.5f;
 
 		renderMap(renderer, mapAtlas, mapTexture, map);
 		
 		for (Bullet& bullet : bullets) {
-			bullet.update();
+			bullet.update(deltaTime);
 			renderBullet(renderer, bullet, bulletTexture);
 		}
 

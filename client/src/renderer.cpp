@@ -9,7 +9,7 @@ void renderPlayerName(gl2d::Renderer2D& renderer, Player player, gl2d::Font font
 	renderer.renderText({ player.pos.x + (player.playerSize.x / 2), player.pos.y + player.playerSize.y }, player.name.c_str(), font, Colors_Orange, 0.25f);
 }
 
-void renderBullet(gl2d::Renderer2D& renderer, Bullet bullet, gl2d::Texture texture) {
+void renderBullet(gl2d::Renderer2D& renderer, Bullet& bullet, gl2d::Texture& texture) {
 	renderer.renderRectangle({ bullet.pos, bullet.width, bullet.height }, texture);
 }
 

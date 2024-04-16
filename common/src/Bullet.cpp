@@ -11,17 +11,29 @@ Bullet::Bullet(Player playerStats):
     speed(playerStats.bulletSpeed),
     damage(playerStats.damage),
     pos(playerStats.pos){
+}
 
-    glm::vec2 bulletVelocity = glm::normalize(this->velocity);
-    bulletVelocity *= playerStats.bulletSpeed;
-    bulletVelocity.x *= (playerStats.velocity.x / 2.0f);
-    bulletVelocity.y *= (playerStats.velocity.y / 2.0f);
+Bullet::Bullet(Player playerStats, glm::vec2 mouseDir) :
+    width(playerStats.bulletSize.x),
+    height(playerStats.bulletSize.y),
+    speed(playerStats.bulletSpeed),
+    damage(playerStats.damage),
+    pos(playerStats.pos) {
+
+    glm::vec2 playerDir = glm::normalize(playerStats.velocity);
+
+    float angle = atan2(mouseDir.y, mouseDir.x);
+
+    glm::vec2 mouseDirection = glm::vec2(cos(angle), sin(angle));
+    glm::vec2 combinedDir = mouseDirection * glm::length(playerStats.velocity) + playerDir;
+
+    glm::vec2 bulletVelocity = glm::normalize(combinedDir) * playerStats.bulletSpeed;
 
     velocity = bulletVelocity;
 }
 
-void Bullet::update(){
-    this->pos += this->velocity;
+void Bullet::update(float deltaTime){
+    this->pos += this->velocity * deltaTime;
 }
 
 //HEADER;x;y;xVel;yVel;width;height;speed;damage

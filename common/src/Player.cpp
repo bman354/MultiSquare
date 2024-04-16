@@ -22,7 +22,7 @@ Player::Player() {
     fireRate = 100; 
     fireRateTimer = fireRate; 
 
-    bulletSpeed = 10.0f; 
+    bulletSpeed = 500.0f; 
 
     playerSize = { 16.0f, 16.0f };
     bulletSize = { 8.0f, 8.0f };
