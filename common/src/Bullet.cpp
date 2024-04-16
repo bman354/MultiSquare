@@ -1,14 +1,23 @@
 #include "../include/Bullet.h"
 
-// Constructor definition
+// Constructor definitions
+Bullet::Bullet() {
+
+}
+
 Bullet::Bullet(Player playerStats):
     width(playerStats.bulletSize.x),
     height(playerStats.bulletSize.y),
     speed(playerStats.bulletSpeed),
-    damage(playerStats.damage){}
+    damage(playerStats.damage),
+    pos(playerStats.pos){
 
-Bullet::Bullet() {
+    glm::vec2 bulletVelocity = glm::normalize(this->velocity);
+    bulletVelocity *= playerStats.bulletSpeed;
+    bulletVelocity.x *= (playerStats.velocity.x / 2.0f);
+    bulletVelocity.y *= (playerStats.velocity.y / 2.0f);
 
+    velocity = bulletVelocity;
 }
 
 void Bullet::update(){
@@ -29,6 +38,8 @@ std::string Bullet::toNetworkPacket(std::string packetHeader) {
         + std::to_string(damage);
 
 }
+
+
 
 Bullet Bullet::packetToBullet(std::string packetData) {
 	Bullet returnBullet;
@@ -54,14 +65,4 @@ Bullet Bullet::packetToBullet(std::string packetData) {
     returnBullet.damage = std::stof(tokens[8]);
 
 	return returnBullet;
-}
-
-Bullet Bullet::fireBullet(Player player) {
-    Bullet bullet(player);
-
-    glm::vec2 bulletVelocity = glm::normalize(this->velocity);
-    bulletVelocity *= player.bulletSpeed;
-
-    bullet.pos += glm::vec2(player.playerSize.x / 2 + bullet.width / 2);
-    return bullet;
 }

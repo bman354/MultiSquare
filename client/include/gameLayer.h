@@ -14,6 +14,8 @@ void playerUpdate(std::string newData);
 int getPacketHeader(std::string packetData);
 void newPlayerConnected(std::string packetData);
 void newConnectionAcknowledge(std::string rawPacketData);
+glm::vec2 getMouseDirection(float w, float h);
+
 
 namespace platform
 {

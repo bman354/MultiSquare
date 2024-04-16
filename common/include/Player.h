@@ -11,13 +11,19 @@ public:
 	Player(std::string packetData);
 	void update(float deltaTime);
 	void updateStats(Player newStats);
-	
+	void boost(glm::vec2 direction);
 
 	std::string toNetworkDataPacket(int HEADERID);
 	int id;
 
 	glm::vec2 pos;
 	glm::vec2 velocity;
+	
+	float boostPower;
+	glm::vec2 boostVelocity;
+	short boostTimer;
+	short maxBoostTimer;
+	float maxBoostSpeed;
 
 	std::string name;
 

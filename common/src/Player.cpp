@@ -4,6 +4,13 @@
 Player::Player() {
     pos = { 100.0f, 100.0f };
     velocity = { 0.0f, 0.0f };
+    
+    boostPower = 500.0f;
+    boostVelocity = { 0.0f, 0.0f };
+    boostTimer = 100;
+    maxBoostTimer = boostTimer;
+    maxBoostSpeed = 400.0f;
+
     id = -1; 
     name = "DEFAULT"; 
     health = 100.0f; 
@@ -11,7 +18,7 @@ Player::Player() {
     lives = 100;
 
     maxSpeed = 200.0f; 
-    acceleration = 25.0f;
+    acceleration = 5.0f;
     fireRate = 100; 
     fireRateTimer = fireRate; 
 
@@ -46,24 +53,43 @@ Player::Player(std::string packetData) {
 
 void Player::update(float deltaTime)
 {
-    float friction = 0.999f;
+    float friction = 0.99f;
+    float boostFriction = 0.95f;
+
+    velocity.x += boostVelocity.x;
+    velocity.y += boostVelocity.y;
+
+    boostVelocity *= boostFriction;
+
+    if (glm::length(boostVelocity) > maxBoostSpeed) {
+        boostVelocity = glm::normalize(boostVelocity) * maxBoostSpeed;
+    }
 
     velocity *= friction;
 
     if (glm::length(velocity) > maxSpeed) {
         velocity = glm::normalize(velocity) * maxSpeed;
     }
-    if (velocity.x < 0.05f && velocity.x > -0.05f) {
-        velocity.x = 0;
-    }
-    if (velocity.y < 0.05f && velocity.y > -0.05f) {
-        velocity.y = 0.0f;
-    }
+    glm::vec2 totalVelocity = velocity + boostVelocity;
 
-
-    pos += velocity * deltaTime;
+    pos += totalVelocity * deltaTime;
     
 }
+
+void Player::boost(glm::vec2 direction) {
+    
+    float angle = atan2(direction.y, direction.x);
+
+    float boostXStrength = boostPower * cos(angle);
+    float boostYStrength = boostPower * sin(angle);
+
+
+    this->boostVelocity.x += boostXStrength;
+    this->boostVelocity.y += boostYStrength;
+
+}
+
+
 //header;id;name;posx;posy;velx;vely;lives;health;maxSpeed;damage;bulletSpeed
 //is there a better way to append the header using the ENUM in the gamelayer?
 std::string Player::toNetworkDataPacket(int HEADERID) {

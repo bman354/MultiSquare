@@ -234,8 +234,6 @@ bool gameLogic(float deltaTime) {
 				if (enet_host_service(client, &event, 5000) > 0 && event.type == ENET_EVENT_TYPE_CONNECT) {
 					std::cout << "Connection success!\n";
 					IS_CONNECTED = true;
-
-					
 				}
 
 				//tell server we are new, and need to tell everyone we've joined
@@ -263,6 +261,8 @@ bool gameLogic(float deltaTime) {
 
 #pragma region movement input
 
+			glm::vec2 currentMouseDirection = getMouseDirection(w, h);
+
 			glm::vec2 inputAcceleration = { 0.0f, 0.0f };
 
 			if (platform::isButtonHeld(platform::Button::W)) {
@@ -281,14 +281,24 @@ bool gameLogic(float deltaTime) {
 				inputAcceleration.x += player.acceleration;
 			}
 			
-			/*
-			if (
-				platform::isLMousePressed || platform::isLMouseHeld) {
-				Bullet firedBullet;
-				bullets.push_back(firedBullet.fireBullet(player));
-			} 
-			*/
 			
+			if (platform::isLMousePressed()) {
+				std::cout << "pew!\n";
+				Bullet firedBullet(player);
+				bullets.push_back(firedBullet);
+			} 
+			
+
+			//boost time babyy
+			if (player.boostTimer > 0) {
+				player.boostTimer--;
+			} else if (platform::isRMousePressed()) {
+				player.boost(currentMouseDirection);
+				player.boostTimer = player.maxBoostTimer;
+			}
+
+			
+
 			player.velocity += inputAcceleration;
 			player.update(deltaTime);
 
@@ -351,8 +361,9 @@ bool gameLogic(float deltaTime) {
 
 
 		renderMap(renderer, mapAtlas, mapTexture, map);
-
-		for (const Bullet& bullet : bullets) {
+		
+		for (Bullet& bullet : bullets) {
+			bullet.update();
 			renderBullet(renderer, bullet, bulletTexture);
 		}
 
@@ -462,5 +473,11 @@ void newConnectionAcknowledge(std::string rawPacketData) {
 	}
 }
 
+glm::vec2 getMouseDirection(float w, float h) {
 
+	glm::vec2 mousePos = platform::getRelMousePosition();
+	glm::vec2 screenCenter(w / 2.f, h / 2.f);
+
+	return mousePos - screenCenter;
+}
 #pragma endregion
