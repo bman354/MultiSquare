@@ -61,7 +61,7 @@ char ipAddress[30];
 char port[20];
 char playerMenuName[30];
 
-std::string newPlayerName = "B";
+std::string newPlayerName = "Boos";
 std::string ipToConnectTo = "localhost";
 std::string portToConnectTo = "42040";
 

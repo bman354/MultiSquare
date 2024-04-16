@@ -17,7 +17,7 @@ void renderMapTile(gl2d::Renderer2D& renderer, Tile& tile, gl2d::TextureAtlas& a
 
 	//atlas x value = tile type % 14
 	//atlas y value = tile type / 14 rounded down
-	renderer.renderRectangle({ x * 64, y * 64, 64, 64 }, texture, Colors_Black, {atlas.get((tile.type % 14), (tile.type / 14)) });
+	renderer.renderRectangle({ x * 32, y * 32, 32, 32 }, texture, Colors_White, {0,0}, 0.0f, {atlas.get((tile.type % 14), (tile.type / 14))});
 	//renderRectangle(const Rect transforms, const Texture texture, const Color4f colors = {1,1,1,1}, const glm::vec2 origin = {}, const float rotationDegrees = 0, const glm::vec4 textureCoords = GL2D_DefaultTextureCoords)
 }
 
