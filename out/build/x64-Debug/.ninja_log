@@ -2,12 +2,12 @@
 90	1475	7346516156796092	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/input.c.obj	39a7bda2bba06a12
 98	259	7346516358466262	CMakeFiles/MultiSquaresClient.dir/common/src/Packet.cpp.obj	7a7578ab7be46305
 7262	7326	7346516215347244	thirdparty/gl2d/gl2d.lib	ea52c4a451ce7b1d
-25	53	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
+23	52	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
 66	923	7346516151386038	CMakeFiles/MultiSquaresServer.dir/common/src/Packet.cpp.obj	760184a067bca1fd
-5816	5996	7346516201816676	thirdparty/raudio/raudio.lib	f07b2e4cfe2f3e16
 97	1509	7346516157106070	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/monitor.c.obj	72c9ba8bd3c0854d
-4251	4734	7346516189510027	thirdparty/imgui-docking/CMakeFiles/imgui.dir/imgui/backends/imgui_impl_opengl3.cpp.obj	ff060a04173ad3c
+5816	5996	7346516201816676	thirdparty/raudio/raudio.lib	f07b2e4cfe2f3e16
 104	1319	7346516155356092	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/vulkan.c.obj	3a43f9dd646b41c
+4251	4734	7346516189510027	thirdparty/imgui-docking/CMakeFiles/imgui.dir/imgui/backends/imgui_impl_opengl3.cpp.obj	ff060a04173ad3c
 78	1335	7346516155536034	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/context.c.obj	5fb168e916741e0c
 6315	6380	7346516205976622	thirdparty/safeSave/safeSave.lib	cde3b444c08bd6f
 84	1642	7346516158516050	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/init.c.obj	cc5c570fcf0049fb
@@ -48,7 +48,7 @@
 81	1021	7349922350279224	CMakeFiles/MultiSquaresClient.dir/client/src/platform/platformInput.cpp.obj	fdc3b3b4f66c057c
 3184	4091	7346516183026141	thirdparty/enet-1.3.17/CMakeFiles/enet.dir/host.c.obj	d4bfe01349eae399
 3615	4822	7346516190243472	thirdparty/enet-1.3.17/CMakeFiles/enet.dir/protocol.c.obj	daec39cedabb2c35
-75	1277	7349927276088836	CMakeFiles/MultiSquaresClient.dir/common/src/Player.cpp.obj	b0787861f08f4ead
+70	1171	7349969002373520	CMakeFiles/MultiSquaresClient.dir/common/src/Player.cpp.obj	b0787861f08f4ead
 4176	5647	7346516198613407	thirdparty/imgui-docking/CMakeFiles/imgui.dir/imgui/backends/imgui_impl_glfw.cpp.obj	1f3dc3e13cf4f385
 3719	4838	7346516190013450	thirdparty/enet-1.3.17/CMakeFiles/enet.dir/win32.c.obj	58ca3600e53b7b18
 4092	5129	7346516193273411	thirdparty/imgui-docking/CMakeFiles/imgui.dir/imgui/imgui_draw.cpp.obj	ecf5d0102658eea4
@@ -60,101 +60,21 @@
 4754	7262	7346516214817243	thirdparty/gl2d/CMakeFiles/gl2d.dir/src/gl2d.cpp.obj	acac01eef33d9d0c
 7326	7395	7346516216007234	thirdparty/glui/glui.lib	4e0024ed63c578d5
 69	588	7346516361746368	CMakeFiles/MultiSquaresClient.dir/client/src/platform/otherPlatformFunctions.cpp.obj	d5909ff0c4f22ea7
-64	1361	7349927276908823	CMakeFiles/MultiSquaresClient.dir/client/src/renderer.cpp.obj	cb1249ffd8097f14
-76	2847	7349922368614244	CMakeFiles/MultiSquaresClient.dir/client/src/platform/glfwMain.cpp.obj	78e01c2a7e11ba06
-69	1484	7349927278168835	CMakeFiles/MultiSquaresClient.dir/common/src/Bullet.cpp.obj	351de3264299a8e2
-60	2122	7349927284518411	CMakeFiles/MultiSquaresClient.dir/client/src/gameLayer.cpp.obj	9b9616c198045086
-2122	2391	7349927286729654	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/MultiSquaresClient.exe	9070c6278f451358
-45	89	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
-123	2322	7349932504936733	CMakeFiles/MultiSquaresClient.dir/common/src/Player.cpp.obj	b0787861f08f4ead
-111	2607	7349932507806718	CMakeFiles/MultiSquaresClient.dir/client/src/renderer.cpp.obj	cb1249ffd8097f14
-117	2620	7349932507926718	CMakeFiles/MultiSquaresClient.dir/common/src/Bullet.cpp.obj	351de3264299a8e2
-102	3558	7349932517318148	CMakeFiles/MultiSquaresClient.dir/client/src/gameLayer.cpp.obj	9b9616c198045086
-3558	3864	7349932519888169	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/MultiSquaresClient.exe	9070c6278f451358
-30	62	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
-71	1176	7349933028172570	CMakeFiles/MultiSquaresClient.dir/common/src/Player.cpp.obj	b0787861f08f4ead
-1177	1428	7349933030252469	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/MultiSquaresClient.exe	9070c6278f451358
-52	150	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
-159	1222	7349933305998168	CMakeFiles/MultiSquaresClient.dir/common/src/Player.cpp.obj	b0787861f08f4ead
-1223	1452	7349933307893121	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/MultiSquaresClient.exe	9070c6278f451358
-26	59	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
-70	1121	7349936523475027	CMakeFiles/MultiSquaresClient.dir/common/src/Player.cpp.obj	b0787861f08f4ead
-1122	1404	7349936525815082	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/MultiSquaresClient.exe	9070c6278f451358
-32	69	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
-77	1237	7349939866873023	CMakeFiles/MultiSquaresClient.dir/common/src/Player.cpp.obj	b0787861f08f4ead
-1238	1510	7349939869172776	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/MultiSquaresClient.exe	9070c6278f451358
-29	64	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
-77	1325	7349940046186061	CMakeFiles/MultiSquaresClient.dir/common/src/Player.cpp.obj	b0787861f08f4ead
-24	52	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
-60	321	7349940128161253	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/MultiSquaresClient.exe	9070c6278f451358
-21	51	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
-59	1227	7349944901222287	CMakeFiles/MultiSquaresClient.dir/common/src/Player.cpp.obj	b0787861f08f4ead
-1228	1501	7349944903502184	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/MultiSquaresClient.exe	9070c6278f451358
-26	64	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
-76	1069	7349947874495779	CMakeFiles/MultiSquaresClient.dir/common/src/Player.cpp.obj	b0787861f08f4ead
-1070	1341	7349947876755766	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/MultiSquaresClient.exe	9070c6278f451358
-26	59	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
-71	1923	7349948675560327	CMakeFiles/MultiSquaresClient.dir/client/src/renderer.cpp.obj	cb1249ffd8097f14
-83	1965	7349948676300247	CMakeFiles/MultiSquaresClient.dir/common/src/Player.cpp.obj	b0787861f08f4ead
-77	1967	7349948676370239	CMakeFiles/MultiSquaresClient.dir/common/src/Bullet.cpp.obj	351de3264299a8e2
-67	2781	7349948684549797	CMakeFiles/MultiSquaresClient.dir/client/src/gameLayer.cpp.obj	9b9616c198045086
-2782	3087	7349948687119892	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/MultiSquaresClient.exe	9070c6278f451358
-41	91	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
-104	2654	7349953521856466	CMakeFiles/MultiSquaresClient.dir/client/src/gameLayer.cpp.obj	9b9616c198045086
-2655	3015	7349953524946386	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/MultiSquaresClient.exe	9070c6278f451358
-30	73	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
-81	1971	7349953883113454	CMakeFiles/MultiSquaresClient.dir/common/src/Player.cpp.obj	b0787861f08f4ead
-1972	2312	7349953885969029	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/MultiSquaresClient.exe	9070c6278f451358
-40	82	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
-99	1973	7349956887239952	CMakeFiles/MultiSquaresClient.dir/client/src/renderer.cpp.obj	cb1249ffd8097f14
-106	2154	7349956889080032	CMakeFiles/MultiSquaresClient.dir/common/src/Bullet.cpp.obj	351de3264299a8e2
-93	2915	7349956896425665	CMakeFiles/MultiSquaresClient.dir/client/src/gameLayer.cpp.obj	9b9616c198045086
-2915	3303	7349956900085567	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/MultiSquaresClient.exe	9070c6278f451358
-35	73	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
-87	2058	7349958662398210	CMakeFiles/MultiSquaresClient.dir/client/src/renderer.cpp.obj	cb1249ffd8097f14
-97	2240	7349958664248203	CMakeFiles/MultiSquaresClient.dir/common/src/Bullet.cpp.obj	351de3264299a8e2
-82	3117	7349958673018184	CMakeFiles/MultiSquaresClient.dir/client/src/gameLayer.cpp.obj	9b9616c198045086
-3118	3446	7349958675798206	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/MultiSquaresClient.exe	9070c6278f451358
-43	89	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
-100	2972	7349959583816433	CMakeFiles/MultiSquaresClient.dir/client/src/gameLayer.cpp.obj	9b9616c198045086
-2973	3412	7349959587622229	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/MultiSquaresClient.exe	9070c6278f451358
-53	110	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
-132	3115	7349959956815591	CMakeFiles/MultiSquaresClient.dir/client/src/gameLayer.cpp.obj	9b9616c198045086
-3117	3566	7349959960571980	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/MultiSquaresClient.exe	9070c6278f451358
-28	57	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
-27	70	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
-80	3339	7349964151647287	CMakeFiles/MultiSquaresClient.dir/client/src/gameLayer.cpp.obj	9b9616c198045086
-3340	3821	7349964155717419	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/MultiSquaresClient.exe	9070c6278f451358
-28	63	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
-76	1964	7349965336909569	CMakeFiles/MultiSquaresClient.dir/client/src/renderer.cpp.obj	cb1249ffd8097f14
-81	2147	7349965338769480	CMakeFiles/MultiSquaresClient.dir/common/src/Bullet.cpp.obj	351de3264299a8e2
-71	3024	7349965347549471	CMakeFiles/MultiSquaresClient.dir/client/src/gameLayer.cpp.obj	9b9616c198045086
-3024	3373	7349965350539444	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/MultiSquaresClient.exe	9070c6278f451358
-34	71	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
-86	2257	7349965786504203	CMakeFiles/MultiSquaresClient.dir/common/src/Bullet.cpp.obj	351de3264299a8e2
-82	3156	7349965795474310	CMakeFiles/MultiSquaresClient.dir/client/src/gameLayer.cpp.obj	9b9616c198045086
-3157	3540	7349965798754266	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/MultiSquaresClient.exe	9070c6278f451358
-27	60	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
-72	2127	7349966832898917	CMakeFiles/MultiSquaresClient.dir/client/src/renderer.cpp.obj	cb1249ffd8097f14
-67	3107	7349966842668906	CMakeFiles/MultiSquaresClient.dir/client/src/gameLayer.cpp.obj	9b9616c198045086
-3108	8758	7349966883091094	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/MultiSquaresClient.exe	9070c6278f451358
-26	58	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
-66	1365	7349968462910854	CMakeFiles/MultiSquaresClient.dir/common/src/Bullet.cpp.obj	351de3264299a8e2
-1365	1654	7349968465280753	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/MultiSquaresClient.exe	9070c6278f451358
-28	62	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
-70	1171	7349969002373520	CMakeFiles/MultiSquaresClient.dir/common/src/Player.cpp.obj	b0787861f08f4ead
-1172	1470	7349969004861525	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/MultiSquaresClient.exe	9070c6278f451358
-31	70	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
 85	1990	7349972909084168	CMakeFiles/MultiSquaresClient.dir/client/src/renderer.cpp.obj	cb1249ffd8097f14
-91	2218	7349972910244198	CMakeFiles/MultiSquaresClient.dir/common/src/Bullet.cpp.obj	351de3264299a8e2
-80	3401	7349972923146015	CMakeFiles/MultiSquaresClient.dir/client/src/gameLayer.cpp.obj	9b9616c198045086
-3401	4071	7349972928935970	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/MultiSquaresClient.exe	9070c6278f451358
-28	62	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
-69	1323	7349974732323690	CMakeFiles/MultiSquaresClient.dir/common/src/Bullet.cpp.obj	351de3264299a8e2
-1324	1592	7349974734476604	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/MultiSquaresClient.exe	9070c6278f451358
-33	68	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
-76	1869	7349974970875278	CMakeFiles/MultiSquaresClient.dir/common/src/Bullet.cpp.obj	351de3264299a8e2
-1871	2235	7349974973975194	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/MultiSquaresClient.exe	9070c6278f451358
-33	69	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
+76	2847	7349922368614244	CMakeFiles/MultiSquaresClient.dir/client/src/platform/glfwMain.cpp.obj	78e01c2a7e11ba06
 78	1825	7349975594182894	CMakeFiles/MultiSquaresClient.dir/common/src/Bullet.cpp.obj	351de3264299a8e2
+80	3401	7349972923146015	CMakeFiles/MultiSquaresClient.dir/client/src/gameLayer.cpp.obj	9b9616c198045086
 1826	2151	7349975596942945	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/MultiSquaresClient.exe	9070c6278f451358
+24	55	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
+66	1382	7350962018695024	CMakeFiles/MultiSquaresServer.dir/common/src/Player.cpp.obj	4e3c556282ed1c37
+61	1509	7350962019975012	CMakeFiles/MultiSquaresServer.dir/common/src/Bullet.cpp.obj	e87b8a23d5254695
+1509	1965	7350962023788446	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/MultiSquaresServer.exe	2e746680340afe2e
+22	50	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
+58	1412	7350962091609994	CMakeFiles/MultiSquaresClient.dir/common/src/Bullet.cpp.obj	351de3264299a8e2
+1413	1879	7350962095789193	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/MultiSquaresClient.exe	9070c6278f451358
+23	69	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
+15	46	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
+56	1599	7350962276025917	CMakeFiles/MultiSquaresClient.dir/common/src/Bullet.cpp.obj	351de3264299a8e2
+78	152	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
+167	3223	7354365465432921	CMakeFiles/MultiSquaresServer.dir/common/src/Bullet.cpp.obj	e87b8a23d5254695
+3224	4031	7354365472342961	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/MultiSquaresServer.exe	2e746680340afe2e
