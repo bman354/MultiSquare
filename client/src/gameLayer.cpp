@@ -19,18 +19,6 @@
 #include "Bullet.h"
 #include "Player.h"
 #include "Packet.h"
-//TODO Client state into int ENUM? mostly on serverSide
-/*
-enum GAME_STATE{
-
-	MAIN_MENU
-
-
-
-}
-*/
-
-
 
 
 //TODO figure out a structure to hold all this data, this is too much just sitting around in an odd scope
@@ -65,10 +53,6 @@ std::string newPlayerName = "Boos";
 std::string ipToConnectTo = "localhost";
 std::string portToConnectTo = "42040";
 
-//timers
-int sendPosTimer = 10;
-
-
 //GAMEPLAY FLAGS~~~~~~
 //TODO swap this to a single state ENUM/Variable so I can use a switch statement instead of if/else
 bool IN_MAIN_MENU = true;
@@ -77,7 +61,7 @@ bool IS_CONNECTED = false;
 int selected = 0;
 
 MapData map = {};
-
+unsigned long long serverTime = 0;
 
 bool initGame() {
 	//creates the renderer and starts game
@@ -207,6 +191,14 @@ bool gameLogic(float deltaTime) {
 #pragma endregion
 
 #pragma region connection init
+
+		player.name = playerMenuName;
+		if (enet_initialize() != 0) {
+			std::cout << "Enet failed to initialize\n";
+			IN_MAIN_MENU = true;
+			IS_CONNECTED = false;
+		}
+
 		//set up connection
 		if (!IS_CONNECTED) {
 			client = enet_host_create(NULL, 1, 2, 0, 0);
@@ -228,30 +220,27 @@ bool gameLogic(float deltaTime) {
 				IS_CONNECTED = false;
 			}
 			else {
-				player.name = playerMenuName;
+
 				event = {};
-				//wait for acknowledgement from enet
+				//Enet Handshake
 				if (enet_host_service(client, &event, 5000) > 0 && event.type == ENET_EVENT_TYPE_CONNECT) {
 					std::cout << "Connection success!\n";
 					IS_CONNECTED = true;
 				}
 
-				//tell server we are new, and need to tell everyone we've joined
-				sendPacket(player.toNetworkDataPacket(NEW_CONNECTION));
-				std::cout << "sent new connection packet\n";
-				event = {};
-				if (enet_host_service(client, &event, 5000) > 0) {
-					std::string rawPacket(reinterpret_cast<char*>(event.packet->data), event.packet->dataLength);
-					int packetHeader = getPacketHeader(rawPacket);
-					
-					if (packetHeader == NEW_CONNECTION_ACKNOWLEDGE) {
-						newConnectionAcknowledge(rawPacket);
-						std::cout << "connection acknowledged and ip applied\n";
-					}
+				//Gamelayer Handshake
+				Packet packet;
+				packet.header = HANDSHAKE;
 
-				} else {
-					std::cout << "connection failed to be acknowledged\n";
-					return false;
+				HandshakePacket packetData;
+				packetData.player = player;
+
+				std::cout << "sending handshake\n";
+				sendPacket(server, packet, (char*)&packetData, sizeof(packetData), true, 1);
+
+				if (enet_host_service(client, &event, 5000) > 0) {
+					std::cout << "Connection success!\n";
+					IS_CONNECTED = true;
 				}
 			}
 		}
@@ -280,36 +269,27 @@ bool gameLogic(float deltaTime) {
 				platform::isButtonHeld(platform::Button::D)) {
 				inputAcceleration.x += player.acceleration;
 			}
-			
+
 			//fire boolet
 			if (platform::isLMousePressed()) {
 				Bullet firedBullet(player, currentMouseDirection);
 				bullets.push_back(firedBullet);
-			} 
-			
+			}
+
 
 			//boost time babyy
 			if (player.boostTimer > 0) {
 				player.boostTimer--;
-			} else if (platform::isRMousePressed()) {
+			}
+			else if (platform::isRMousePressed()) {
 				player.boost(currentMouseDirection);
 				player.boostTimer = player.maxBoostTimer;
 			}
 
-			
+
 
 			player.velocity += inputAcceleration;
 			player.update(deltaTime);
-
-			//update the server semi regularly with the player's data
-			//HACK change this to only send packets when player info changes enough
-			if (sendPosTimer >= 1) {
-				sendPosTimer--;
-			}
-			else {
-				sendPosUpdate();
-				sendPosTimer = 1;
-			}
 
 
 #pragma endregion
@@ -320,7 +300,7 @@ bool gameLogic(float deltaTime) {
 			while (enet_host_service(client, &event, 0) > 0) {
 
 				std::string rawPacket(reinterpret_cast<char*>(event.packet->data), event.packet->dataLength);
-				int packetHeader = getPacketHeader(rawPacket);
+				//int packetHeader = getPacketHeader(rawPacket);
 
 				switch (event.type) {
 
@@ -335,52 +315,54 @@ bool gameLogic(float deltaTime) {
 					break;
 				}
 				case ENET_EVENT_TYPE_RECEIVE: {
-
+					/*
 					switch (packetHeader) {
 						case PLAYER_UPDATE: {
 							playerUpdate(rawPacket);
 							break;
 						}
 						case NEW_OUTSIDE_PLAYER_CONNECTED: {
-							newPlayerConnected(rawPacket);
+
 						break;
 						}
 					}
-					
+
+					*/
 					break;
 				}
+				
 				}
-			}
 #pragma endregion			
 
 #pragma region rendering
-		
-		renderer.currentCamera.follow({ player.pos.x, player.pos.y }, 1.0f, 10.0f, 10.0f, w, h);
-		renderer.currentCamera.zoom = 1.5f;
 
-		renderMap(renderer, mapAtlas, mapTexture, map);
-		
-		for (Bullet& bullet : bullets) {
-			bullet.update(deltaTime);
-			renderBullet(renderer, bullet, bulletTexture);
-		}
+				renderer.currentCamera.follow({ player.pos.x, player.pos.y }, 1.0f, 10.0f, 10.0f, w, h);
+				renderer.currentCamera.zoom = 1.5f;
 
-		for (Player player : extPlayers) {
-			renderPlayer(renderer, player, playerTexture);
-			renderPlayerName(renderer, player, font);
-		}
-		
-		renderPlayer(renderer, player, playerTexture);
-		renderPlayerName(renderer, player, font);
+				renderMap(renderer, mapAtlas, mapTexture, map);
 
-		//tell GPU to process everything
-		renderer.flush();
+				for (Bullet& bullet : bullets) {
+					bullet.update(deltaTime);
+					renderBullet(renderer, bullet, bulletTexture);
+				}
+
+				for (Player player : extPlayers) {
+					renderPlayer(renderer, player, playerTexture);
+					renderPlayerName(renderer, player, font);
+				}
+
+				renderPlayer(renderer, player, playerTexture);
+				renderPlayerName(renderer, player, font);
+
+				//tell GPU to process everything
+				renderer.flush();
+				serverTime++;
 #pragma endregion
 			}
 			return true;
 		}
 	}
-
+}
 
 //This function might not be be called if the program is forced closed
 void closeGame()
@@ -398,79 +380,6 @@ void closeGame()
 
 }
 
-#pragma region packet handling
-void sendPacket(std::string data) {
-	ENetPacket* packet = enet_packet_create(data.c_str(), data.size() + 1, 0);
-	enet_peer_send(server, 0, packet);
-}
-void sendPacketReliable(std::string data) {
-	ENetPacket* packet = enet_packet_create(data.c_str(), data.size() + 1, ENET_PACKET_FLAG_RELIABLE);
-	enet_peer_send(server, 0, packet);
-}
-
-void sendPosUpdate() {
-	sendPacket(player.toNetworkDataPacket(PLAYER_UPDATE));
-}
-
-//ext player sent some data we need to update
-void playerUpdate(std::string newData) {
-	bool playerUpdated = false;
-	Player newPlayer = Player(newData);
-	
-	for (Player &player : extPlayers) {
-		if (player.id == newPlayer.id) {
-			playerUpdated = true;
-			player.updateStats(newPlayer);
-		}
-	}
-	if (playerUpdated == false) {
-		newPlayerConnected(newData);
-	}
-}
-
-
-void newPlayerConnected(std::string packetData) {
-	std::cout << "new player connected\n";
-	Player newPlayer = Player(packetData);
-	std::cout << "new player id: " << newPlayer.id << "\n";
-	if (extPlayers.size() > 0) {
-		for (const Player& player : extPlayers) {
-			if (player.id == newPlayer.id) {
-				std::cout << "new player packet sent when we already have a player with that ID\n";
-				break;
-			}
-			else {
-				extPlayers.push_back(newPlayer);
-			}
-		}
-	}
-	else {
-		extPlayers.push_back(newPlayer);
-	}
-	
-}
-
-
-int getPacketHeader(std::string packetData) {
-	size_t delimiterPos = packetData.find(';');
-
-	std::string headerString = packetData.substr(0, delimiterPos);
-
-	return std::stoi(headerString);
-}
-
-void newConnectionAcknowledge(std::string rawPacketData) {
-	std::cout << rawPacketData << "\n";
-	size_t delimiterPos = rawPacketData.find(';');
-	if (delimiterPos != std::string::npos) {
-		std::string idString = rawPacketData.substr(delimiterPos + 1);
-		player.id = std::stoi(idString);
-		std::cout << "player id is now: " << player.id << "\n";
-	} else {
-		std::cout << "invalid acknowledgement packet\n";
-	}
-}
-
 glm::vec2 getMouseDirection(float w, float h) {
 
 	glm::vec2 mousePos = platform::getRelMousePosition();
@@ -478,4 +387,3 @@ glm::vec2 getMouseDirection(float w, float h) {
 
 	return mousePos - screenCenter;
 }
-#pragma endregion
