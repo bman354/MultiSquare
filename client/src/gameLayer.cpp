@@ -241,8 +241,21 @@ bool gameLogic(float deltaTime) {
 				sendPacket(server, packet, (char*)&packetData, sizeof(packetData), true, 1);
 
 				if (enet_host_service(client, &event, 5000) > 0) {
-					std::cout << "Connection success!\n";
-					IS_CONNECTED = true;
+					packet = {};
+					size_t dataSize = 0;
+
+					auto data = parsePacket(event, packet, dataSize);
+					if (packet.header == HANDSHAKE_CONFIRM) {
+						HandshakeConfirmationPacket handshakeConfirmationPacket = *(HandshakeConfirmationPacket*)data;
+						player.id = handshakeConfirmationPacket.id;
+						std::cout << "new id: " << player.id << "\n";
+						IS_CONNECTED = true;
+					}
+					else {
+						std::cerr << "bad handshake\n";
+						IS_CONNECTED = false;
+						IN_MAIN_MENU = true;
+					}
 				}
 			}
 		}
