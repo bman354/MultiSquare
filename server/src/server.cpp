@@ -136,9 +136,24 @@ void doServerHandshake(HandshakePacket& handshakePacket, ENetEvent* event) {
 	NewPlayerConnectedPacket packetData;
 	packetData.connectingPlayer = serverPlayerToPlayer(newPlayer);
 
-	//send to all, ignore new player
+	//send new player data to all other players
 	broadcastAll(newPlayer.peer, packet, (char*)&packetData, sizeof(packetData), true, 1);
+
+
+	//send all other players current status to new player
+	packet = {};
+	packet.header = HANDSHAKE_PLAYERDATA;
+
+	GenericPlayerPacket handshakePlayerData;
+
+	for (ServerPlayer player : clients) {
+		if (player.id != newPlayer.id) {
+			handshakePlayerData.playerData = serverPlayerToPlayer(player);
+			sendPacket(newPlayer.peer, packet, (char*)&handshakePlayerData, sizeof(handshakePlayerData), true, 0);
+		}
+	}
 	
+	//Confirm handshake was completed successfully
 	packet = {};
 	packet.header = HANDSHAKE_CONFIRM;
 

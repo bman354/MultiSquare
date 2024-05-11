@@ -193,7 +193,7 @@ bool gameLogic(float deltaTime) {
 		
 		//set up connection
 		if (!IS_CONNECTED) {
-			networker.initNetworker(ipAddress, port, player);
+			networker.initNetworker(ipAddress, port, player, extPlayers);
 			IS_CONNECTED = true;
 		}
 		else {

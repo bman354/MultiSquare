@@ -14,7 +14,7 @@ struct Networker {
 
 	unsigned long long serverTime = 0;
 
-	int initNetworker(char ipAddress[30], char port[20], Player& player);
+	int initNetworker(char ipAddress[30], char port[20], Player& player, std::vector<Player>& extPlayers);
 	void doEnetEventService(Player& player, std::vector<Player>& extPlayers, std::vector<Bullet>& bullets);
 	void closeNetworker();
 	void sendPlayerPosUpdate(Player& player);

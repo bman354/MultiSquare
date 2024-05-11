@@ -10,6 +10,7 @@ enum PacketHeader
 	HANDSHAKE_CONFIRM = 1010,
 
 	NEW_PLAYER_CONNECTED = 1001,
+	HANDSHAKE_PLAYERDATA = 1011,
 
 	PLAYER_POS_UPDATE = 1002
 };
@@ -45,6 +46,10 @@ struct HandshakeConfirmationPacket {
 //sent from server to alert to new player connected
 struct NewPlayerConnectedPacket {
 	Player connectingPlayer;
+};
+
+struct GenericPlayerPacket {
+	Player playerData;
 };
 
 struct PosUpdatePacket {

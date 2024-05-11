@@ -1,6 +1,6 @@
 #include "Networker.h"
 
-int Networker::initNetworker(char ipAddress[30], char port[20], Player& player) {
+int Networker::initNetworker(char ipAddress[30], char port[20], Player& player, std::vector<Player>& extPlayers) {
 	
 	if (enet_initialize() != 0) {
 		std::cout << "Enet failed to initialize\n";
@@ -45,7 +45,10 @@ int Networker::initNetworker(char ipAddress[30], char port[20], Player& player) 
 			size_t dataSize = 0;
 
 			auto data = parsePacket(event, packet, dataSize);
-			if (packet.header == HANDSHAKE_CONFIRM) {
+			if (packet.header == HANDSHAKE_PLAYERDATA) {
+				GenericPlayerPacket playerPacket = *(GenericPlayerPacket*)data;
+				extPlayers.push_back(playerPacket.playerData);
+			} else if (packet.header == HANDSHAKE_CONFIRM) {
 				HandshakeConfirmationPacket handshakeConfirmationPacket = *(HandshakeConfirmationPacket*)data;
 				player.id = handshakeConfirmationPacket.id;
 				std::cout << "new id: " << player.id << "\n";
@@ -89,6 +92,10 @@ void Networker::doEnetEventService(Player& player, std::vector<Player>& extPlaye
 					} case PLAYER_POS_UPDATE: {
 						PosUpdatePacket posPacket = *(PosUpdatePacket*)data;
 						handlePlayerPosUpdate(posPacket, extPlayers);
+						break;
+					} case HANDSHAKE_PLAYERDATA: {
+						GenericPlayerPacket playerPacket = *(GenericPlayerPacket*)data;
+						extPlayers.push_back(playerPacket.playerData);
 						break;
 					}
 				}
