@@ -43,7 +43,6 @@ struct ServerPlayer {
 public:
 	ServerPlayer();
 	ServerPlayer(Player playerData);
-	std::string toNetworkDataPacket(int HEADERID);
 	int id;
 
 	glm::vec2 pos;
@@ -63,6 +62,10 @@ public:
 	float damage;
 	glm::vec2 playerSize;
 	int fireRate;
+	float bulletSpeed;
 
+	glm::vec2 bulletSize;
 	ENetPeer* peer;
 };
+
+Player serverPlayerToPlayer(ServerPlayer playerData);

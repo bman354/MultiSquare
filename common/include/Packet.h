@@ -8,10 +8,9 @@ enum PacketHeader
 {
 	HANDSHAKE = 1000,
 	HANDSHAKE_CONFIRM = 1010,
-	PLAYER_UPDATE = 1001,
-	NEW_CONNECTION_ACKNOWLEDGE = 1002,
-	NEW_OUTSIDE_PLAYER_CONNECTED = 1003,
-	SYNC_UPDATE = 1004
+
+	NEW_PLAYER_CONNECTED = 1001
+
 };
 
 /*
@@ -31,15 +30,21 @@ struct Packet {
 
 
 //data, just send the bits, BITCH
+
+//sent to server with new player's data
 struct HandshakePacket {
 	Player player;
 };
 
-struct HandshakeConfirmation {
+//sent from server with new id
+struct HandshakeConfirmationPacket {
 	int id;
 };
 
-
+//sent from server to alert to new player connected
+struct NewPlayerConnectedPacket {
+	Player connectingPlayer;
+};
 
 void sendPacket(ENetPeer* to, Packet p, const char* data, size_t size, bool reliable, int channel);
 char* parsePacket(ENetEvent& event, Packet& p, size_t& dataSize);

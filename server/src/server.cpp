@@ -7,7 +7,11 @@
 #include "Bullet.h"
 #include "Packet.h"
 
-unsigned long long ticks = 0;
+void doHandshake(HandshakePacket handshakePacket, ENetEvent* event);
+
+
+
+unsigned long long serverTime = 0;
 int currentId = 0;
 std::vector<ServerPlayer> clients;
 
@@ -18,7 +22,6 @@ int main()
 		std::cerr << "Failed to initialize ENet\n";
 		return -1;
 	}
-
 
 	ENetAddress address = {};
 	ENetHost* server = nullptr;
@@ -44,12 +47,8 @@ int main()
 	std::cout << "Server Started, running on port " << address.port << "\n";
 	//server main loop
 	while (true) {
-
 		ENetEvent event = {};
 		int eventsProcessed = 0;
-
-		
-
 
 		while (enet_host_service(server, &event, 10) > 0) {
 			if (eventsProcessed < 10) {
@@ -69,8 +68,8 @@ int main()
 
 					switch (packet.header) {
 						case(HANDSHAKE): {
-							HandshakePacket recievedPlayer = *(HandshakePacket*)data;
-							std::cout << recievedPlayer.player.name << "\n";
+							HandshakePacket handshakePacket = *(HandshakePacket*)data;
+							doHandshake(handshakePacket, &event);
 							break;
 						}
 					}
@@ -94,11 +93,63 @@ int main()
 				break;
 			}
 		}
-		ticks++;
+		serverTime++;
 		//end of main server loop, clean up after here
 	}
 	
 	enet_host_destroy(server);
 	return 0;
 }
+
+void broadcastAll(Packet p, const char* data, size_t size, bool reliable, int channel) {
+	for (ServerPlayer& player : clients) {
+		sendPacket(player.peer, p, data, size, reliable, channel);
+	}
+}
+void broadcastAll(ENetPeer *ignoredPeer, Packet p, const char* data, size_t size, bool reliable, int channel) {
+	for (ServerPlayer& player : clients) {
+		if (player.peer != ignoredPeer) {
+			sendPacket(player.peer, p, data, size, reliable, channel);
+		}
+	}
+}
+void broadcastAll(int ignoredId, Packet p, const char* data, size_t size, bool reliable, int channel) {
+	for (ServerPlayer& player : clients) {
+		if (player.id != ignoredId) {
+			sendPacket(player.peer, p, data, size, reliable, channel);
+		}
+	}
+}
+
+//send back newly connected client their id, increment id and send new player's information to all other clients
+void doHandshake(HandshakePacket handshakePacket, ENetEvent* event) {
+
+	ServerPlayer newPlayer(handshakePacket.player);
+
+	newPlayer.id = currentId;
+	currentId++;
+	newPlayer.peer = event->peer;
+
+	clients.push_back(newPlayer);
+
+	Packet packet;
+	packet.header = NEW_PLAYER_CONNECTED;
+
+	NewPlayerConnectedPacket packetData;
+	packetData.connectingPlayer = serverPlayerToPlayer(newPlayer);
+
+	//send to all, ignore new player
+	broadcastAll(newPlayer.peer, packet, (char*)&packetData, sizeof(packetData), true, 1);
+	
+	packet = {};
+	packet.header = HANDSHAKE_CONFIRM;
+
+	HandshakeConfirmationPacket handshakePacketData;
+	handshakePacketData.id = newPlayer.id;
+
+	sendPacket(newPlayer.peer, packet, (char*)&handshakePacketData, sizeof(handshakePacketData), true, 1);
+	std::cout << "accepted handshake with Id: " << newPlayer.id << "\n";
+}
+
+
 

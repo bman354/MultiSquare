@@ -33,6 +33,7 @@ endif()
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "C:/Users/Bryce/Dev Workspace/Cplus/games/MultiSquares/server/src/*.cpp")
 set(OLD_GLOB
   "C:/Users/Bryce/Dev Workspace/Cplus/games/MultiSquares/server/src/server.cpp"
+  "C:/Users/Bryce/Dev Workspace/Cplus/games/MultiSquares/server/src/serverUtils.cpp"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   message("-- GLOB mismatch!")

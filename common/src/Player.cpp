@@ -109,7 +109,37 @@ ServerPlayer::ServerPlayer(Player playerData) {
     maxSpeed = playerData.maxSpeed;
     acceleration = playerData.acceleration;
     fireRate = playerData.fireRate;
+    bulletSpeed = playerData.bulletSpeed;
+    bulletSize = playerData.bulletSize;
 
     playerSize = playerData.playerSize;
     ENetPeer* peer = {};
+}
+
+Player serverPlayerToPlayer(ServerPlayer playerData) {
+    Player returnPlayer = {};
+    returnPlayer.pos = playerData.pos;
+    returnPlayer.velocity = playerData.velocity;
+
+    returnPlayer.boostPower = playerData.boostPower;
+    returnPlayer.boostVelocity = playerData.boostVelocity;
+    returnPlayer.boostTimer = 0;
+    returnPlayer.maxBoostTimer = playerData.maxBoostTimer;
+    returnPlayer.maxBoostSpeed = playerData.maxBoostSpeed;
+
+    returnPlayer.id = playerData.id;
+    returnPlayer.name = playerData.name;
+    returnPlayer.health = playerData.health;
+    returnPlayer.damage = playerData.damage;
+    returnPlayer.lives = playerData.lives;
+
+    returnPlayer.maxSpeed = playerData.maxSpeed;
+    returnPlayer.acceleration = playerData.acceleration;
+    returnPlayer.fireRate = playerData.fireRate;
+    returnPlayer.fireRateTimer = returnPlayer.fireRate;
+    returnPlayer.bulletSpeed = playerData.bulletSpeed;
+    returnPlayer.bulletSize = playerData.bulletSize;
+
+    returnPlayer.playerSize = playerData.playerSize;
+    return returnPlayer;
 }

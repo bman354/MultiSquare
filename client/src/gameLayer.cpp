@@ -20,6 +20,8 @@
 #include "Player.h"
 #include "Packet.h"
 
+void newPlayerConnected(NewPlayerConnectedPacket& newConnectedPacket);
+
 
 //TODO figure out a structure to hold all this data, this is too much just sitting around in an odd scope
 //use one structure that is just players, "player" can just be an index or a key to the local player?
@@ -299,9 +301,6 @@ bool gameLogic(float deltaTime) {
 			//HACK probably needs to either go to another thread, ENET may do this already
 			while (enet_host_service(client, &event, 0) > 0) {
 
-				std::string rawPacket(reinterpret_cast<char*>(event.packet->data), event.packet->dataLength);
-				//int packetHeader = getPacketHeader(rawPacket);
-
 				switch (event.type) {
 
 				case ENET_EVENT_TYPE_CONNECT: {
@@ -315,19 +314,22 @@ bool gameLogic(float deltaTime) {
 					break;
 				}
 				case ENET_EVENT_TYPE_RECEIVE: {
-					/*
-					switch (packetHeader) {
-						case PLAYER_UPDATE: {
-							playerUpdate(rawPacket);
-							break;
-						}
-						case NEW_OUTSIDE_PLAYER_CONNECTED: {
+					
+					Packet packet;
+					size_t dataSize = 0;
 
-						break;
+					auto data = parsePacket(event, packet, dataSize);
+
+
+					switch (packet.header) {
+						case NEW_PLAYER_CONNECTED: {
+							NewPlayerConnectedPacket newConnectedPacket = *(NewPlayerConnectedPacket*)data;
+							newPlayerConnected(newConnectedPacket);
+							break;
 						}
 					}
 
-					*/
+					
 					break;
 				}
 				
@@ -386,4 +388,9 @@ glm::vec2 getMouseDirection(float w, float h) {
 	glm::vec2 screenCenter(w / 2.f, h / 2.f);
 
 	return mousePos - screenCenter;
+}
+
+void newPlayerConnected(NewPlayerConnectedPacket& newConnectedPacket) {
+	extPlayers.push_back(newConnectedPacket.connectingPlayer);
+	std::cout << newConnectedPacket.connectingPlayer.name << " has joined the game\n";
 }
