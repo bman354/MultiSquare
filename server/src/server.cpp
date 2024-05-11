@@ -3,12 +3,6 @@
 #include <server.h>
 #include <vector>
 #include <string>
-#include "Player.h"
-#include "Bullet.h"
-#include "Packet.h"
-
-void doHandshake(HandshakePacket handshakePacket, ENetEvent* event);
-
 
 
 unsigned long long serverTime = 0;
@@ -69,7 +63,11 @@ int main()
 					switch (packet.header) {
 						case(HANDSHAKE): {
 							HandshakePacket handshakePacket = *(HandshakePacket*)data;
-							doHandshake(handshakePacket, &event);
+							doServerHandshake(handshakePacket, &event);
+							break;
+						} case(PLAYER_POS_UPDATE) : {
+							PosUpdatePacket posPacket = *(PosUpdatePacket*)data;
+							playerPosUpdate(posPacket, &event);
 							break;
 						}
 					}
@@ -122,7 +120,7 @@ void broadcastAll(int ignoredId, Packet p, const char* data, size_t size, bool r
 }
 
 //send back newly connected client their id, increment id and send new player's information to all other clients
-void doHandshake(HandshakePacket handshakePacket, ENetEvent* event) {
+void doServerHandshake(HandshakePacket& handshakePacket, ENetEvent* event) {
 
 	ServerPlayer newPlayer(handshakePacket.player);
 
@@ -151,5 +149,22 @@ void doHandshake(HandshakePacket handshakePacket, ENetEvent* event) {
 	std::cout << "accepted handshake with Id: " << newPlayer.id << "\n";
 }
 
-
+void playerPosUpdate(PosUpdatePacket& posPacket, ENetEvent* event) {
+	
+	Packet p;
+	p.header = PLAYER_POS_UPDATE;
+	
+	for (ServerPlayer player : clients) {
+		if (posPacket.id == player.id) {
+			player.pos.x = posPacket.x;
+			player.pos.y = posPacket.y;
+			player.velocity.x = posPacket.xVel;
+			player.velocity.y = posPacket.yVel;
+			break;
+		}
+		else {
+			sendPacket(player.peer, p, (char*)&posPacket, sizeof(posPacket), true, 1);
+		}
+	}
+}
 

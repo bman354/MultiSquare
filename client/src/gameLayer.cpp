@@ -7,7 +7,7 @@
 //#include "imgui.h"
 #include <iostream>
 #include <sstream>
-#include <enet/enet.h>
+#include "Networker.h"
 //#include "imfilebrowser.h"
 #include <gl2d/gl2d.h>
 #include <platform/platformTools.h>
@@ -20,14 +20,14 @@
 #include "Player.h"
 #include "Packet.h"
 
-void newPlayerConnected(NewPlayerConnectedPacket& newConnectedPacket);
-
-
 //TODO figure out a structure to hold all this data, this is too much just sitting around in an odd scope
 //use one structure that is just players, "player" can just be an index or a key to the local player?
+
 Player player;
 std::vector<Bullet> bullets;
 std::vector<Player> extPlayers;
+
+MapData map = {};
 
 gl2d::Renderer2D renderer;
 glui::RendererUi rendererUi;
@@ -39,13 +39,7 @@ gl2d::Texture menuTexture;
 gl2d::Texture mapTexture;
 gl2d::TextureAtlas mapAtlas;
 
-
 gl2d::Font font;
-
-ENetHost* client = nullptr;
-ENetPeer* server = nullptr;
-ENetAddress address = {};
-ENetEvent event = {};
 
 char ipAddress[30];
 char port[20];
@@ -55,6 +49,14 @@ std::string newPlayerName = "Boos";
 std::string ipToConnectTo = "localhost";
 std::string portToConnectTo = "42040";
 
+Networker networker;
+
+
+glm::vec2 lastPlayerPos;
+glm::vec2 deltaPos;
+
+
+
 //GAMEPLAY FLAGS~~~~~~
 //TODO swap this to a single state ENUM/Variable so I can use a switch statement instead of if/else
 bool IN_MAIN_MENU = true;
@@ -62,8 +64,6 @@ bool IN_GAME = false;
 bool IS_CONNECTED = false;
 int selected = 0;
 
-MapData map = {};
-unsigned long long serverTime = 0;
 
 bool initGame() {
 	//creates the renderer and starts game
@@ -178,9 +178,7 @@ bool gameLogic(float deltaTime) {
 			}
 		}
 
-
 		rendererUi.EndMenu();
-
 
 		rendererUi.End();
 		renderer.clearScreen(Colors_White);
@@ -191,80 +189,20 @@ bool gameLogic(float deltaTime) {
 	else {
 
 #pragma endregion
-
-#pragma region connection init
-
 		player.name = playerMenuName;
-		if (enet_initialize() != 0) {
-			std::cout << "Enet failed to initialize\n";
-			IN_MAIN_MENU = true;
-			IS_CONNECTED = false;
-		}
-
+		
 		//set up connection
 		if (!IS_CONNECTED) {
-			client = enet_host_create(NULL, 1, 2, 0, 0);
-
-			if (client == NULL) {
-				std::cout << "client failed to be created\n";
-				IN_MAIN_MENU = true;
-				IS_CONNECTED = false;
-			}
-
-			enet_address_set_host(&address, ipAddress);
-			address.port = atoi(port);
-
-			server = enet_host_connect(client, &address, 2, 0);
-
-			if (server == nullptr) {
-				std::cout << "Failed to initialize connection\n";
-				IN_MAIN_MENU = true;
-				IS_CONNECTED = false;
-			}
-			else {
-
-				event = {};
-				//Enet Handshake
-				if (enet_host_service(client, &event, 5000) > 0 && event.type == ENET_EVENT_TYPE_CONNECT) {
-					std::cout << "Connection success!\n";
-					IS_CONNECTED = true;
-				}
-
-				//Gamelayer Handshake
-				Packet packet;
-				packet.header = HANDSHAKE;
-
-				HandshakePacket packetData;
-				packetData.player = player;
-
-				std::cout << "sending handshake\n";
-				sendPacket(server, packet, (char*)&packetData, sizeof(packetData), true, 1);
-
-				if (enet_host_service(client, &event, 5000) > 0) {
-					packet = {};
-					size_t dataSize = 0;
-
-					auto data = parsePacket(event, packet, dataSize);
-					if (packet.header == HANDSHAKE_CONFIRM) {
-						HandshakeConfirmationPacket handshakeConfirmationPacket = *(HandshakeConfirmationPacket*)data;
-						player.id = handshakeConfirmationPacket.id;
-						std::cout << "new id: " << player.id << "\n";
-						IS_CONNECTED = true;
-					}
-					else {
-						std::cerr << "bad handshake\n";
-						IS_CONNECTED = false;
-						IN_MAIN_MENU = true;
-					}
-				}
-			}
+			networker.initNetworker(ipAddress, port, player);
+			IS_CONNECTED = true;
 		}
 		else {
+
 #pragma endregion
 
-
 #pragma region movement input
-
+			lastPlayerPos = player.pos;
+			
 			glm::vec2 currentMouseDirection = getMouseDirection(w, h);
 
 			glm::vec2 inputAcceleration = { 0.0f, 0.0f };
@@ -291,7 +229,6 @@ bool gameLogic(float deltaTime) {
 				bullets.push_back(firedBullet);
 			}
 
-
 			//boost time babyy
 			if (player.boostTimer > 0) {
 				player.boostTimer--;
@@ -301,52 +238,26 @@ bool gameLogic(float deltaTime) {
 				player.boostTimer = player.maxBoostTimer;
 			}
 
-
-
 			player.velocity += inputAcceleration;
 			player.update(deltaTime);
+			
+			glm::vec2 currentDeltaPos = player.pos - lastPlayerPos;
+			deltaPos += currentDeltaPos;
 
+			float threshhold = 0.1f;
+			if (deltaPos.length() > threshhold) {
+				networker.sendPlayerPosUpdate(player);
+				deltaPos.x = 0.0f;
+				deltaPos.y = 0.0f;
+			}
 
 #pragma endregion
 
 
 #pragma region network event handler
-			//HACK probably needs to either go to another thread, ENET may do this already
-			while (enet_host_service(client, &event, 0) > 0) {
 
-				switch (event.type) {
+			networker.doEnetEventService(player, extPlayers, bullets);
 
-				case ENET_EVENT_TYPE_CONNECT: {
-					std::cout << "Connected to server!" << std::endl;
-					break;
-				}
-				case ENET_EVENT_TYPE_DISCONNECT: {
-					std::cout << "Disconnected from server!" << std::endl;
-					IN_MAIN_MENU = true;
-					IS_CONNECTED = false;
-					break;
-				}
-				case ENET_EVENT_TYPE_RECEIVE: {
-					
-					Packet packet;
-					size_t dataSize = 0;
-
-					auto data = parsePacket(event, packet, dataSize);
-
-
-					switch (packet.header) {
-						case NEW_PLAYER_CONNECTED: {
-							NewPlayerConnectedPacket newConnectedPacket = *(NewPlayerConnectedPacket*)data;
-							newPlayerConnected(newConnectedPacket);
-							break;
-						}
-					}
-
-					
-					break;
-				}
-				
-				}
 #pragma endregion			
 
 #pragma region rendering
@@ -371,27 +282,17 @@ bool gameLogic(float deltaTime) {
 
 				//tell GPU to process everything
 				renderer.flush();
-				serverTime++;
+				networker.serverTime++;
 #pragma endregion
 			}
 			return true;
 		}
 	}
-}
+
 
 //This function might not be be called if the program is forced closed
-void closeGame()
-{
-	// Send a disconnect message to the server
-	if (client != nullptr && server != nullptr) {
-		enet_peer_disconnect(server, 0);
-		// Allow up to 3 seconds for the disconnect to succeed
-		enet_host_flush(client);
-	}
-
-	// Cleanup resources
-	enet_host_destroy(client);
-	enet_deinitialize();
+void closeGame(){
+	networker.closeNetworker();
 
 }
 
@@ -401,9 +302,4 @@ glm::vec2 getMouseDirection(float w, float h) {
 	glm::vec2 screenCenter(w / 2.f, h / 2.f);
 
 	return mousePos - screenCenter;
-}
-
-void newPlayerConnected(NewPlayerConnectedPacket& newConnectedPacket) {
-	extPlayers.push_back(newConnectedPacket.connectingPlayer);
-	std::cout << newConnectedPacket.connectingPlayer.name << " has joined the game\n";
 }

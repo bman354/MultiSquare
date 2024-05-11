@@ -9,8 +9,9 @@ enum PacketHeader
 	HANDSHAKE = 1000,
 	HANDSHAKE_CONFIRM = 1010,
 
-	NEW_PLAYER_CONNECTED = 1001
+	NEW_PLAYER_CONNECTED = 1001,
 
+	PLAYER_POS_UPDATE = 1002
 };
 
 /*
@@ -44,6 +45,14 @@ struct HandshakeConfirmationPacket {
 //sent from server to alert to new player connected
 struct NewPlayerConnectedPacket {
 	Player connectingPlayer;
+};
+
+struct PosUpdatePacket {
+	int id;
+	float x;
+	float y;
+	float xVel;
+	float yVel;
 };
 
 void sendPacket(ENetPeer* to, Packet p, const char* data, size_t size, bool reliable, int channel);
