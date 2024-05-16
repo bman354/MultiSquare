@@ -104,6 +104,7 @@ void broadcastAll(Packet p, const char* data, size_t size, bool reliable, int ch
 		sendPacket(player.peer, p, data, size, reliable, channel);
 	}
 }
+
 void broadcastAll(ENetPeer *ignoredPeer, Packet p, const char* data, size_t size, bool reliable, int channel) {
 	for (ServerPlayer& player : clients) {
 		if (player.peer != ignoredPeer) {
@@ -111,6 +112,7 @@ void broadcastAll(ENetPeer *ignoredPeer, Packet p, const char* data, size_t size
 		}
 	}
 }
+
 void broadcastAll(int ignoredId, Packet p, const char* data, size_t size, bool reliable, int channel) {
 	for (ServerPlayer& player : clients) {
 		if (player.id != ignoredId) {
