@@ -1,8 +1,8 @@
-# Install script for directory: C:/Users/Bryce/Dev Workspace/Cplus/games/MultiSquares/thirdparty/glfw-3.3.2
+# Install script for directory: C:/.dev/Scribble Them Out/thirdparty/glfw-3.3.2
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "C:/Users/Bryce/Dev Workspace/Cplus/games/MultiSquares/out/install/x64-Debug")
+  set(CMAKE_INSTALL_PREFIX "C:/.dev/Scribble Them Out/out/install/x64-Debug")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -34,7 +34,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("C:/Users/Bryce/Dev Workspace/Cplus/games/MultiSquares/out/build/x64-Debug/thirdparty/glfw-3.3.2/src/cmake_install.cmake")
+  include("C:/.dev/Scribble Them Out/out/build/x64-Debug/thirdparty/glfw-3.3.2/src/cmake_install.cmake")
 
 endif()
 

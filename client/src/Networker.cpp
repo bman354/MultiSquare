@@ -40,25 +40,6 @@ int Networker::initNetworker(char ipAddress[30], char port[20], Player& player, 
 		std::cout << "sending handshake\n";
 		sendPacket(server, packet, (char*)&packetData, sizeof(packetData), true, 1);
 
-		if (enet_host_service(this->client, &event, 5000) > 0) {
-			packet = {};
-			size_t dataSize = 0;
-
-			auto data = parsePacket(event, packet, dataSize);
-			if (packet.header == HANDSHAKE_PLAYERDATA) {
-				GenericPlayerPacket playerPacket = *(GenericPlayerPacket*)data;
-				extPlayers.push_back(playerPacket.playerData);
-			} else if (packet.header == HANDSHAKE_CONFIRM) {
-				HandshakeConfirmationPacket handshakeConfirmationPacket = *(HandshakeConfirmationPacket*)data;
-				player.id = handshakeConfirmationPacket.id;
-				std::cout << "new id: " << player.id << "\n";
-				return 0;
-			}
-			else {
-				std::cerr << "bad handshake\n";
-				return -1;
-			}
-		}
 	}
 }
 
@@ -94,8 +75,11 @@ void Networker::doEnetEventService(Player& player, std::vector<Player>& extPlaye
 						handlePlayerPosUpdate(posPacket, extPlayers);
 						break;
 					} case HANDSHAKE_PLAYERDATA: {
-						GenericPlayerPacket playerPacket = *(GenericPlayerPacket*)data;
-						extPlayers.push_back(playerPacket.playerData);
+						std::cout << "recieved handshake data\n";
+						HandshakeDataPacket handshakePacket = *(HandshakeDataPacket*)data;
+						for (Player player : handshakePacket.existingPlayers) {
+							extPlayers.push_back(player);
+						}
 						break;
 					}
 				}

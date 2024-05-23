@@ -48,6 +48,11 @@ struct NewPlayerConnectedPacket {
 	Player connectingPlayer;
 };
 
+struct HandshakeDataPacket {
+	Player existingPlayers[8];
+
+};
+
 struct GenericPlayerPacket {
 	Player playerData;
 };

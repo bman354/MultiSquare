@@ -146,14 +146,10 @@ void doServerHandshake(HandshakePacket& handshakePacket, ENetEvent* event) {
 	packet = {};
 	packet.header = HANDSHAKE_PLAYERDATA;
 
-	GenericPlayerPacket handshakePlayerData;
+	HandshakeDataPacket handshakePlayerData;
 
-	for (ServerPlayer player : clients) {
-		if (player.id != newPlayer.id) {
-			handshakePlayerData.playerData = serverPlayerToPlayer(player);
-			sendPacket(newPlayer.peer, packet, (char*)&handshakePlayerData, sizeof(handshakePlayerData), true, 0);
-		}
-	}
+	std::copy(clients.begin(), clients.end(), handshakePlayerData);
+	sendPacket(newPlayer.peer, packet, (char*)&handshakePlayerData, sizeof(handshakePlayerData), true, 0);
 	
 	//Confirm handshake was completed successfully
 	packet = {};

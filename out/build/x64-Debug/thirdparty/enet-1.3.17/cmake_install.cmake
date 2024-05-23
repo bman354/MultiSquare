@@ -1,8 +1,8 @@
-# Install script for directory: C:/Users/Bryce/Dev Workspace/Cplus/games/MultiSquares/thirdparty/enet-1.3.17
+# Install script for directory: C:/.dev/Scribble Them Out/thirdparty/enet-1.3.17
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "C:/Users/Bryce/Dev Workspace/Cplus/games/MultiSquares/out/install/x64-Debug")
+  set(CMAKE_INSTALL_PREFIX "C:/.dev/Scribble Them Out/out/install/x64-Debug")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 

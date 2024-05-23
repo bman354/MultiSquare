@@ -13,3 +13,4 @@ MultiSquaresClient/CMakeSettings.json
 MultiSquaresClient/Makefile
 .vs/
 images/
+out/
