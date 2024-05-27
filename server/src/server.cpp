@@ -3,90 +3,19 @@
 #include <server.h>
 #include <vector>
 #include <string>
-#include <sstream>
-#include <random>
-/*
-Packet Layouts
-
-new client connects and sends its init data
-NEW_CONNECTION: header;id;name;x;y;xVel;yVel;lives;health;maxSpeed;damage;acceleration;bulletSpeed
-
-send back the server's player Id and starting positions
-NEW_CONNECTION_ACKNOWLEDGE: header;id;pos.x;pos.y
-
-player sends where they are, header ID also used to send back to clients to inform of updated pos on that player
-PLAYER_UPDATE: header;id;name;x;y;xVel;yVel;lives;health;maxSpeed;damage;xSize;ySize
-
-packet sent to clients to give them data on a new client that has connected
-NEW_OUTSIDE_PLAYER_CONNECTED:  header;id;name;x;y;xVel;yVel;lives;health;maxSpeed;damage;xSize;ySize
-
-packet being sent to update everything about a player every 500 ticks to ensure everyone is in sync
-SYNC_UPDATE: header;id;name;x;y;xVel;yVel;lives;health;maxSpeed;damage;xSize;ySize
 
 
-packet sent and recieved with information about a bullet
-BULLET: HEADER;x;y;xVel;yVel;width;height;speed;damage
-
-*/
-
-
-struct Client {
-	ENetPeer* peer = {};
-	int id;
-	std::string name;
-	float x;
-	float y;
-	float xVel;
-	float yVel;
-	float xSize;
-	float ySize;
-
-	int lives;
-	float health;
-	float maxSpeed;
-	float damage;
-	float acceleration;
-	float bulletSpeed;
-};
-
-struct Bullet {
-	float x;
-	float y;
-
-	float xVel;
-	float yVel;
-	//rotation
-	float width;
-	float height;
-
-	float speed;
-	float damage;
-};
-
-
-
-int newConnectionPacketHandler(Client client);
-void handlePacket(ENetPeer* sender, const std::string& packetData);
-bool syncPlayerData();
-bool sendClientUpdate(Client client);
-std::string clientToPacket(Client client);
-Client packetToClient(std::string packetData);
-int getPacketHeader(const std::string& packetData);
-
+unsigned long long serverTime = 0;
 int currentId = 0;
-std::vector<Client> clients;
-
-int syncPositionTimer = 5000;
-
+std::vector<Client> clients = {};
 
 int main()
 {
-	
+#pragma region init
 	if (enet_initialize() != 0) {
 		std::cerr << "Failed to initialize ENet\n";
 		return -1;
 	}
-
 
 	ENetAddress address = {};
 	ENetHost* server = nullptr;
@@ -107,26 +36,41 @@ int main()
 	}
 
 	
+#pragma endregion
 
 	std::cout << "Server Started, running on port " << address.port << "\n";
 	//server main loop
 	while (true) {
-
-		
 		ENetEvent event = {};
+		int eventsProcessed = 0;
 
-		while (enet_host_service(server, &event, 10) > 0)
-		{
-			switch (event.type) {
+		while (enet_host_service(server, &event, 10) > 0) {
+			if (eventsProcessed < 10) {
+				switch (event.type) {
 
-				case ENET_EVENT_TYPE_CONNECT:
-				{
+				case ENET_EVENT_TYPE_CONNECT: {
 					std::cout << "New client connected from address and port " << event.peer->address.host << " Port: " << event.peer->address.port << "\n";
 					break;
 				}
-				case ENET_EVENT_TYPE_RECEIVE:
-				{
-					handlePacket(event.peer, std::string(reinterpret_cast<char*>(event.packet->data), event.packet->dataLength));
+				case ENET_EVENT_TYPE_RECEIVE: {
+					//packet holds the header, packetsize is how big the data is
+					//data points to the start of the data
+					Packet packet;
+					size_t dataSize = 0;
+
+					auto data = parsePacket(event, packet, dataSize);
+
+					switch (packet.header) {
+						case(HANDSHAKE): {
+							HandshakePacket handshakePacket = *(HandshakePacket*)data;
+							doServerHandshake(handshakePacket, &event);
+							break;
+						} case(PLAYER_POS_UPDATE) : {
+							PosUpdatePacket posPacket = *(PosUpdatePacket*)data;
+							playerPosUpdate(posPacket, &event);
+							break;
+						}
+					}
 					break;
 				}
 				case ENET_EVENT_TYPE_DISCONNECT: {
@@ -136,180 +80,97 @@ int main()
 							clients.erase(it);
 							break;
 						}
+					}
+					break;
 				}
+
+				}
+				//process a max of 10 events before moving on to avoid too many packets clogging server
+				eventsProcessed++;
+			} else {
 				break;
 			}
-			}
 		}
-
-		//syncing and common routines
-		if(clients.size() > 1) {
-			if (syncPositionTimer > 0) {
-				syncPositionTimer--;
-			}
-			else if (syncPositionTimer <= 0) {
-
-				syncPlayerData();
-				syncPositionTimer = 1500;
-
-			}
-		}
+		serverTime++;
 		//end of main server loop, clean up after here
 	}
-
+	
 	enet_host_destroy(server);
 	return 0;
 }
 
-int sendMessage(const char* data, size_t size, ENetPeer* peer) {
-
-	if (std::strlen(data) > 500) {
-		std::cout << "WARNING, packet was sent with size > 500, data loss may occur\n";
+void broadcastAll(Packet p, const char* data, size_t size, bool reliable, int channel) {
+	for (Client& player : clients) {
+		sendPacket(player.peer, p, data, size, reliable, channel);
 	}
-
-	ENetPacket* packet = enet_packet_create(data, size, 0);
-	return enet_peer_send(peer, 0, packet);
 }
 
-
-void handlePacket(ENetPeer* sender, const std::string& packetData) {
-	
-		int packetHeader = getPacketHeader(packetData);
-		
-		switch (packetHeader) {
-			case PLAYER_UPDATE: {
-				Client updateClient = packetToClient(packetData);
-				sendClientUpdate(updateClient);
-				break;
-			}
-			case NEW_CONNECTION: {
-				Client newClient = packetToClient(packetData);
-				newClient.peer = sender;
-				newConnectionPacketHandler(newClient);
-				break;
-			}
-		default:
-			// Handle other packet types as needed
-			break;
+void broadcastAll(ENetPeer* ignoredPeer, Packet p, const char* data, size_t size, bool reliable, int channel) {
+	for (Client& client : clients) {
+		if (client.peer != ignoredPeer) {
+			sendPacket(client.peer, p, data, size, reliable, channel);
 		}
-	
+	}
 }
 
+void broadcastAll(int ignoredId, Packet p, const char* data, size_t size, bool reliable, int channel) {
+	for (Client& client : clients) {
+		if (client.player.id != ignoredId) {
+			sendPacket(client.peer, p, data, size, reliable, channel);
+		}
+	}
+}
 
-int newConnectionPacketHandler(Client newClient) {
-	bool successful = true;
-	newClient.id = currentId;
-	std::cout << "new client given id: " << currentId << "\n";
-	currentId++;
+//send back newly connected client their id, increment id and send new player's information to all other clients
+void doServerHandshake(HandshakePacket& handshakePacket, ENetEvent* event) {
+	Packet p;
+	p.header = HANDSHAKE_CONFIRM;
+
+	ConfirmHandshakePacket data;
+	data.id = currentId;
+	data.serverTime = serverTime;
+
+	Client newClient;
+	newClient.player = handshakePacket.player;
+	newClient.player.id = data.id;
+	newClient.peer = event->peer;
+	
+	size_t i = 0;
+	for (Client client : clients) {
+		data.existingPlayers[i] = client.player;
+		i++;
+	}
+	
+	//send handshake confirmation
+	sendPacket(newClient.peer, p, (char*)&data, sizeof(data), true, 1);
+
+	Packet newPlayerPacket;
+	newPlayerPacket.header = NEW_PLAYER_CONNECTED;
+	
+	PlayerPacket newPlayerData;
+	newPlayerData.player = newClient.player;
+
+	broadcastAll(newClient.player.id, newPlayerPacket, (char*)&newPlayerData, sizeof(newPlayerData), true, 1);
+
 	clients.push_back(newClient);
-
-	
-		std::string payload = clientToPacket(newClient);
-		std::string ackPayload = std::to_string(NEW_CONNECTION_ACKNOWLEDGE) + ";" + std::to_string(newClient.id);
-
-		for (const Client& recieverClient : clients) {
-			if (recieverClient.id != newClient.id) {
-				if (sendMessage(payload.c_str(), payload.length() + 1, recieverClient.peer) < 0) {
-					std::cout << "error sending new client acknowledgement to other client\n";
-					successful = false;
-				}
-			} else if(sendMessage(ackPayload.c_str(), ackPayload.length() + 1, newClient.peer) < 0){
-				successful = false;
-				std::cout << "failed to send connection acknowledgement to id " << newClient.id << "\n";
-			}
-
-		}
-
-		return successful;
-	
+	currentId++;
 }
 
-//send syncingClient's stats to each reciever client to keep everything in lockstep
-bool syncPlayerData() {
-	bool sentSuccessfully = true;
-	if (!clients.empty()) {
 
-		for (const Client& syncingClient : clients) {
+void playerPosUpdate(PosUpdatePacket& posPacket, ENetEvent* event) {
+    Packet p;
+    p.header = PLAYER_POS_UPDATE;
 
-			for (const Client& recieverClient : clients) {
+    for (Client& client : clients) {
+        if (client.peer == event->peer) {
+            // Update position for the player associated with the received position update packet
+            client.player.pos.x = posPacket.x;
+            client.player.pos.y = posPacket.y;
+            client.player.velocity.x = posPacket.xVel;
+            client.player.velocity.y = posPacket.yVel;
 
-				std::string payload = std::to_string(SYNC_UPDATE) + ";" + clientToPacket(syncingClient);
-				std::cout << "sync payload: " << payload << "\n";
-				if (sendMessage(payload.c_str(), payload.length() + 1, recieverClient.peer) < 0) {
-					sentSuccessfully = false;
-				}
-			}
-		}
-	}
-	return sentSuccessfully;
-}
-
-//player sent a packet with update data, send everyone but sender fresh data
-bool sendClientUpdate(Client senderClient) {
-	bool sentSuccessfully = true;
-	for (const Client& recievingClient : clients) {
-		if (recievingClient.id != senderClient.id) {
-			std::string payload = std::to_string(PLAYER_UPDATE) + ";";
-			payload += clientToPacket(senderClient);
-
-			if ((sendMessage(payload.c_str(), strlen(payload.c_str()) + 1, recievingClient.peer)) < 0) {
-				sentSuccessfully = false;
-			}
-		}
-	}
-	return sentSuccessfully;
-}
-
-//builds a string with the clients stats for various types of packets
-std::string clientToPacket(Client client) {
-
-	return std::to_string(client.id) + ";"
-		+ client.name + ";"
-		+ std::to_string(client.x) + ";"
-		+ std::to_string(client.y) + ";"
-		+ std::to_string(client.xVel) + ";"
-		+ std::to_string(client.yVel) + ";"
-		+ std::to_string(client.lives) + ";"
-		+ std::to_string(client.health) + ";"
-		+ std::to_string(client.maxSpeed) + ";"
-		+ std::to_string(client.damage) + ";"
-		+ std::to_string(client.xSize) + ";"
-		+ std::to_string(client.ySize);
-
-}
-
-Client packetToClient(std::string packetData) {
-	Client returnClient;
-
-	std::istringstream ss(packetData);
-	std::string token;
-	std::vector<std::string> tokens;
-
-	// tokenize packetData using ';' as delimiter
-	while (std::getline(ss, token, ';')) {
-		tokens.push_back(token);
-	}
-	
-	returnClient.id = std::stoi(tokens[1]);
-	returnClient.name = tokens[2];
-	returnClient.x = std::stof(tokens[3]);;
-	returnClient.y = std::stof(tokens[4]);
-	returnClient.xVel = std::stof(tokens[5]);
-	returnClient.yVel = std::stof(tokens[6]);
-	returnClient.lives = std::stoi(tokens[7]);
-	returnClient.health = std::stof(tokens[8]);
-	returnClient.maxSpeed = std::stof(tokens[9]);
-	returnClient.damage = std::stof(tokens[10]);
-	returnClient.xSize = std::stof(tokens[11]);
-	returnClient.ySize = std::stof(tokens[12]);
-
-	return returnClient;
-}
-
-int getPacketHeader(const std::string& packetData) {
-	size_t delimiterPos = packetData.find(';');
-
-	std::string headerString = packetData.substr(0, delimiterPos);
-
-	return std::stoi(headerString);
+            // Broadcast the updated position to all other clients
+            broadcastAll(client.player.id, p, (char*)&posPacket, sizeof(posPacket), true, 1);
+        }
+    }
 }

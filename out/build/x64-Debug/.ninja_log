@@ -1,80 +1,73 @@
 # ninja log v5
-90	1475	7346516156796092	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/input.c.obj	39a7bda2bba06a12
-98	259	7346516358466262	CMakeFiles/MultiSquaresClient.dir/common/src/Packet.cpp.obj	7a7578ab7be46305
-7262	7326	7346516215347244	thirdparty/gl2d/gl2d.lib	ea52c4a451ce7b1d
-23	52	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
-66	923	7346516151386038	CMakeFiles/MultiSquaresServer.dir/common/src/Packet.cpp.obj	760184a067bca1fd
-97	1509	7346516157106070	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/monitor.c.obj	72c9ba8bd3c0854d
-5816	5996	7346516201816676	thirdparty/raudio/raudio.lib	f07b2e4cfe2f3e16
-104	1319	7346516155356092	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/vulkan.c.obj	3a43f9dd646b41c
-4251	4734	7346516189510027	thirdparty/imgui-docking/CMakeFiles/imgui.dir/imgui/backends/imgui_impl_opengl3.cpp.obj	ff060a04173ad3c
-78	1335	7346516155536034	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/context.c.obj	5fb168e916741e0c
-6315	6380	7346516205976622	thirdparty/safeSave/safeSave.lib	cde3b444c08bd6f
-84	1642	7346516158516050	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/init.c.obj	cc5c570fcf0049fb
-926	1962	7346516161706052	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/window.c.obj	8753ce40fc26cd94
-61	1521	7346534566912125	CMakeFiles/MultiSquaresClient.dir/common/src/MapData.cpp.obj	c6897e845991f21c
-3323	4250	7346516184636042	thirdparty/enet-1.3.17/CMakeFiles/enet.dir/peer.c.obj	5caf8ac8160eedbe
-1320	2119	7346516163266143	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/win32_init.c.obj	78d6b237d87a99d7
-1567	1940	7349917972626714	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/MultiSquaresServer.exe	2e746680340afe2e
-3620	3852	7346516180266105	thirdparty/enet-1.3.17/CMakeFiles/enet.dir/unix.c.obj	4c6a648253ac5a75
-1335	2248	7346516164626163	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/win32_joystick.c.obj	b10422affac5c75f
-3895	6062	7346516202776617	thirdparty/imgui-docking/CMakeFiles/imgui.dir/imgui/imgui.cpp.obj	a4b63d98930afc01
-3987	4754	7346516189713387	thirdparty/imgui-docking/CMakeFiles/imgui.dir/imgui/imgui_demo.cpp.obj	1f99a1c4c81dfe9a
-3336	3619	7346516177656084	thirdparty/glfw-3.3.2/src/glfw3.lib	3b7870458319a60f
-2800	3895	7346516180616159	thirdparty/enet-1.3.17/CMakeFiles/enet.dir/callbacks.c.obj	456de0e7d6a46ae4
-1476	2311	7346516165256161	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/win32_monitor.c.obj	2681975b4b7437c5
-70	2248	7346534407067126	CMakeFiles/MultiSquaresServer.dir/common/src/MapData.cpp.obj	6957b53211e6c0d
-1510	2339	7346516165526117	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/win32_time.c.obj	69fae091ae21de6f
-1642	2464	7346516166766092	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/win32_thread.c.obj	6510a3b7b18b1201
-75	1404	7349917967833267	CMakeFiles/MultiSquaresServer.dir/common/src/Player.cpp.obj	4e3c556282ed1c37
-1962	2799	7346516170166131	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/win32_window.c.obj	5de1484a1507bb04
-2649	3070	7346516172766082	thirdparty/stb_truetype/CMakeFiles/stb_truetype.dir/src/stb_truetype.cpp.obj	70944a9a419d4c29
-2119	3108	7346516173016123	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/wgl_context.c.obj	51e6580366d4007b
-2249	3184	7346516174006139	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/egl_context.c.obj	8da9157a2d66f3bb
-3311	4175	7346516183936134	thirdparty/enet-1.3.17/CMakeFiles/enet.dir/list.c.obj	1e95b9eeccb501d
-70	1567	7349917969453243	CMakeFiles/MultiSquaresServer.dir/common/src/Bullet.cpp.obj	e87b8a23d5254695
-3852	5816	7346516200176627	thirdparty/raudio/CMakeFiles/raudio.dir/src/raudio.c.obj	16c9f448526a2ac
-3070	3323	7346516175326128	thirdparty/stb_truetype/stb_truetype.lib	8cec1a009e81e49a
-3318	4129	7346516183426102	thirdparty/enet-1.3.17/CMakeFiles/enet.dir/packet.c.obj	f123372913e4f2ec
-2312	3336	7346516175486063	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/osmesa_context.c.obj	389ae979f8f8c318
-3108	4101	7346516183226062	thirdparty/enet-1.3.17/CMakeFiles/enet.dir/compress.c.obj	3109d2b2a6f24890
-2464	3453	7346516176266103	thirdparty/stb_image/CMakeFiles/stb_image.dir/src/stb_image.cpp.obj	a4e924b5198bed11
-49	3615	7346516177666085	CMakeFiles/MultiSquaresServer.dir/server/src/server.cpp.obj	3bcddba13ef15cdb
-4102	4914	7346516191193514	thirdparty/imgui-docking/CMakeFiles/imgui.dir/imgui/imgui_tables.cpp.obj	ff67c4b7ae73d4f4
-2340	3783	7346516179696088	thirdparty/glad/CMakeFiles/glad.dir/src/glad.c.obj	d4008f0afe99b9a9
-3453	3719	7346516178406088	thirdparty/stb_image/stb_image.lib	abdc04d40f2fdf1e
-4915	6985	7346516212057137	thirdparty/glui/CMakeFiles/glui.dir/src/glui.cpp.obj	bb589c31c86adb0c
-3784	3987	7346516181646094	thirdparty/glad/glad.lib	d4809af5f468ff8
-81	1021	7349922350279224	CMakeFiles/MultiSquaresClient.dir/client/src/platform/platformInput.cpp.obj	fdc3b3b4f66c057c
-3184	4091	7346516183026141	thirdparty/enet-1.3.17/CMakeFiles/enet.dir/host.c.obj	d4bfe01349eae399
-3615	4822	7346516190243472	thirdparty/enet-1.3.17/CMakeFiles/enet.dir/protocol.c.obj	daec39cedabb2c35
-70	1171	7349969002373520	CMakeFiles/MultiSquaresClient.dir/common/src/Player.cpp.obj	b0787861f08f4ead
-4176	5647	7346516198613407	thirdparty/imgui-docking/CMakeFiles/imgui.dir/imgui/backends/imgui_impl_glfw.cpp.obj	1f3dc3e13cf4f385
-3719	4838	7346516190013450	thirdparty/enet-1.3.17/CMakeFiles/enet.dir/win32.c.obj	58ca3600e53b7b18
-4092	5129	7346516193273411	thirdparty/imgui-docking/CMakeFiles/imgui.dir/imgui/imgui_draw.cpp.obj	ecf5d0102658eea4
-4838	5193	7346516192993357	thirdparty/enet-1.3.17/enet.lib	39cd3285b9621f90
-4130	5211	7346516194263385	thirdparty/imgui-docking/CMakeFiles/imgui.dir/imgui/imgui_widgets.cpp.obj	bc5fdadc43d1c00a
-6063	6170	7346516203806659	thirdparty/imgui-docking/imgui.lib	2de2288425765b3d
-4737	6315	7346516205366690	thirdparty/safeSave/CMakeFiles/safeSave.dir/src/safeSave.cpp.obj	7e4de197023fce2f
-4822	6530	7346516207526635	thirdparty/gl2d/CMakeFiles/gl2d.dir/src/gl2dParticleSystem.cpp.obj	c640f0eeac60d891
-4754	7262	7346516214817243	thirdparty/gl2d/CMakeFiles/gl2d.dir/src/gl2d.cpp.obj	acac01eef33d9d0c
-7326	7395	7346516216007234	thirdparty/glui/glui.lib	4e0024ed63c578d5
-69	588	7346516361746368	CMakeFiles/MultiSquaresClient.dir/client/src/platform/otherPlatformFunctions.cpp.obj	d5909ff0c4f22ea7
-85	1990	7349972909084168	CMakeFiles/MultiSquaresClient.dir/client/src/renderer.cpp.obj	cb1249ffd8097f14
-76	2847	7349922368614244	CMakeFiles/MultiSquaresClient.dir/client/src/platform/glfwMain.cpp.obj	78e01c2a7e11ba06
-78	1825	7349975594182894	CMakeFiles/MultiSquaresClient.dir/common/src/Bullet.cpp.obj	351de3264299a8e2
-80	3401	7349972923146015	CMakeFiles/MultiSquaresClient.dir/client/src/gameLayer.cpp.obj	9b9616c198045086
-1826	2151	7349975596942945	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/MultiSquaresClient.exe	9070c6278f451358
-24	55	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
-66	1382	7350962018695024	CMakeFiles/MultiSquaresServer.dir/common/src/Player.cpp.obj	4e3c556282ed1c37
-61	1509	7350962019975012	CMakeFiles/MultiSquaresServer.dir/common/src/Bullet.cpp.obj	e87b8a23d5254695
-1509	1965	7350962023788446	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/MultiSquaresServer.exe	2e746680340afe2e
-22	50	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
-58	1412	7350962091609994	CMakeFiles/MultiSquaresClient.dir/common/src/Bullet.cpp.obj	351de3264299a8e2
-1413	1879	7350962095789193	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/MultiSquaresClient.exe	9070c6278f451358
-23	69	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
-15	46	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
-56	1599	7350962276025917	CMakeFiles/MultiSquaresClient.dir/common/src/Bullet.cpp.obj	351de3264299a8e2
-78	152	0	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	1d24fdd468593afd
-167	3223	7354365465432921	CMakeFiles/MultiSquaresServer.dir/common/src/Bullet.cpp.obj	e87b8a23d5254695
-3224	4031	7354365472342961	C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/MultiSquaresServer.exe	2e746680340afe2e
+8	20	0	C:/.dev/Scribble Them Out/MultiSquare/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	8a83733fff576d02
+31	853	7385429252673288	CMakeFiles/MultiSquaresServer.dir/common/src/Player.cpp.obj	66d61dbff28a1758
+1112	1142	7381410888443187	thirdparty/raudio/raudio.lib	f6d9c87b66043e29
+39	284	7381410879819200	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/monitor.c.obj	9b199bd960b8942c
+27	919	7381410886200590	CMakeFiles/MultiSquaresServer.dir/common/src/MapData.cpp.obj	dcf489b5b5597cb9
+50	279	7381410879749182	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/win32_time.c.obj	4ee1548362bb7549
+651	823	7381410885180351	thirdparty/imgui-docking/CMakeFiles/imgui.dir/imgui/backends/imgui_impl_opengl3.cpp.obj	8b58c664e92826fb
+41	276	7381410879759186	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/vulkan.c.obj	d18a77b83a1854c1
+23	94	7381410877978767	CMakeFiles/MultiSquaresServer.dir/server/src/serverUtils.cpp.obj	82f569f9c83c4249
+1648	1671	7381410893738144	thirdparty/glui/glui.lib	224cbdd91d4f4695
+52	269	7381410879719179	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/win32_thread.c.obj	b83c0a8aa040271b
+33	273	7381410879759186	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/context.c.obj	4f1393e23f228992
+40	673	7381410943181322	CMakeFiles/MultiSquaresClient.dir/common/src/MapData.cpp.obj	e9ca13c79a10b9e9
+297	654	7381410883499957	thirdparty/enet-1.3.17/CMakeFiles/enet.dir/peer.c.obj	d25f6dd4f30f0580
+45	282	7381410879809198	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/win32_init.c.obj	fe18433112bd9f03
+37	286	7381410879819200	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/input.c.obj	5a824701e9ecde9
+43	289	7381410879819200	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/window.c.obj	c4c2179ebfaf4a36
+1228	1251	7381410889547162	thirdparty/safeSave/safeSave.lib	562e92798dbf639c
+35	291	7381410879829204	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/init.c.obj	332538fbe4a37ef7
+526	1209	7381410889093347	thirdparty/imgui-docking/CMakeFiles/imgui.dir/imgui/imgui.cpp.obj	dee75286d0b37166
+602	902	7381410885940529	thirdparty/imgui-docking/CMakeFiles/imgui.dir/imgui/imgui_demo.cpp.obj	deba6021cde6ee54
+529	604	7381410883039954	thirdparty/glfw-3.3.2/src/glfw3.lib	75ef323800ad3255
+284	607	7381410883099974	thirdparty/enet-1.3.17/CMakeFiles/enet.dir/callbacks.c.obj	5273a7a3f4a10d29
+48	294	7381410879839203	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/win32_monitor.c.obj	555c97500307f5ab
+356	402	7381410881029484	thirdparty/enet-1.3.17/CMakeFiles/enet.dir/unix.c.obj	797eb85f8ccda117
+47	297	7381410879849206	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/win32_joystick.c.obj	1f3e805fb019c851
+54	299	7381410879919228	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/win32_window.c.obj	877b8168589ea34
+94	355	7381410880569374	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/wgl_context.c.obj	4726c94755dc5928
+282	409	7381410881099497	thirdparty/stb_truetype/CMakeFiles/stb_truetype.dir/src/stb_truetype.cpp.obj	24eb4d68f42a674d
+692	789	7385467234278382	C:/.dev/Scribble Them Out/MultiSquare/out/MultiSquaresServer.exe	32701e92c0af8f87
+487	1112	7381410888133114	thirdparty/raudio/CMakeFiles/raudio.dir/src/raudio.c.obj	dbc32aa511feff74
+409	487	7381410881799663	thirdparty/stb_truetype/stb_truetype.lib	3f02a6210b6385c1
+270	526	7381410882279774	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/egl_context.c.obj	42b17a6654695d4f
+294	651	7381410883449947	thirdparty/enet-1.3.17/CMakeFiles/enet.dir/packet.c.obj	9b5db5310d5d3497
+273	529	7381410882269772	thirdparty/glfw-3.3.2/src/CMakeFiles/glfw.dir/osmesa_context.c.obj	4259b0541cc04439
+287	659	7381410883589978	thirdparty/enet-1.3.17/CMakeFiles/enet.dir/compress.c.obj	60dce66456fab380
+279	596	7381410882969936	thirdparty/stb_image/CMakeFiles/stb_image.dir/src/stb_image.cpp.obj	76ed3610b5346b96
+27	970	7385429253833553	CMakeFiles/MultiSquaresServer.dir/common/src/Bullet.cpp.obj	e122b878aa70c13e
+292	602	7381410883059960	thirdparty/enet-1.3.17/CMakeFiles/enet.dir/list.c.obj	24db718add5791f7
+300	645	7381410883439944	thirdparty/enet-1.3.17/CMakeFiles/enet.dir/protocol.c.obj	87e2cba4c519b60e
+34	296	7381410939430448	CMakeFiles/MultiSquaresClient.dir/client/src/platform/platformInput.cpp.obj	198a6c23a7275cab
+289	648	7381410883469952	thirdparty/enet-1.3.17/CMakeFiles/enet.dir/host.c.obj	542ee2074407853a
+607	902	7381410885970536	thirdparty/imgui-docking/CMakeFiles/imgui.dir/imgui/imgui_tables.cpp.obj	5224b4751d078447
+276	741	7381410884360158	thirdparty/glad/CMakeFiles/glad.dir/src/glad.c.obj	35172aa5f006ed0e
+596	657	7381410883519962	thirdparty/stb_image/stb_image.lib	f0d341093b5fa0ab
+34	642	7385429320640745	CMakeFiles/MultiSquaresClient.dir/common/src/Player.cpp.obj	dbb254bb344b2ad0
+648	1188	7381410888913297	thirdparty/imgui-docking/CMakeFiles/imgui.dir/imgui/backends/imgui_impl_glfw.cpp.obj	894ae1814f0f89e8
+402	790	7381410884880281	thirdparty/enet-1.3.17/CMakeFiles/enet.dir/win32.c.obj	83b03b3d6ec19e8f
+823	1567	7381410892687895	thirdparty/glui/CMakeFiles/glui.dir/src/glui.cpp.obj	ac9c18e96d3a60ec
+741	826	7381410885240367	thirdparty/glad/glad.lib	d6dedf9815bf666f
+790	862	7381410885520430	thirdparty/enet-1.3.17/enet.lib	ed982de5c522e853
+605	951	7381410886510664	thirdparty/imgui-docking/CMakeFiles/imgui.dir/imgui/imgui_draw.cpp.obj	1ee2ff34b7fe1f10
+645	997	7381410886980772	thirdparty/imgui-docking/CMakeFiles/imgui.dir/imgui/imgui_widgets.cpp.obj	49d0a8745767431
+654	1227	7381410889303387	thirdparty/safeSave/CMakeFiles/safeSave.dir/src/safeSave.cpp.obj	16486d0b29845e7
+1209	1244	7381410889447133	thirdparty/imgui-docking/imgui.lib	2e68b9a153612aff
+24	940	7385457587898315	CMakeFiles/MultiSquaresServer.dir/common/src/Packet.cpp.obj	edd91e64d727d972
+659	1312	7381410890147301	thirdparty/gl2d/CMakeFiles/gl2d.dir/src/gl2dParticleSystem.cpp.obj	3cfc74efac8ebd73
+22	692	7385467233508201	CMakeFiles/MultiSquaresServer.dir/server/src/server.cpp.obj	606e533a686d5bb0
+657	1622	7381410893248026	thirdparty/gl2d/CMakeFiles/gl2d.dir/src/gl2d.cpp.obj	2bb00e203d3fb71d
+29	673	7385457624852034	CMakeFiles/MultiSquaresClient.dir/common/src/Packet.cpp.obj	d0420c6498f9cd92
+1622	1648	7381410893488080	thirdparty/gl2d/gl2d.lib	e4796ba021bf0edc
+23	689	7385462225107779	CMakeFiles/MultiSquaresClient.dir/client/src/Networker.cpp.obj	7462e21ebd7c2b51
+32	198	7381410938460220	CMakeFiles/MultiSquaresClient.dir/client/src/platform/otherPlatformFunctions.cpp.obj	fa349958733b5527
+29	727	7385429321480934	CMakeFiles/MultiSquaresClient.dir/client/src/renderer.cpp.obj	d431071f582d9439
+30	751	7385429321730990	CMakeFiles/MultiSquaresClient.dir/common/src/Bullet.cpp.obj	a3dfd881bf44aaf2
+30	951	7381410945971978	CMakeFiles/MultiSquaresClient.dir/client/src/platform/glfwMain.cpp.obj	9ce342e43e25ebd0
+28	775	7385457625862267	CMakeFiles/MultiSquaresClient.dir/client/src/gameLayer.cpp.obj	1749410d4a64ea38
+690	799	7385462226007991	C:/.dev/Scribble Them Out/MultiSquare/out/MultiSquaresClient.exe	d9ed399489b9fa2f
+11	23	0	C:/.dev/Scribble Them Out/MultiSquare/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	8a83733fff576d02
+8	20	0	C:/.dev/Scribble Them Out/MultiSquare/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	8a83733fff576d02
+7	19	0	C:/.dev/Scribble Them Out/MultiSquare/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	8a83733fff576d02
+8	20	0	C:/.dev/Scribble Them Out/MultiSquare/out/build/x64-Debug/CMakeFiles/cmake.verify_globs	8a83733fff576d02

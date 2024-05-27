@@ -3,17 +3,14 @@
 #include <string>
 #include <sstream>
 #include <vector>
-
+#include <enet/enet.h>
 
 class Player {
 public:
 	Player();
-	Player(std::string packetData);
 	void update(float deltaTime);
 	void updateStats(Player newStats);
 	void boost(glm::vec2 direction);
-
-	std::string toNetworkDataPacket(int HEADERID);
 	int id;
 
 	glm::vec2 pos;
@@ -40,4 +37,9 @@ public:
 	float bulletSpeed;
 
 	glm::vec2 bulletSize;
+};
+
+struct Client {
+	Player player;
+	ENetPeer* peer;
 };

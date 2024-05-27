@@ -1,8 +1,8 @@
-# Install script for directory: C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/thirdparty/stb_image
+# Install script for directory: C:/.dev/Scribble Them Out/MultiSquare/thirdparty/stb_image
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "C:/Users/Bryce/Dev Workspace/Cplus/projects/MultiSquares/out/install/x64-Debug")
+  set(CMAKE_INSTALL_PREFIX "C:/.dev/Scribble Them Out/MultiSquare/out/install/x64-Debug")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
