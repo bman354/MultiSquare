@@ -1,8 +1,8 @@
-# Install script for directory: C:/.dev/Scribble Them Out
+# Install script for directory: C:/.dev/Scribble Them Out/MultiSquare
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "C:/.dev/Scribble Them Out/out/install/x64-Debug")
+  set(CMAKE_INSTALL_PREFIX "C:/.dev/Scribble Them Out/MultiSquare/out/install/x64-Debug")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -34,62 +34,62 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/.dev/Scribble Them Out/out/build/x64-Debug/thirdparty/glfw-3.3.2/cmake_install.cmake")
+  include("C:/.dev/Scribble Them Out/MultiSquare/out/build/x64-Debug/thirdparty/glfw-3.3.2/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/.dev/Scribble Them Out/out/build/x64-Debug/thirdparty/glad/cmake_install.cmake")
+  include("C:/.dev/Scribble Them Out/MultiSquare/out/build/x64-Debug/thirdparty/glad/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/.dev/Scribble Them Out/out/build/x64-Debug/thirdparty/stb_image/cmake_install.cmake")
+  include("C:/.dev/Scribble Them Out/MultiSquare/out/build/x64-Debug/thirdparty/stb_image/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/.dev/Scribble Them Out/out/build/x64-Debug/thirdparty/stb_truetype/cmake_install.cmake")
+  include("C:/.dev/Scribble Them Out/MultiSquare/out/build/x64-Debug/thirdparty/stb_truetype/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/.dev/Scribble Them Out/out/build/x64-Debug/thirdparty/enet-1.3.17/cmake_install.cmake")
+  include("C:/.dev/Scribble Them Out/MultiSquare/out/build/x64-Debug/thirdparty/enet-1.3.17/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/.dev/Scribble Them Out/out/build/x64-Debug/thirdparty/raudio/cmake_install.cmake")
+  include("C:/.dev/Scribble Them Out/MultiSquare/out/build/x64-Debug/thirdparty/raudio/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/.dev/Scribble Them Out/out/build/x64-Debug/thirdparty/glm/cmake_install.cmake")
+  include("C:/.dev/Scribble Them Out/MultiSquare/out/build/x64-Debug/thirdparty/glm/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/.dev/Scribble Them Out/out/build/x64-Debug/thirdparty/imgui-docking/cmake_install.cmake")
+  include("C:/.dev/Scribble Them Out/MultiSquare/out/build/x64-Debug/thirdparty/imgui-docking/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/.dev/Scribble Them Out/out/build/x64-Debug/thirdparty/safeSave/cmake_install.cmake")
+  include("C:/.dev/Scribble Them Out/MultiSquare/out/build/x64-Debug/thirdparty/safeSave/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/.dev/Scribble Them Out/out/build/x64-Debug/thirdparty/profilerLib/cmake_install.cmake")
+  include("C:/.dev/Scribble Them Out/MultiSquare/out/build/x64-Debug/thirdparty/profilerLib/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/.dev/Scribble Them Out/out/build/x64-Debug/thirdparty/gl2d/cmake_install.cmake")
+  include("C:/.dev/Scribble Them Out/MultiSquare/out/build/x64-Debug/thirdparty/gl2d/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/.dev/Scribble Them Out/out/build/x64-Debug/thirdparty/glui/cmake_install.cmake")
+  include("C:/.dev/Scribble Them Out/MultiSquare/out/build/x64-Debug/thirdparty/glui/cmake_install.cmake")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -100,5 +100,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/.dev/Scribble Them Out/out/build/x64-Debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/.dev/Scribble Them Out/MultiSquare/out/build/x64-Debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

@@ -12,7 +12,7 @@ Player::Player() {
     maxBoostSpeed = 400.0f;
 
     id = -1; 
-    name = "DEFAULT"; 
+    name = "ERROR"; 
     health = 100.0f; 
     damage = 10.0f; 
     lives = 100;
@@ -65,81 +65,4 @@ void Player::boost(glm::vec2 direction) {
     this->boostVelocity.x += boostXStrength;
     this->boostVelocity.y += boostYStrength;
 
-}
-
-ServerPlayer::ServerPlayer() {
-
-    pos = { 100.0f, 100.0f };
-    velocity = { 0.0f, 0.0f };
-
-    boostPower = 500.0f;
-    boostVelocity = { 0.0f, 0.0f };
-    maxBoostSpeed = 400.0f;
-
-    id = -1;
-    name = "DEFAULT";
-    health = 100.0f;
-    damage = 10.0f;
-    lives = 100;
-
-    maxSpeed = 200.0f;
-    acceleration = 5.0f;
-    fireRate = 100;
-
-    playerSize = { 16.0f, 16.0f };
-    ENetPeer* peer = {};
-}
-
-ServerPlayer::ServerPlayer(Player playerData) {
-
-    pos = playerData.pos;
-    velocity = playerData.velocity;
-
-    boostPower = playerData.boostPower;
-    boostVelocity = playerData.boostVelocity;
-    maxBoostTimer = playerData.maxBoostTimer;
-    maxBoostSpeed = playerData.maxBoostSpeed;
-
-    id = playerData.id;
-    name = playerData.name;
-    health = playerData.health;
-    damage = playerData.damage;
-    lives = playerData.lives;
-
-    maxSpeed = playerData.maxSpeed;
-    acceleration = playerData.acceleration;
-    fireRate = playerData.fireRate;
-    bulletSpeed = playerData.bulletSpeed;
-    bulletSize = playerData.bulletSize;
-
-    playerSize = playerData.playerSize;
-    ENetPeer* peer = {};
-}
-
-Player serverPlayerToPlayer(ServerPlayer playerData) {
-    Player returnPlayer = {};
-    returnPlayer.pos = playerData.pos;
-    returnPlayer.velocity = playerData.velocity;
-
-    returnPlayer.boostPower = playerData.boostPower;
-    returnPlayer.boostVelocity = playerData.boostVelocity;
-    returnPlayer.boostTimer = 0;
-    returnPlayer.maxBoostTimer = playerData.maxBoostTimer;
-    returnPlayer.maxBoostSpeed = playerData.maxBoostSpeed;
-
-    returnPlayer.id = playerData.id;
-    returnPlayer.name = playerData.name;
-    returnPlayer.health = playerData.health;
-    returnPlayer.damage = playerData.damage;
-    returnPlayer.lives = playerData.lives;
-
-    returnPlayer.maxSpeed = playerData.maxSpeed;
-    returnPlayer.acceleration = playerData.acceleration;
-    returnPlayer.fireRate = playerData.fireRate;
-    returnPlayer.fireRateTimer = returnPlayer.fireRate;
-    returnPlayer.bulletSpeed = playerData.bulletSpeed;
-    returnPlayer.bulletSize = playerData.bulletSize;
-
-    returnPlayer.playerSize = playerData.playerSize;
-    return returnPlayer;
 }

@@ -12,7 +12,10 @@ enum PacketHeader
 	NEW_PLAYER_CONNECTED = 1001,
 	HANDSHAKE_PLAYERDATA = 1011,
 
-	PLAYER_POS_UPDATE = 1002
+
+
+	PLAYER_POS_UPDATE = 1002,
+	MISSING_PLAYER_DATA = 1012
 };
 
 /*
@@ -29,32 +32,25 @@ struct Packet {
 	}
 };
 
-
-
-//data, just send the bits, BITCH
-
-//sent to server with new player's data
-struct HandshakePacket {
+struct PlayerPacket {
 	Player player;
 };
 
-//sent from server with new id
-struct HandshakeConfirmationPacket {
+struct IdPacket {
 	int id;
+};
+struct HandshakePacket {
+	Player player;
+};
+struct ConfirmHandshakePacket {
+	int id;
+	unsigned long long serverTime;
+	Player existingPlayers[8];
 };
 
 //sent from server to alert to new player connected
 struct NewPlayerConnectedPacket {
 	Player connectingPlayer;
-};
-
-struct HandshakeDataPacket {
-	Player existingPlayers[8];
-
-};
-
-struct GenericPlayerPacket {
-	Player playerData;
 };
 
 struct PosUpdatePacket {
@@ -63,6 +59,7 @@ struct PosUpdatePacket {
 	float y;
 	float xVel;
 	float yVel;
+	unsigned long long serverTime;
 };
 
 void sendPacket(ENetPeer* to, Packet p, const char* data, size_t size, bool reliable, int channel);

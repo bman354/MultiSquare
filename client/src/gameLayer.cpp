@@ -64,7 +64,6 @@ bool IN_GAME = false;
 bool IS_CONNECTED = false;
 int selected = 0;
 
-
 bool initGame() {
 	//creates the renderer and starts game
 	gl2d::init();
@@ -97,7 +96,6 @@ bool gameLogic(float deltaTime) {
 
 	renderer.updateWindowMetrics(w, h);
 #pragma endregion
-
 
 #pragma region Main Menu
 
@@ -173,7 +171,6 @@ bool gameLogic(float deltaTime) {
 						portToConnectTo += in;
 						break;
 					}
-
 				}
 			}
 		}
@@ -192,11 +189,12 @@ bool gameLogic(float deltaTime) {
 		player.name = playerMenuName;
 		
 		//set up connection
-		if (!IS_CONNECTED) {
+		if (!networker.status.connected) {
 			networker.initNetworker(ipAddress, port, player, extPlayers);
-			IS_CONNECTED = true;
+			networker.doHandshake(player, extPlayers);
 		}
-		else {
+		else 
+		{
 
 #pragma endregion
 
@@ -252,13 +250,9 @@ bool gameLogic(float deltaTime) {
 			}
 
 #pragma endregion
-
-
-#pragma region network event handler
-
+			//handle incoming network requests
 			networker.doEnetEventService(player, extPlayers, bullets);
 
-#pragma endregion			
 
 #pragma region rendering
 

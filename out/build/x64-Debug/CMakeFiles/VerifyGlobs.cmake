@@ -3,40 +3,40 @@
 cmake_policy(SET CMP0009 NEW)
 
 # CLIENT_SOURCES at CMakeLists.txt:53 (file)
-file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "C:/.dev/Scribble Them Out/client/src/*.cpp")
+file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "C:/.dev/Scribble Them Out/MultiSquare/client/src/*.cpp")
 set(OLD_GLOB
-  "C:/.dev/Scribble Them Out/client/src/Networker.cpp"
-  "C:/.dev/Scribble Them Out/client/src/gameLayer.cpp"
-  "C:/.dev/Scribble Them Out/client/src/platform/glfwMain.cpp"
-  "C:/.dev/Scribble Them Out/client/src/platform/otherPlatformFunctions.cpp"
-  "C:/.dev/Scribble Them Out/client/src/platform/platformInput.cpp"
-  "C:/.dev/Scribble Them Out/client/src/renderer.cpp"
+  "C:/.dev/Scribble Them Out/MultiSquare/client/src/Networker.cpp"
+  "C:/.dev/Scribble Them Out/MultiSquare/client/src/gameLayer.cpp"
+  "C:/.dev/Scribble Them Out/MultiSquare/client/src/platform/glfwMain.cpp"
+  "C:/.dev/Scribble Them Out/MultiSquare/client/src/platform/otherPlatformFunctions.cpp"
+  "C:/.dev/Scribble Them Out/MultiSquare/client/src/platform/platformInput.cpp"
+  "C:/.dev/Scribble Them Out/MultiSquare/client/src/renderer.cpp"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   message("-- GLOB mismatch!")
-  file(TOUCH_NOCREATE "C:/.dev/Scribble Them Out/out/build/x64-Debug/CMakeFiles/cmake.verify_globs")
+  file(TOUCH_NOCREATE "C:/.dev/Scribble Them Out/MultiSquare/out/build/x64-Debug/CMakeFiles/cmake.verify_globs")
 endif()
 
 # SHARED_SOURCES at CMakeLists.txt:50 (file)
-file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "C:/.dev/Scribble Them Out/common/src/*.cpp")
+file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "C:/.dev/Scribble Them Out/MultiSquare/common/src/*.cpp")
 set(OLD_GLOB
-  "C:/.dev/Scribble Them Out/common/src/Bullet.cpp"
-  "C:/.dev/Scribble Them Out/common/src/MapData.cpp"
-  "C:/.dev/Scribble Them Out/common/src/Packet.cpp"
-  "C:/.dev/Scribble Them Out/common/src/Player.cpp"
+  "C:/.dev/Scribble Them Out/MultiSquare/common/src/Bullet.cpp"
+  "C:/.dev/Scribble Them Out/MultiSquare/common/src/MapData.cpp"
+  "C:/.dev/Scribble Them Out/MultiSquare/common/src/Packet.cpp"
+  "C:/.dev/Scribble Them Out/MultiSquare/common/src/Player.cpp"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   message("-- GLOB mismatch!")
-  file(TOUCH_NOCREATE "C:/.dev/Scribble Them Out/out/build/x64-Debug/CMakeFiles/cmake.verify_globs")
+  file(TOUCH_NOCREATE "C:/.dev/Scribble Them Out/MultiSquare/out/build/x64-Debug/CMakeFiles/cmake.verify_globs")
 endif()
 
 # SERVER_SOURCES at CMakeLists.txt:56 (file)
-file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "C:/.dev/Scribble Them Out/server/src/*.cpp")
+file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "C:/.dev/Scribble Them Out/MultiSquare/server/src/*.cpp")
 set(OLD_GLOB
-  "C:/.dev/Scribble Them Out/server/src/server.cpp"
-  "C:/.dev/Scribble Them Out/server/src/serverUtils.cpp"
+  "C:/.dev/Scribble Them Out/MultiSquare/server/src/server.cpp"
+  "C:/.dev/Scribble Them Out/MultiSquare/server/src/serverUtils.cpp"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   message("-- GLOB mismatch!")
-  file(TOUCH_NOCREATE "C:/.dev/Scribble Them Out/out/build/x64-Debug/CMakeFiles/cmake.verify_globs")
+  file(TOUCH_NOCREATE "C:/.dev/Scribble Them Out/MultiSquare/out/build/x64-Debug/CMakeFiles/cmake.verify_globs")
 endif()

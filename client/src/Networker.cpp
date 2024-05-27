@@ -28,18 +28,8 @@ int Networker::initNetworker(char ipAddress[30], char port[20], Player& player, 
 		//Enet Handshake
 		if (enet_host_service(this->client, &event, 5000) > 0 && event.type == ENET_EVENT_TYPE_CONNECT) {
 			std::cout << "Enet handshake successful\n";
-		}
-
-		//Gamelayer Handshake
-		Packet packet;
-		packet.header = HANDSHAKE;
-
-		HandshakePacket packetData;
-		packetData.player = player;
-
-		std::cout << "sending handshake\n";
-		sendPacket(server, packet, (char*)&packetData, sizeof(packetData), true, 1);
-
+			status.connected = true;
+		}		
 	}
 }
 
@@ -48,13 +38,13 @@ void Networker::doEnetEventService(Player& player, std::vector<Player>& extPlaye
 	while (enet_host_service(this->client, &event, 0) > 0) {
 		switch (event.type) {
 			case ENET_EVENT_TYPE_CONNECT: {
-				//HACK may not be useful here?
+				this->status.connected = true;
 				std::cout << "Connected to server!" << std::endl;
 				break;
 			}
 			case ENET_EVENT_TYPE_DISCONNECT: {
 				std::cout << "Disconnected from server!" << std::endl;
-				//TODO actually disconnect game
+				this->status.connected = false;
 				break;
 			}
 			case ENET_EVENT_TYPE_RECEIVE: {
@@ -67,19 +57,13 @@ void Networker::doEnetEventService(Player& player, std::vector<Player>& extPlaye
 
 				switch (packet.header) {
 					case NEW_PLAYER_CONNECTED: {
+						std::cout << "New player connected\n";
 						NewPlayerConnectedPacket newConnectedPacket = *(NewPlayerConnectedPacket*)data;
 						extPlayers.push_back(newConnectedPacket.connectingPlayer);
 						break;
 					} case PLAYER_POS_UPDATE: {
 						PosUpdatePacket posPacket = *(PosUpdatePacket*)data;
 						handlePlayerPosUpdate(posPacket, extPlayers);
-						break;
-					} case HANDSHAKE_PLAYERDATA: {
-						std::cout << "recieved handshake data\n";
-						HandshakeDataPacket handshakePacket = *(HandshakeDataPacket*)data;
-						for (Player player : handshakePacket.existingPlayers) {
-							extPlayers.push_back(player);
-						}
 						break;
 					}
 				}
@@ -124,6 +108,56 @@ void Networker::handlePlayerPosUpdate(PosUpdatePacket& posPacket, std::vector<Pl
 			player.pos.y = posPacket.y;
 			player.velocity.x = posPacket.xVel;
 			player.velocity.y = posPacket.yVel;
+			std::cout << "pos update on -- " << posPacket.id << "\n";
+			return;
 		}
+	}
+}
+
+void Networker::doHandshake(Player& localPlayer, std::vector<Player>& extPlayers) {
+	Packet packet;
+	packet.header = HANDSHAKE;
+
+	HandshakePacket data;
+	data.player = localPlayer;
+
+
+	const int maxAttempts = 5;
+	int attempts = 0;
+
+	while (attempts < maxAttempts && !status.handshakeSuccessful) {
+		sendPacket(server, packet, (char*)&data, sizeof(data), true, 1);
+
+
+		if (enet_host_service(client, &event, 5000) > 0) {
+			if (event.type == ENET_EVENT_TYPE_RECEIVE) {
+				Packet packet;
+				size_t dataSize = 0;
+
+				auto data = parsePacket(event, packet, dataSize);
+
+				if (packet.header == HANDSHAKE_CONFIRM) {
+					ConfirmHandshakePacket packetData = *(ConfirmHandshakePacket*)data;
+
+					localPlayer.id = packetData.id;
+					serverTime = packetData.serverTime;
+					
+					for (Player& player : packetData.existingPlayers) {
+						if (player.id >= 0) {
+							std::cout << "Got existing player with name: " << player.name << "and id: " << player.id << "\n";
+							extPlayers.push_back(player);
+						}
+					}
+
+					status.handshakeSuccessful = true;
+				} else {
+					std::cout << "Non handshake packet recieved with header: " << packet.header << "\n";
+				}
+			}
+		}
+		else {
+			std::cout << "Handshake timed out, retrying...\n";
+		}
+		attempts++;
 	}
 }

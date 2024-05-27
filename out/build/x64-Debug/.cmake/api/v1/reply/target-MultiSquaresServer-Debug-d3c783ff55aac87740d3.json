@@ -1,0 +1,399 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "C:/.dev/Scribble Them Out/MultiSquare/out/MultiSquaresServer.exe"
+		},
+		{
+			"path" : "C:/.dev/Scribble Them Out/MultiSquare/out/MultiSquaresServer.pdb"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_executable",
+			"target_link_libraries",
+			"target_compile_definitions",
+			"target_include_directories",
+			"set_property",
+			"target_sources"
+		],
+		"files" : 
+		[
+			"CMakeLists.txt",
+			"thirdparty/enet-1.3.17/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 84,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 115,
+				"parent" : 0
+			},
+			{
+				"file" : 1
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 94,
+				"parent" : 3
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 94,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 105,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 87,
+				"parent" : 0
+			},
+			{
+				"command" : 4,
+				"file" : 0,
+				"line" : 99,
+				"parent" : 0
+			},
+			{
+				"command" : 5,
+				"file" : 0,
+				"line" : 86,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "/DWIN32 /D_WINDOWS /GR /EHsc /Zi /Ob0 /Od /RTC1 -std:c++17 -MTd"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 5,
+					"define" : "PRODUCTION_BUILD=0"
+				},
+				{
+					"backtrace" : 6,
+					"define" : "_CRT_SECURE_NO_WARNINGS"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 7,
+					"path" : "C:/.dev/Scribble Them Out/MultiSquare/server/include"
+				},
+				{
+					"backtrace" : 7,
+					"path" : "C:/.dev/Scribble Them Out/MultiSquare/common/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/.dev/Scribble Them Out/MultiSquare/thirdparty/glm/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/.dev/Scribble Them Out/MultiSquare/thirdparty/glm"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/.dev/Scribble Them Out/MultiSquare/thirdparty/glfw-3.3.2/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/.dev/Scribble Them Out/MultiSquare/thirdparty/glad/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/.dev/Scribble Them Out/MultiSquare/thirdparty/stb_image/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/.dev/Scribble Them Out/MultiSquare/thirdparty/stb_truetype/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/.dev/Scribble Them Out/MultiSquare/thirdparty/gl2d/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/.dev/Scribble Them Out/MultiSquare/thirdparty/raudio/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/.dev/Scribble Them Out/MultiSquare/thirdparty/imgui-docking/imgui"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/.dev/Scribble Them Out/MultiSquare/thirdparty/safeSave/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/.dev/Scribble Them Out/MultiSquare/thirdparty/enet-1.3.17/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/.dev/Scribble Them Out/MultiSquare/thirdparty/profilerLib/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/.dev/Scribble Them Out/MultiSquare/thirdparty/glui/include"
+				}
+			],
+			"language" : "CXX",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					8
+				],
+				"standard" : "17"
+			},
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3,
+				4,
+				5
+			]
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 2,
+			"id" : "glfw::@c8db1781ba139d98a588"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "glad::@140c1f658771f9cc4abc"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "stb_image::@203766a7419bd4cdeb21"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "stb_truetype::@5402ffb4a20a82b7e45d"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "enet::@68d3957fa5c81bdcfc98"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "raudio::@1df9a5823cc1f60ecd48"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "imgui::@0e4bebfa6e0abb85058b"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "gl2d::@b1e5fb9460302e2a28d7"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "safeSave::@7315f01a1cae82018d2e"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "glui::@17281c2e28480a18eeb3"
+		}
+	],
+	"id" : "MultiSquaresServer::@6890427a1f51a3e7e1df",
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "/DWIN32 /D_WINDOWS /GR /EHsc /Zi /Ob0 /Od /RTC1 -MTd",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "/machine:x64 /debug /INCREMENTAL /subsystem:console",
+				"role" : "flags"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "thirdparty\\glfw-3.3.2\\src\\glfw3.lib",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "thirdparty\\glad\\glad.lib",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "thirdparty\\stb_image\\stb_image.lib",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "thirdparty\\stb_truetype\\stb_truetype.lib",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "thirdparty\\gl2d\\gl2d.lib",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "thirdparty\\raudio\\raudio.lib",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "thirdparty\\imgui-docking\\imgui.lib",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "thirdparty\\safeSave\\safeSave.lib",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "thirdparty\\enet-1.3.17\\enet.lib",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "thirdparty\\glui\\glui.lib",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "thirdparty\\glfw-3.3.2\\src\\glfw3.lib",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 4,
+				"fragment" : "winmm.lib",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 4,
+				"fragment" : "ws2_32.lib",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "thirdparty\\gl2d\\gl2d.lib",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "thirdparty\\glad\\glad.lib",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "thirdparty\\stb_image\\stb_image.lib",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "thirdparty\\stb_truetype\\stb_truetype.lib",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib",
+				"role" : "libraries"
+			}
+		],
+		"language" : "CXX"
+	},
+	"name" : "MultiSquaresServer",
+	"nameOnDisk" : "MultiSquaresServer.exe",
+	"paths" : 
+	{
+		"build" : ".",
+		"source" : "."
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3,
+				4,
+				5
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 9,
+			"compileGroupIndex" : 0,
+			"path" : "server/src/server.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 9,
+			"compileGroupIndex" : 0,
+			"path" : "server/src/serverUtils.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 9,
+			"compileGroupIndex" : 0,
+			"path" : "common/src/Bullet.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 9,
+			"compileGroupIndex" : 0,
+			"path" : "common/src/MapData.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 9,
+			"compileGroupIndex" : 0,
+			"path" : "common/src/Packet.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 9,
+			"compileGroupIndex" : 0,
+			"path" : "common/src/Player.cpp",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "EXECUTABLE"
+}

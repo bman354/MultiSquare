@@ -6,11 +6,18 @@
 #include "Bullet.h"
 #include <iostream>
 
+
+
 struct Networker {
 	ENetHost* client = nullptr;
 	ENetPeer* server = nullptr;
 	ENetAddress address = {};
 	ENetEvent event = {};
+
+	struct NetworkerStatus {
+		bool connected = false;
+		bool handshakeSuccessful = false;
+	} status;
 
 	unsigned long long serverTime = 0;
 
@@ -19,4 +26,6 @@ struct Networker {
 	void closeNetworker();
 	void sendPlayerPosUpdate(Player& player);
 	void handlePlayerPosUpdate(PosUpdatePacket& posPacket, std::vector<Player>& extPlayers);
+
+	void doHandshake(Player& localPlayer, std::vector<Player>& extPlayers);
 };

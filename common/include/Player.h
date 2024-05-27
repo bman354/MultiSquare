@@ -39,33 +39,7 @@ public:
 	glm::vec2 bulletSize;
 };
 
-struct ServerPlayer {
-public:
-	ServerPlayer();
-	ServerPlayer(Player playerData);
-	int id;
-
-	glm::vec2 pos;
-	glm::vec2 velocity;
-	float acceleration;
-
-	float boostPower;
-	glm::vec2 boostVelocity;
-	short maxBoostTimer;
-	float maxBoostSpeed;
-
-	std::string name;
-
-	int lives;
-	float health;
-	float maxSpeed;
-	float damage;
-	glm::vec2 playerSize;
-	int fireRate;
-	float bulletSpeed;
-
-	glm::vec2 bulletSize;
+struct Client {
+	Player player;
 	ENetPeer* peer;
 };
-
-Player serverPlayerToPlayer(ServerPlayer playerData);

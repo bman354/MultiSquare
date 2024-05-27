@@ -7,7 +7,7 @@
 
 unsigned long long serverTime = 0;
 int currentId = 0;
-std::vector<ServerPlayer> clients;
+std::vector<Client> clients = {};
 
 int main()
 {
@@ -100,84 +100,77 @@ int main()
 }
 
 void broadcastAll(Packet p, const char* data, size_t size, bool reliable, int channel) {
-	for (ServerPlayer& player : clients) {
+	for (Client& player : clients) {
 		sendPacket(player.peer, p, data, size, reliable, channel);
 	}
 }
 
-void broadcastAll(ENetPeer *ignoredPeer, Packet p, const char* data, size_t size, bool reliable, int channel) {
-	for (ServerPlayer& player : clients) {
-		if (player.peer != ignoredPeer) {
-			sendPacket(player.peer, p, data, size, reliable, channel);
+void broadcastAll(ENetPeer* ignoredPeer, Packet p, const char* data, size_t size, bool reliable, int channel) {
+	for (Client& client : clients) {
+		if (client.peer != ignoredPeer) {
+			sendPacket(client.peer, p, data, size, reliable, channel);
 		}
 	}
 }
 
 void broadcastAll(int ignoredId, Packet p, const char* data, size_t size, bool reliable, int channel) {
-	for (ServerPlayer& player : clients) {
-		if (player.id != ignoredId) {
-			sendPacket(player.peer, p, data, size, reliable, channel);
+	for (Client& client : clients) {
+		if (client.player.id != ignoredId) {
+			sendPacket(client.peer, p, data, size, reliable, channel);
 		}
 	}
 }
 
 //send back newly connected client their id, increment id and send new player's information to all other clients
 void doServerHandshake(HandshakePacket& handshakePacket, ENetEvent* event) {
+	Packet p;
+	p.header = HANDSHAKE_CONFIRM;
 
-	ServerPlayer newPlayer(handshakePacket.player);
+	ConfirmHandshakePacket data;
+	data.id = currentId;
+	data.serverTime = serverTime;
 
-	newPlayer.id = currentId;
-	currentId++;
-	newPlayer.peer = event->peer;
-
-	clients.push_back(newPlayer);
-
-	Packet packet;
-	packet.header = NEW_PLAYER_CONNECTED;
-
-	NewPlayerConnectedPacket packetData;
-	packetData.connectingPlayer = serverPlayerToPlayer(newPlayer);
-
-	//send new player data to all other players
-	broadcastAll(newPlayer.peer, packet, (char*)&packetData, sizeof(packetData), true, 1);
-
-
-	//send all other players current status to new player
-	packet = {};
-	packet.header = HANDSHAKE_PLAYERDATA;
-
-	HandshakeDataPacket handshakePlayerData;
-
-	std::copy(clients.begin(), clients.end(), handshakePlayerData);
-	sendPacket(newPlayer.peer, packet, (char*)&handshakePlayerData, sizeof(handshakePlayerData), true, 0);
+	Client newClient;
+	newClient.player = handshakePacket.player;
+	newClient.player.id = data.id;
+	newClient.peer = event->peer;
 	
-	//Confirm handshake was completed successfully
-	packet = {};
-	packet.header = HANDSHAKE_CONFIRM;
+	size_t i = 0;
+	for (Client client : clients) {
+		data.existingPlayers[i] = client.player;
+		i++;
+	}
+	
+	//send handshake confirmation
+	sendPacket(newClient.peer, p, (char*)&data, sizeof(data), true, 1);
 
-	HandshakeConfirmationPacket handshakePacketData;
-	handshakePacketData.id = newPlayer.id;
+	Packet newPlayerPacket;
+	newPlayerPacket.header = NEW_PLAYER_CONNECTED;
+	
+	PlayerPacket newPlayerData;
+	newPlayerData.player = newClient.player;
 
-	sendPacket(newPlayer.peer, packet, (char*)&handshakePacketData, sizeof(handshakePacketData), true, 1);
-	std::cout << "accepted handshake with Id: " << newPlayer.id << "\n";
+	broadcastAll(newClient.player.id, newPlayerPacket, (char*)&newPlayerData, sizeof(newPlayerData), true, 1);
+
+	clients.push_back(newClient);
+	currentId++;
 }
+
 
 void playerPosUpdate(PosUpdatePacket& posPacket, ENetEvent* event) {
-	
-	Packet p;
-	p.header = PLAYER_POS_UPDATE;
-	
-	for (ServerPlayer player : clients) {
-		if (posPacket.id == player.id) {
-			player.pos.x = posPacket.x;
-			player.pos.y = posPacket.y;
-			player.velocity.x = posPacket.xVel;
-			player.velocity.y = posPacket.yVel;
-			break;
-		}
-		else {
-			sendPacket(player.peer, p, (char*)&posPacket, sizeof(posPacket), true, 1);
-		}
-	}
-}
+    Packet p;
+    p.header = PLAYER_POS_UPDATE;
 
+    for (Client& client : clients) {
+        if (client.peer == event->peer) {
+            // Update position for the player associated with the received position update packet
+            client.player.pos.x = posPacket.x;
+            client.player.pos.y = posPacket.y;
+            client.player.velocity.x = posPacket.xVel;
+            client.player.velocity.y = posPacket.yVel;
+
+            // Broadcast the updated position to all other clients
+            broadcastAll(client.player.id, p, (char*)&posPacket, sizeof(posPacket), true, 1);
+        }
+    }
+}
